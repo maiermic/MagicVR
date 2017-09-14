@@ -16,6 +16,9 @@ set(User_ProjectName "MyProject" CACHE STRING ${USER_CMAKE_TEXT})
 # in the next line if necessary. Please avoid Typos!
 set(User_Build_Configuration Release CACHE STRING ${USER_CMAKE_TEXT})
 
+# Set environment variable IS_MY_LINUX_SYSTEM=TRUE on your own Linux system
+# and set IS_MY_LINUX_SYSTEM=FALSE or do not define it, when you generate build environment in V2C/LRZ.
+set(IS_MY_LINUX_SYSTEM $ENV{IS_MY_LINUX_SYSTEM} CACHE BOOL {USER_CMAKE_TEXT})
 
 ##################################################################################
 
@@ -67,6 +70,12 @@ if(WIN32)
   endif()
   
   set(GLUT_glut_LIBRARY "${GLUT_ROOT_PATH}/lib/${glutlib}" CACHE FILEPATH ${USER_CMAKE_TEXT})
+elseif(IS_MY_LINUX_SYSTEM)
+    set(BOOST_ROOT /sw/boost/1.53.0/ CACHE PATH ${USER_CMAKE_TEXT})
+    set(OPENSG_ROOT /sw/opensg/2.0/2015-01-16/ CACHE PATH ${USER_CMAKE_TEXT})
+    set(inVRs_ROOT_DIR /sw/inVRs/rev2647/ CACHE PATH ${USER_CMAKE_TEXT})
+    set(CAVESceneManager_DIR ${inVRs_ROOT_DIR}/lib/cmake/CAVESceneManager CACHE PATH ${USER_CMAKE_TEXT})
+    set(VRPN_ROOT_DIR /sw/vrpn/7.33/ CACHE PATH ${USER_CMAKE_TEXT})
 else()
   #set(BOOST_ROOT /sw/boost/1.53.0  CACHE PATH ${USER_CMAKE_TEXT})
   set(OPENSG_ROOT $ENV{HOME}/opensg/latest CACHE PATH ${USER_CMAKE_TEXT})
