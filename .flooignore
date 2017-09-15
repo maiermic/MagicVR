@@ -4,3 +4,7 @@ tmp
 vendor
 .idea/workspace.xml
 .idea/misc.xml
+build/*
+build_cavemaster01u/*
+build_cavemaster02u/*
+exe/*
