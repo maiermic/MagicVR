@@ -27,24 +27,21 @@ OSG_USING_NAMESPACE
 OSGCSM::CAVEConfig cfg;
 OSGCSM::CAVESceneManager *mgr = nullptr;
 
-input::RemoteManager* remoteManager;
+input::RemoteManager *remoteManager;
 
-Scene* scene = nullptr;
+Scene *scene = nullptr;
 
 // head light fix (1/3)
 DirectionalLightRecPtr mainLight;
 
-void cleanup()
-{
+void cleanup() {
     delete mgr;
     delete remoteManager;
 }
 
-void keyboard(unsigned char k, int x, int y)
-{
+void keyboard(unsigned char k, int x, int y) {
     Real32 ed;
-    switch(k)
-    {
+    switch (k) {
         case 'q':
         case 27:
             cleanup();
@@ -72,58 +69,52 @@ void keyboard(unsigned char k, int x, int y)
     }
 }
 
-void setupGLUT(int *argc, char *argv[])
-{
+void setupGLUT(int *argc, char *argv[]) {
     glutInit(argc, argv);
-    glutInitDisplayMode(GLUT_RGB  |GLUT_DEPTH | GLUT_DOUBLE);
+    glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
     glutCreateWindow("OpenSG CSMDemo with VRPN API");
-    glutDisplayFunc([]()
-                    {
-                        // black navigation window
-                        glClear(GL_COLOR_BUFFER_BIT);
-                        glutSwapBuffers();
-                    });
-    glutReshapeFunc([](int w, int h)
-                    {
-                        mgr->resize(w, h);
-                        glutPostRedisplay();
-                    });
+    glutDisplayFunc([]() {
+        // black navigation window
+        glClear(GL_COLOR_BUFFER_BIT);
+        glutSwapBuffers();
+    });
+    glutReshapeFunc([](int w, int h) {
+        mgr->resize(w, h);
+        glutPostRedisplay();
+    });
     glutKeyboardFunc(keyboard);
-    glutIdleFunc([]()
-                 {
-                     remoteManager->check_tracker();
+    glutIdleFunc([]() {
+        remoteManager->check_tracker();
 
-                     scene->update();
+        scene->update();
 
-                     const auto speed = 1.f;
-                     auto head = remoteManager->head;
-                     mgr->setUserTransform(head.position, head.orientation);
-                     mgr->setTranslation(mgr->getTranslation() + speed * remoteManager->analog_values);
+        const auto speed = 1.f;
+        auto head = remoteManager->head;
+        mgr->setUserTransform(head.position, head.orientation);
+        mgr->setTranslation(mgr->getTranslation() + speed * remoteManager->analog_values);
 
-                     // head light fix (2/3)
-                     Matrix4f mat;
-                     mat.setRotate(head.orientation);
-                     auto dir = mat * Vec3f(0.f, 0.f, 1.f);
-                     mainLight->setDirection(dir);
+        // head light fix (2/3)
+        Matrix4f mat;
+        mat.setRotate(head.orientation);
+        auto dir = mat * Vec3f(0.f, 0.f, 1.f);
+        mainLight->setDirection(dir);
 
-                     commitChanges();
-                     mgr->redraw();
-                     // the changelist should be cleared - else things could be copied multiple times
-                     OSG::Thread::getCurrentChangeList()->clear();
-                 });
+        commitChanges();
+        mgr->redraw();
+        // the changelist should be cleared - else things could be copied multiple times
+        OSG::Thread::getCurrentChangeList()->clear();
+    });
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 #if WIN32
     OSG::preloadSharedObject("OSGFileIO");
-	OSG::preloadSharedObject("OSGImageFileIO");
+    OSG::preloadSharedObject("OSGImageFileIO");
 #endif
-    try
-    {
+    try {
         // ChangeList needs to be set for OpenSG 1.4
         ChangeList::setReadWriteDefault();
-        osgInit(argc,argv);
+        osgInit(argc, argv);
 
         // evaluate intial params
         Arguments args(argc, argv);
@@ -138,8 +129,7 @@ int main(int argc, char **argv)
         cfg.printConfig();
 
         // start servers for video rendering
-        if ( startServers(cfg) < 0 )
-        {
+        if (startServers(cfg) < 0) {
             std::cout << "ERROR: Failed to start servers\n";
             return EXIT_FAILURE;
         }
@@ -170,25 +160,22 @@ int main(int argc, char **argv)
         commitChanges();
 
         mgr = new OSGCSM::CAVESceneManager(&cfg);
-        mgr->setWindow(mwin );
+        mgr->setWindow(mwin);
         mgr->setRoot(root);
         mgr->showAll();
         mgr->getWindow()->init();
         mgr->turnWandOff();
         mgr->setHeadlight(false);
     }
-    catch(std::string e)
-    {
+    catch (std::string e) {
         std::cout << "ERROR: " << e << '\n';
         return EXIT_FAILURE;
     }
-    catch(const char *e)
-    {
+    catch (const char *e) {
         std::cout << "ERROR: " << e << '\n';
         return EXIT_FAILURE;
     }
-    catch(const std::exception& e)
-    {
+    catch (const std::exception &e) {
         std::cout << "ERROR: " << e.what() << '\n';
         return EXIT_FAILURE;
     }
