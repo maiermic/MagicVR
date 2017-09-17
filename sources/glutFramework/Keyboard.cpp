@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-#include "Keyboard.h"
+#include "glutFramework/Keyboard.h"
 
 namespace glutFramework {
 	

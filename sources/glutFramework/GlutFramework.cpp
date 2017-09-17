@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-#include "GlutFramework.h"
+#include "glutFramework/GlutFramework.h"
 
 namespace glutFramework {
 	

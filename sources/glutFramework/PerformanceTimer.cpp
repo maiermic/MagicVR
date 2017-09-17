@@ -23,7 +23,7 @@
  */
 
 #include <cstddef>
-#include "PerformanceTimer.h"
+#include "glutFramework/PerformanceTimer.h"
 
 namespace glutFramework {
 		

@@ -3,7 +3,7 @@
 
 #include <OSGCSM/OSGCAVESceneManager.h>
 #include <Scene.h>
-#include "../glutFramework/GlutFramework.h"
+#include "glutFramework/GlutFramework.h"
 #include "../input/RemoteManager.h"
 
 class MagicVrGlutFramework : public glutFramework::GlutFramework {
