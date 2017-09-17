@@ -2,7 +2,7 @@
 #define MYPROJECT_MAGICVRGLUTFRAMEWORK_HPP
 
 #include <OSGCSM/OSGCAVESceneManager.h>
-#include <Scene.h>
+#include <Scene.hpp>
 #include "glutFramework/GlutFramework.hpp"
 #include "input/RemoteManager.hpp"
 

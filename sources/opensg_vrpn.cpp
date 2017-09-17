@@ -19,7 +19,7 @@
 #include <OSGCSM/appctrl.h>
 
 #include "Arguments.hpp"
-#include "Scene.h"
+#include "Scene.hpp"
 #include "input/RemoteManager.hpp"
 #include "magicvr/MagicVrGlutFramework.hpp"
 

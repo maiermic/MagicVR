@@ -3,7 +3,7 @@
 
 #include <OSGCSM/OSGCAVESceneManager.h>
 
-#include "Scene.h"
+#include "Scene.hpp"
 
 
 void Scene::build() {
