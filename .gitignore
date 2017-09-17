@@ -1,6 +1,11 @@
 build/*
 build_*/*
 exe/*
+start_csm.bat
+start_demo_cave_Release
+start_demo_cave_Release.bat
+start_demo_Release
+start_demo_Release.bat
 
 
 # Created by https://www.gitignore.io/api/clion
