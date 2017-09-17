@@ -5,6 +5,7 @@
 #include <OpenSG/OSGGL.h>
 #include <OpenSG/OSGComponentTransformFields.h>
 #include <OpenSG/OSGSwitchFields.h>
+#include <OpenSG/OSGSwitch.h>
 
 #include "input/Tracker.h"
 

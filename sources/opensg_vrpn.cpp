@@ -21,90 +21,9 @@
 #include "Arguments.h"
 #include "Scene.h"
 #include "input/RemoteManager.h"
+#include "magicvr/MagicVrGlutFramework.hpp"
 
 OSG_USING_NAMESPACE
-
-OSGCSM::CAVEConfig cfg;
-OSGCSM::CAVESceneManager *mgr = nullptr;
-
-input::RemoteManager *remoteManager;
-
-Scene *scene = nullptr;
-
-// head light fix (1/3)
-DirectionalLightRecPtr mainLight;
-
-void cleanup() {
-    delete mgr;
-    delete remoteManager;
-}
-
-void keyboard(unsigned char k, int x, int y) {
-    Real32 ed;
-    switch (k) {
-        case 'q':
-        case 27:
-            cleanup();
-            exit(EXIT_SUCCESS);
-            break;
-        case 'e':
-            ed = mgr->getEyeSeparation() * .9f;
-            std::cout << "Eye distance: " << ed << '\n';
-            mgr->setEyeSeparation(ed);
-            break;
-        case 'E':
-            ed = mgr->getEyeSeparation() * 1.1f;
-            std::cout << "Eye distance: " << ed << '\n';
-            mgr->setEyeSeparation(ed);
-            break;
-        case 'h':
-            cfg.setFollowHead(!cfg.getFollowHead());
-            std::cout << "following head: " << std::boolalpha << cfg.getFollowHead() << '\n';
-            break;
-        case 'i':
-            remoteManager->print_tracker();
-            break;
-        default:
-            std::cout << "Key '" << k << "' ignored\n";
-    }
-}
-
-void setupGLUT(int *argc, char *argv[]) {
-    glutInit(argc, argv);
-    glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
-    glutCreateWindow("OpenSG CSMDemo with VRPN API");
-    glutDisplayFunc([]() {
-        // black navigation window
-        glClear(GL_COLOR_BUFFER_BIT);
-        glutSwapBuffers();
-    });
-    glutReshapeFunc([](int w, int h) {
-        mgr->resize(w, h);
-        glutPostRedisplay();
-    });
-    glutKeyboardFunc(keyboard);
-    glutIdleFunc([]() {
-        remoteManager->check_tracker();
-
-        scene->update();
-
-        const auto speed = 1.f;
-        auto head = remoteManager->head;
-        mgr->setUserTransform(head.position, head.orientation);
-        mgr->setTranslation(mgr->getTranslation() + speed * remoteManager->analog_values);
-
-        // head light fix (2/3)
-        Matrix4f mat;
-        mat.setRotate(head.orientation);
-        auto dir = mat * Vec3f(0.f, 0.f, 1.f);
-        mainLight->setDirection(dir);
-
-        commitChanges();
-        mgr->redraw();
-        // the changelist should be cleared - else things could be copied multiple times
-        OSG::Thread::getCurrentChangeList()->clear();
-    });
-}
 
 int main(int argc, char **argv) {
 #if WIN32
@@ -118,6 +37,7 @@ int main(int argc, char **argv) {
 
         // evaluate intial params
         Arguments args(argc, argv);
+        OSGCSM::CAVEConfig cfg;
 
         if (args.configurationFile == nullptr) {
             throw "No configuration passed.";
@@ -134,9 +54,8 @@ int main(int argc, char **argv) {
             return EXIT_FAILURE;
         }
 
-        setupGLUT(&argc, argv);
-
-        remoteManager = new input::RemoteManager(cfg);
+        input::RemoteManager remoteManager(cfg);
+        Scene scene(remoteManager.wand);
 
         MultiDisplayWindowRefPtr mwin = createAppWindow(cfg, cfg.getBroadcastaddress());
 
@@ -147,12 +66,11 @@ int main(int argc, char **argv) {
                 throw "Scene could not be loaded: '" + std::string(args.sceneFile) + "'";
             }
         } else {
-            scene = new Scene(remoteManager->wand);
-            root = scene->root;
+            root = scene.root;
         }
 
         // head light fix (3/3)
-        mainLight = DirectionalLight::create();
+        DirectionalLightRecPtr mainLight = DirectionalLight::create();
         mainLight->setDiffuse(Color4f(1, 1, 1, 1));
         mainLight->setAmbient(Color4f(0.2, 0.2, 0.2, 1));
         mainLight->setSpecular(Color4f(1, 1, 1, 1));
@@ -162,13 +80,16 @@ int main(int argc, char **argv) {
 
         commitChanges();
 
-        mgr = new OSGCSM::CAVESceneManager(&cfg);
-        mgr->setWindow(mwin);
-        mgr->setRoot(root);
-        mgr->showAll();
-        mgr->getWindow()->init();
-        mgr->turnWandOff();
-        mgr->setHeadlight(false);
+        OSGCSM::CAVESceneManager mgr(&cfg);
+        mgr.setWindow(mwin);
+        mgr.setRoot(root);
+        mgr.showAll();
+        mgr.getWindow()->init();
+        mgr.turnWandOff();
+        mgr.setHeadlight(false);
+
+        MagicVrGlutFramework framework(cfg, mgr, remoteManager, scene, mainLight);
+        framework.startFramework(argc, argv);
     }
     catch (std::string e) {
         std::cout << "ERROR: " << e << '\n';
@@ -182,6 +103,4 @@ int main(int argc, char **argv) {
         std::cout << "ERROR: " << e.what() << '\n';
         return EXIT_FAILURE;
     }
-
-    glutMainLoop();
 }

@@ -223,7 +223,7 @@ namespace glutFramework {
 		void setInstance(); 
 		
 		/** The run method is called by GLUT and contains the logic to set the framerate of the application. */
-		void run();
+		virtual void run();
 		
 		/** The displayFramework() function sets up initial GLUT state and calculates the
 		 change in time between each frame. It calls the display(float) function which can
