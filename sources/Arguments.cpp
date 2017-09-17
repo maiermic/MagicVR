@@ -1,6 +1,6 @@
 #include <cstring>
 
-#include "Arguments.h"
+#include "Arguments.hpp"
 
 
 Arguments::Arguments(int argc, char **argv) {

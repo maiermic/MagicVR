@@ -18,7 +18,7 @@
 #include <OSGCSM/OSGCAVEConfig.h>
 #include <OSGCSM/appctrl.h>
 
-#include "Arguments.h"
+#include "Arguments.hpp"
 #include "Scene.h"
 #include "input/RemoteManager.hpp"
 #include "magicvr/MagicVrGlutFramework.hpp"
