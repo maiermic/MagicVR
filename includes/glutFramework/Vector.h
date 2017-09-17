@@ -30,7 +30,7 @@
 #include <string>
 #include <stdio.h>
 
-#include "Point.h"
+#include "Point.hpp"
 
 /* Vector.cpp
  *
