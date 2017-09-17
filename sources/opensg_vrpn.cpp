@@ -153,6 +153,9 @@ int main(int argc, char **argv) {
 
         // head light fix (3/3)
         mainLight = DirectionalLight::create();
+        mainLight->setDiffuse(Color4f(1, 1, 1, 1));
+        mainLight->setAmbient(Color4f(0.2, 0.2, 0.2, 1));
+        mainLight->setSpecular(Color4f(1, 1, 1, 1));
         root->setCore(mainLight);
         NodeRecPtr beaconGeo = makeNodeFor(Geometry::create());
         mainLight->setBeacon(beaconGeo);
