@@ -1,6 +1,5 @@
 build/*
-build_cavemaster01u/*
-build_cavemaster02u/*
+build_*/*
 exe/*
 
 
