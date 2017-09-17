@@ -44,7 +44,7 @@
 
 #include "Keyboard.hpp"
 #include "PerformanceTimer.hpp"
-#include "Vector.h"
+#include "Vector.hpp"
 
 /** GlutFramework.h
  *
