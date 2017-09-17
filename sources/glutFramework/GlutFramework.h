@@ -38,7 +38,7 @@
 	#include <windows.h> 
 	#include <GL/glut.h> 
 #else
-	#include <GLUT/glut.h>
+	#include <OpenSG/OSGGLUT.h>
 #endif
 
 
