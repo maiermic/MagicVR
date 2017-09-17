@@ -1,4 +1,4 @@
-#include "MagicVrGlutFramework.hpp"
+#include "magicvr/MagicVrGlutFramework.hpp"
 
 void MagicVrGlutFramework::keyboardDown(unsigned char key, int x, int y) {
     glutFramework::GlutFramework::keyboardDown(key, x, y);
