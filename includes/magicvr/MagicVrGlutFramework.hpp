@@ -4,7 +4,7 @@
 #include <OSGCSM/OSGCAVESceneManager.h>
 #include <Scene.h>
 #include "glutFramework/GlutFramework.hpp"
-#include "input/RemoteManager.h"
+#include "input/RemoteManager.hpp"
 
 class MagicVrGlutFramework : public glutFramework::GlutFramework {
     OSGCSM::CAVEConfig &cfg;

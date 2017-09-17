@@ -20,7 +20,7 @@
 
 #include "Arguments.h"
 #include "Scene.h"
-#include "input/RemoteManager.h"
+#include "input/RemoteManager.hpp"
 #include "magicvr/MagicVrGlutFramework.hpp"
 
 OSG_USING_NAMESPACE
