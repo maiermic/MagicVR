@@ -9,7 +9,7 @@
 #include <input/Tracker.h>
 
 namespace input {
-    class RemoteManager {
+    class RemoteManager final {
         OSGCSM::CAVEConfig &cfg;
         vrpn_Tracker_Remote* tracker =  nullptr;
         vrpn_Button_Remote* button = nullptr;
@@ -21,7 +21,9 @@ namespace input {
         Vec3f analog_values;
 
         RemoteManager(OSGCSM::CAVEConfig &cfg);
-        virtual ~RemoteManager();
+        ~RemoteManager();
+        RemoteManager(const RemoteManager& other) = delete;
+        RemoteManager& operator=(const RemoteManager& other) = delete;
 
         void check_tracker();
 
