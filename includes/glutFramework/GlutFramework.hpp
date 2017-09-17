@@ -42,7 +42,7 @@
 #endif
 
 
-#include "Keyboard.h"
+#include "Keyboard.hpp"
 #include "PerformanceTimer.h"
 #include "Vector.h"
 
