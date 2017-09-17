@@ -1,4 +1,4 @@
-#include "util.h"
+#include "util.hpp"
 
 
 OSG::QuaternionBase<OSG::Real32> util::arrayToQuaternion(const vrpn_float64 *array) {

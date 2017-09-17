@@ -1,6 +1,6 @@
 #include <OSGCSM/OSGCAVEConfig.h>
 #include "input/RemoteManager.hpp"
-#include "util.h"
+#include "util.hpp"
 
 OSG_USING_NAMESPACE
 
