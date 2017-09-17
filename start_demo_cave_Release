@@ -1,3 +1,0 @@
-#!/bin/bash 
- export OSG_LOAD_LIBS=OSGFileIO:OSGImageFileIO 
- ./exe/MyProject -f /sw/config/opensg/csm/lrz_cave_vrpn.csm
