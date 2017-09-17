@@ -8,7 +8,7 @@
 #include <OpenSG/OSGSwitch.h>
 #include <OpenSG/OSGSimpleGeometry.h>
 
-#include "input/Tracker.h"
+#include "input/Tracker.hpp"
 
 OSG_USING_NAMESPACE
 

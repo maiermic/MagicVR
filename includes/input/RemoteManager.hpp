@@ -6,7 +6,7 @@
 #include <vrpn_Button.h>
 #include <vrpn_Tracker.h>
 #include <OSGCSM/OSGCAVEConfig.h>
-#include <input/Tracker.h>
+#include <input/Tracker.hpp>
 
 namespace input {
     class RemoteManager final {
