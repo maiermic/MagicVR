@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 
+#include <cstddef>
 #include "PerformanceTimer.h"
 
 namespace glutFramework {
