@@ -9,6 +9,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
 include(AddProject)
 
 set(OPENSG_MODULES OSGBase OSGSystem OSGWindow OSGWindowGLUT OSGDrawable OSGUtil OSGGroup OSGFileIO OSGImageFileIO)
+set(INVRS_MODULES OpenSGApplicationBase)
 
 set(EXECUTABLE_OUTPUT_PATH ../exe/)
 add_project(${PROJECT_NAME}
@@ -16,6 +17,7 @@ add_project(${PROJECT_NAME}
 	HEADER_DIR "includes/"
 	CONFIGS "config/mono.csm"
 	OPENSG_MODULES ${OPENSG_MODULES}
+	INVRS_MODULES ${INVRS_MODULES}
 	CSM_MODULE
 	VRPN_MODULE
 )
