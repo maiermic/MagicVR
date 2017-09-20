@@ -1,0 +1,57 @@
+<!ENTITY % transformation SYSTEM "transformation_v1.0a4.dtd" >
+%transformation;
+<!ENTITY % arguments SYSTEM "argumentVector_v1.0a4.dtd" >
+%arguments;
+
+<!ELEMENT controllerManager (controller)>
+<!ATTLIST controllerManager
+	version (1.0a4) #REQUIRED>
+
+<!ELEMENT controller (device*)>
+<!ATTLIST controller
+	buttons CDATA #REQUIRED
+	axes CDATA #REQUIRED
+	sensors CDATA #REQUIRED>
+
+<!ELEMENT device (arguments?, button*, axis*, sensor*)>
+<!ATTLIST device
+	type CDATA #REQUIRED>
+
+<!ELEMENT button (buttonCorrection?)>
+<!ATTLIST button
+	deviceIndex CDATA #REQUIRED
+	controllerIndex CDATA #REQUIRED>
+
+<!ELEMENT buttonCorrection EMPTY>
+<!ATTLIST buttonCorrection
+	invert CDATA #REQUIRED>
+
+<!ELEMENT axis ((axisCorrection|axisValues)?)>
+<!ATTLIST axis
+	deviceIndex CDATA #REQUIRED
+	controllerIndex CDATA #REQUIRED>
+	
+<!ELEMENT axisCorrection EMPTY>
+<!ATTLIST axisCorrection
+	offset CDATA #REQUIRED
+	scale CDATA #REQUIRED>
+
+<!ELEMENT axisValues EMPTY>
+<!ATTLIST axisValues
+	minValue CDATA #REQUIRED
+	maxValue CDATA #REQUIRED>
+	
+<!ELEMENT sensor (coordinateSystemCorrection?, positionCorrection?, orientationCorrection?)>
+<!ATTLIST sensor
+	deviceIndex CDATA #REQUIRED
+	controllerIndex CDATA #REQUIRED>
+
+<!ELEMENT coordinateSystemCorrection (translation?, rotation?, scale?)>
+<!ATTLIST coordinateSystemCorrection>
+
+<!ELEMENT positionCorrection (translation?, scale?)>
+<!ATTLIST positionCorrection>
+
+<!ELEMENT orientationCorrection (rotation?)>
+<!ATTLIST orientationCorrection>
+	

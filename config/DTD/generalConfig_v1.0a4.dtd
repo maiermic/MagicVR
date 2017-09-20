@@ -1,0 +1,16 @@
+<!ELEMENT generalConfig (general, paths)>
+<!ATTLIST generalConfig
+	version (1.0a4) #REQUIRED>
+
+<!ELEMENT general ANY>
+
+<!ELEMENT paths (root, path*)>
+
+<!ELEMENT root EMPTY>
+<!ATTLIST root
+	directory CDATA #REQUIRED>
+
+<!ELEMENT path EMPTY>
+<!ATTLIST path
+	name CDATA #REQUIRED
+	directory CDATA #REQUIRED>

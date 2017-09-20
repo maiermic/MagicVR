@@ -1,0 +1,25 @@
+<!ENTITY % transformation SYSTEM "transformation_v1.0a4.dtd" >
+%transformation;
+
+<!ELEMENT environment (tileMap, entryPoint*, entity*)>
+<!ATTLIST environment
+	version (1.0a4) #REQUIRED>
+
+<!ELEMENT tileMap (#PCDATA)>
+<!ATTLIST tileMap
+	xDimension CDATA #REQUIRED
+	zDimension CDATA #REQUIRED>
+
+<!ELEMENT entryPoint (#PCDATA)>
+<!ATTLIST entryPoint
+	xPos CDATA #REQUIRED
+	yPos CDATA #REQUIRED
+	zPos CDATA #REQUIRED
+	xDir CDATA #REQUIRED
+	yDir CDATA #REQUIRED
+	zDir CDATA #REQUIRED>
+
+<!ELEMENT entity (transformation)>
+<!ATTLIST entity 
+	id CDATA #REQUIRED
+	typeId CDATA #REQUIRED>

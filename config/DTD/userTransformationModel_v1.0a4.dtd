@@ -1,0 +1,8 @@
+<!ELEMENT userTransformationModel (model)>
+<!ATTLIST userTransformationModel
+	version (1.0a4) #REQUIRED>
+
+<!ELEMENT model (arguments?)>
+<!ATTLIST model
+	name CDATA #REQUIRED>
+

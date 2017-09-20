@@ -1,0 +1,19 @@
+<!ELEMENT userDatabase (avatar?, cursorRepresentation?, cursorTransformationModel?, userTransformationModel?)>
+<!ATTLIST userDatabase
+	version (1.0a4) #REQUIRED>
+
+<!ELEMENT avatar EMPTY>
+<!ATTLIST avatar
+	configFile CDATA #REQUIRED>
+
+<!ELEMENT cursorRepresentation EMPTY>
+<!ATTLIST cursorRepresentation
+	configFile CDATA #REQUIRED>
+
+<!ELEMENT cursorTransformationModel EMPTY>
+<!ATTLIST cursorTransformationModel
+	configFile CDATA #REQUIRED>
+
+<!ELEMENT userTransformationModel EMPTY>
+<!ATTLIST userTransformationModel
+	configFile CDATA #REQUIRED>

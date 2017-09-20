@@ -1,0 +1,19 @@
+<!ELEMENT systemCore (worldDatabase, userDatabase, transformationManager, eventManager?)>
+<!ATTLIST systemCore
+	version (1.0a4) #REQUIRED>
+
+<!ELEMENT worldDatabase EMPTY>
+<!ATTLIST worldDatabase
+	configFile CDATA #REQUIRED>
+
+<!ELEMENT userDatabase EMPTY>
+<!ATTLIST userDatabase
+	configFile CDATA #REQUIRED>
+
+<!ELEMENT transformationManager EMPTY>
+<!ATTLIST transformationManager
+	configFile CDATA #REQUIRED>
+
+<!ELEMENT eventManager EMPTY>
+<!ATTLIST eventManager
+	configFile CDATA #REQUIRED>

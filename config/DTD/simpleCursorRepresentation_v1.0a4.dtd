@@ -1,0 +1,6 @@
+<!ENTITY % representation SYSTEM "representation_v1.0a4.dtd" >
+%representation;
+
+<!ELEMENT simpleCursorRepresentation (representation)>
+<!ATTLIST simpleCursorRepresentation
+	version (1.0a4) #REQUIRED>

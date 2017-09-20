@@ -1,0 +1,8 @@
+<!ELEMENT arguments (arg*)>
+<!ATTLIST arguments>
+	
+<!ELEMENT arg EMPTY>
+<!ATTLIST arg
+	key CDATA #REQUIRED
+	type CDATA #IMPLIED
+	value CDATA #REQUIRED>

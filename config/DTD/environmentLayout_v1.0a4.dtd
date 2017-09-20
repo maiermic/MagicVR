@@ -1,0 +1,17 @@
+<!ELEMENT environmentLayout (tileGrid, environment*)>
+<!ATTLIST environmentLayout
+	version (1.0a4) #REQUIRED>
+
+<!ELEMENT tileGrid EMPTY>
+<!ATTLIST tileGrid
+	xSpacing CDATA #REQUIRED
+	zSpacing CDATA #REQUIRED>
+
+<!ELEMENT environment EMPTY>
+<!ATTLIST environment
+	id CDATA #REQUIRED
+	configFile CDATA #REQUIRED
+	xLoc CDATA #REQUIRED
+	zLoc CDATA #REQUIRED>
+
+

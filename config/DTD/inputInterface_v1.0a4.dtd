@@ -1,0 +1,9 @@
+<!ELEMENT inputInterface (module*)>
+<!ATTLIST inputInterface
+	version (1.0a4) #REQUIRED>
+
+<!ELEMENT module EMPTY>
+<!ATTLIST module
+	name CDATA #REQUIRED
+	configFile CDATA #REQUIRED
+	libraryName CDATA #IMPLIED>

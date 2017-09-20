@@ -1,0 +1,20 @@
+<!ENTITY % arguments SYSTEM "argumentVector_v1.0a4.dtd" >
+%arguments;
+
+<!ELEMENT navigation (translationModel?, orientationModel?, speedModel?)>
+<!ATTLIST navigation
+	version (1.0a4) #REQUIRED>
+
+<!ELEMENT translationModel (arguments?)>
+<!ATTLIST translationModel
+	type CDATA #REQUIRED>
+	
+<!ELEMENT orientationModel (arguments?)>
+<!ATTLIST orientationModel
+	type CDATA #REQUIRED
+	angle CDATA #REQUIRED>
+
+<!ELEMENT speedModel (arguments?)>
+<!ATTLIST speedModel
+	type CDATA #REQUIRED
+	speed CDATA #REQUIRED>

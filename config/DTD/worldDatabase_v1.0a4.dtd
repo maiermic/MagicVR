@@ -1,0 +1,15 @@
+<!ELEMENT worldDatabase (entityTypes*, tiles*, environmentLayout?)>
+<!ATTLIST worldDatabase
+	version (1.0a4) #REQUIRED>
+
+<!ELEMENT entityTypes EMPTY>
+<!ATTLIST entityTypes
+	configFile CDATA #REQUIRED>
+
+<!ELEMENT tiles EMPTY>
+<!ATTLIST tiles
+	configFile CDATA #REQUIRED>
+
+<!ELEMENT environmentLayout EMPTY>
+<!ATTLIST environmentLayout
+	configFile CDATA #REQUIRED>

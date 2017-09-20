@@ -1,0 +1,40 @@
+<!ENTITY % arguments SYSTEM "argumentVector_v1.0a4.dtd" >
+%arguments;
+
+<!ELEMENT interaction (stateActionModels, stateTransitionModels)>
+<!ATTLIST interaction
+	version (1.0a4) #REQUIRED>
+
+<!ELEMENT stateActionModels (idleActionModel?, selectionActionModel?, manipulationActionModel?)>
+<!ATTLIST stateActionModels>
+
+<!ELEMENT idleActionModel (arguments?)>
+<!ATTLIST idleActionModel
+	type CDATA #REQUIRED> 
+	
+<!ELEMENT selectionActionModel (arguments?)>
+<!ATTLIST selectionActionModel
+	type CDATA #REQUIRED>
+
+<!ELEMENT manipulationActionModel (arguments?)>
+<!ATTLIST manipulationActionModel
+	type CDATA #REQUIRED> 
+	
+<!ELEMENT stateTransitionModels (selectionChangeModel?, unselectionChangeModel?, manipulationConfirmationModel?, manipulationTerminationModel?)>
+<!ATTLIST stateTransitionModels>
+
+<!ELEMENT selectionChangeModel (arguments?)>
+<!ATTLIST selectionChangeModel
+	type CDATA #REQUIRED>
+
+<!ELEMENT unselectionChangeModel (arguments?)>
+<!ATTLIST unselectionChangeModel
+	type CDATA #REQUIRED>
+
+<!ELEMENT manipulationConfirmationModel (arguments?)>
+<!ATTLIST manipulationConfirmationModel
+	type CDATA #REQUIRED>
+
+<!ELEMENT manipulationTerminationModel (arguments?)>
+<!ATTLIST manipulationTerminationModel
+	type CDATA #REQUIRED>

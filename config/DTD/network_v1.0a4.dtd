@@ -1,0 +1,12 @@
+<!ELEMENT network (ports, localIP?)>
+<!ATTLIST network
+	version (1.0a4) #REQUIRED>
+
+<!ELEMENT ports EMPTY>
+<!ATTLIST ports
+	TCP CDATA #REQUIRED
+	UDP CDATA #REQUIRED>
+
+<!ELEMENT localIP EMPTY>
+<!ATTLIST localIP
+	value CDATA #REQUIRED>

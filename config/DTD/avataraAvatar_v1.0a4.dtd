@@ -1,0 +1,25 @@
+<!ENTITY % representation SYSTEM "representation_v1.0a4.dtd" >
+%representation;
+
+<!ELEMENT avataraAvatar (name?, representation, texture?, animations?)>
+<!ATTLIST avataraAvatar
+	version (1.0a4) #REQUIRED>
+
+<!ELEMENT name EMPTY>
+<!ATTLIST name
+	value CDATA #REQUIRED>
+
+<!ELEMENT texture EMPTY>
+<!ATTLIST texture
+	file CDATA #REQUIRED>
+
+<!ELEMENT animations (animation*)>
+<!ATTLIST animations
+	smooth CDATA #IMPLIED
+	speed CDATA #IMPLIED
+	default CDATA #IMPLIED>
+
+<!ELEMENT animation EMPTY>
+<!ATTLIST animation
+	name CDATA #REQUIRED
+	file CDATA #REQUIRED>

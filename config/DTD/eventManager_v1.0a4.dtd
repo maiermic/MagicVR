@@ -1,0 +1,3 @@
+<!ELEMENT eventManager (#PCDATA)>
+<!ATTLIST eventManager
+	version (1.0a4) #REQUIRED>

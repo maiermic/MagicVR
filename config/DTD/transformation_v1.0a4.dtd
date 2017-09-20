@@ -1,0 +1,29 @@
+<!ELEMENT transformation (translation?,rotation?,scale?,scaleOrientation?)>
+
+<!ELEMENT translation EMPTY>
+<!ATTLIST translation
+	x CDATA #REQUIRED
+	y CDATA #REQUIRED
+	z CDATA #REQUIRED>
+
+<!ELEMENT rotation EMPTY>
+<!ATTLIST rotation 
+	x CDATA #REQUIRED
+	y CDATA #REQUIRED
+	z CDATA #REQUIRED
+	angleDeg CDATA #IMPLIED
+	angleRad CDATA #IMPLIED>
+
+<!ELEMENT scale EMPTY>
+<!ATTLIST scale 
+	x CDATA #REQUIRED
+	y CDATA #REQUIRED
+	z CDATA #REQUIRED>
+
+<!ELEMENT scaleOrientation EMPTY>
+<!ATTLIST scaleOrientation 
+	x CDATA #REQUIRED
+	y CDATA #REQUIRED
+	z CDATA #REQUIRED
+	angleDeg CDATA #IMPLIED
+	angleRad CDATA #IMPLIED>

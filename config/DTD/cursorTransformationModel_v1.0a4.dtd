@@ -1,0 +1,11 @@
+<!ENTITY % arguments SYSTEM "argumentVector_v1.0a4.dtd" >
+%arguments;
+
+<!ELEMENT cursorTransformationModel (model)>
+<!ATTLIST cursorTransformationModel
+	version (1.0a4) #REQUIRED>
+
+<!ELEMENT model (arguments?)>
+<!ATTLIST model
+	name CDATA #REQUIRED>
+

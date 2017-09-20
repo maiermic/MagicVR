@@ -1,0 +1,15 @@
+<!ENTITY % transformation SYSTEM "transformation_v1.0a4.dtd" >
+%transformation;
+
+<!ELEMENT representation (( file | reference ), transformation?)>
+<!ATTLIST representation
+	copy CDATA #IMPLIED>
+
+<!ELEMENT file EMPTY>
+<!ATTLIST file
+	type CDATA #REQUIRED
+	name CDATA #REQUIRED>
+
+<!ELEMENT reference EMPTY>
+<!ATTLIST reference
+	sourceId CDATA #REQUIRED>

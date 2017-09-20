@@ -1,0 +1,62 @@
+<!ENTITY % arguments SYSTEM "argumentVector_v1.0a4.dtd" >
+%arguments;
+
+<!ELEMENT transformationManager (logFile?, mergerList?, pipeList?)>
+<!ATTLIST transformationManager 
+	version (1.0a4) #REQUIRED>
+	
+<!ELEMENT logFile EMPTY>
+<!ATTLIST logFile
+	name CDATA #REQUIRED>
+	
+<!ELEMENT mergerList (merger*)>
+<!ATTLIST mergerList>
+
+<!ELEMENT merger (inputPipe+, outputPipe+, arguments?)>
+<!ATTLIST merger
+	type CDATA #REQUIRED
+	id CDATA #REQUIRED>
+
+<!ELEMENT inputPipe EMPTY>
+<!ATTLIST inputPipe
+	srcComponent CDATA #IMPLIED
+	srcComponentName CDATA #IMPLIED
+	dstComponent CDATA #IMPLIED
+	dstComponentName CDATA #IMPLIED
+	pipeType CDATA #REQUIRED
+	objectClass CDATA #REQUIRED
+	objectType CDATA #REQUIRED
+	objectId CDATA #REQUIRED
+	fromNetwork CDATA #REQUIRED>
+
+<!ELEMENT outputPipe EMPTY>
+<!ATTLIST outputPipe
+	srcComponent CDATA #IMPLIED
+	srcComponentName CDATA #IMPLIED
+	dstComponent CDATA #IMPLIED
+	dstComponentName CDATA #IMPLIED
+	pipeType CDATA #REQUIRED
+	objectClass CDATA #REQUIRED
+	objectType CDATA #REQUIRED
+	objectId CDATA #REQUIRED
+	fromNetwork CDATA #REQUIRED>
+
+<!ELEMENT pipeList (pipe*)>
+<!ATTLIST pipeList>
+
+<!ELEMENT pipe (modifier*)>
+<!ATTLIST pipe
+	srcComponent CDATA #IMPLIED
+	srcComponentName CDATA #IMPLIED
+	dstComponent CDATA #IMPLIED
+	dstComponentName CDATA #IMPLIED
+	pipeType CDATA #REQUIRED
+	objectClass CDATA #REQUIRED
+	objectType CDATA #REQUIRED
+	objectId CDATA #REQUIRED
+	fromNetwork CDATA #REQUIRED>
+
+<!ELEMENT modifier (arguments?)>
+<!ATTLIST modifier
+	type CDATA #REQUIRED>
+	
