@@ -24,6 +24,17 @@ bool MagicVrApp::initialize(const CommandLineArgumentWrapper &args) {
     input::RemoteManager remoteManager(cfg);
     Scene scene(remoteManager.wand);
 
+    // head light fix (3/3)
+    mainLight = DirectionalLightBase::create();
+    mainLight->setDiffuse(Color4f(1, 1, 1, 1));
+    mainLight->setAmbient(Color4f(0.2, 0.2, 0.2, 1));
+    mainLight->setSpecular(Color4f(1, 1, 1, 1));
+    scene.root->setCore(mainLight);
+    NodeRecPtr beaconGeo = makeNodeFor(Geometry::create());
+    mainLight->setBeacon(beaconGeo);
+
+    commitChanges();
+
     // set root node to the responsible SceneManager (managed by OpenSGApplicationBase)
 //    setRootNode(scene);
     setRootNode(scene.root);
@@ -32,7 +43,13 @@ bool MagicVrApp::initialize(const CommandLineArgumentWrapper &args) {
 }
 
 void MagicVrApp::display(float dt) {
-
+    // TODO get head orientation
+    Quaternion head_orientation(Vec3f(0.f, 1.f, 0.f), 3.141f);
+    // head light fix (2/3)
+    Matrix4f mat;
+    mat.setRotate(head_orientation);
+    auto dir = mat * Vec3f(0.f, 0.f, 1.f);
+    mainLight->setDirection(dir);
 }
 
 void MagicVrApp::cleanup() {
