@@ -8,8 +8,8 @@ std::string MagicVrApp::getConfigFile(const CommandLineArgumentWrapper &args) {
 }
 
 bool MagicVrApp::initialize(const CommandLineArgumentWrapper &args) {
-    OpenSGSceneGraphInterface* sgIF =
-            dynamic_cast<OpenSGSceneGraphInterface*>(sceneGraphInterface);
+    OpenSGSceneGraphInterface *sgIF =
+            dynamic_cast<OpenSGSceneGraphInterface *>(sceneGraphInterface);
     // must exist because it is created by the OutputInterface
     if (!sgIF) {
         printd(ERROR, "GoingImmersive::initialize(): Unable to obtain SceneGraphInterface!\n");
