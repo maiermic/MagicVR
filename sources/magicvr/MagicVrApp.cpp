@@ -1,7 +1,7 @@
 #include <inVRs/SystemCore/DebugOutput.h>
 #include <Scene.hpp>
 #include <input/RemoteManager.hpp>
-#include "MagicVrApp.hpp"
+#include "magicvr/MagicVrApp.hpp"
 
 std::string MagicVrApp::getConfigFile(const CommandLineArgumentWrapper &args) {
     return args.containOption("config") ? args.getOptionValue("config") : defaultConfigFile;
