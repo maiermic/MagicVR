@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE navigation SYSTEM "http://dtd.inVRs.org/navigation_v1.0a4.dtd">
+<navigation version="1.0a4">
+	<translationModel type="TranslationViewDirectionModel"/>
+	<orientationModel type="OrientationDualAxisModel" angle="10">
+		<arguments>
+			<arg key="xAxisIndex" type="int" value="0"/>
+			<arg key="yAxisIndex" type="int" value="1"/>
+			<arg key="buttonIndex" type="int" value="2"/>
+		</arguments>
+	</orientationModel>
+	<speedModel type="SpeedButtonModel" speed="5">
+		<arguments>
+			<arg key="accelButtonIndex" type="int" value="0"/>
+			<arg key="decelButtonIndex" type="int" value="1"/>
+		</arguments>
+	</speedModel>
+</navigation>

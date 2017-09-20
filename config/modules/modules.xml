@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE modules SYSTEM "http://dtd.inVRs.org/modules_v1.0a4.dtd">
+<modules version="1.0a4">
+
+	<module name="Navigation" configFile="navigation.xml"/>
+
+<!-- *************************** Snippet-2-2 ******************************* -->
+
+</modules>

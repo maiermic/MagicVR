@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE inputInterface SYSTEM "http://dtd.inVRs.org/inputInterface_v1.0a4.dtd">
+<inputInterface version="1.0a4">
+
+	<module name="ControllerManager" configFile="MouseKeybSensorController.xml"/>
+	
+<!-- *************************** Snippet-2-2 ******************************* -->
+
+</inputInterface>

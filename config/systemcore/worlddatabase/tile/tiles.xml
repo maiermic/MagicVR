@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE tiles SYSTEM "http://dtd.inVRs.org/tiles_v1.0a4.dtd">
+<tiles version="1.0a4">
+	<tile id="1" name="plane_10x10">
+		<tileProperties>
+			<size xSize="10" zSize="10"/>
+			<adjustment height="0" yRotation="0"/>
+		</tileProperties>
+		<representation copy="false">
+			<file type="VRML97" name="plane_10x10.WRL"/>
+		</representation>
+	</tile>
+</tiles>

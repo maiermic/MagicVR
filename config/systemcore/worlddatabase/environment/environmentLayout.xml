@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE environmentLayout SYSTEM "http://dtd.inVRs.org/environmentLayout_v1.0a4.dtd">
+<environmentLayout version="1.0a4">
+	<tileGrid xSpacing="10" zSpacing="10"/>
+	<environment id="1" configFile="environment.xml" xLoc="0" zLoc="0"/>
+</environmentLayout>

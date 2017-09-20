@@ -1,0 +1,104 @@
+################################################################################
+# Configuration file for CSM + applications                                    #
+################################################################################
+
+
+################################################################################
+# Specify here which CS walls you want to run and in which graphics pipe       #
+# walldisplays for the jku-curved screen                                       #
+################################################################################
+Walls screen0 screen1 screen2
+#Walls    simulator
+
+
+################################################################################
+# Size of screen & viewing distance - defines simulator viewing frustum        #
+################################################################################
+SimulatorView 10 7.5 2
+
+
+################################################################################
+# Display information for wall types (pipe # & (optional) window geometry)     #
+# Set up all walls to by simulator by default                                  #
+################################################################################
+#WallDisplay simulator 	-1 window
+
+
+################################################################################
+# Display information for walls (pipe # & (optional) window geometry)          #
+# window geometry: XDIMxYDIM+XOFFSET+YOFFSET                                   #
+# 2008-11-24 LeB: new layout                                                   #
+################################################################################
+WallDisplay screen0 :0.0 1280x1024+0+0
+WallDisplay screen1 :0.1 1280x1024+0+0
+WallDisplay screen2 :0.2 1280x1024+0+0
+
+
+################################################################################
+# 2008-11-24 LeB: new layout                                                   #
+# for CS screen0 #        P2  +--------------------------+                     #
+# for CS screen0 #            | x=-4.710                 |                     #
+# for CS screen0 #            | y=0                      |                     #
+# for CS screen0 #            | z=-2.641                 |                     #
+# for CS screen0 #            |                          |                     #
+# for CS screen0 #            |                          |                     #
+# for CS screen0 #            |                          |                     #
+# for CS screen0 #            |                          |                     #
+# for CS screen0 #            |                          |                     #
+# for CS screen0 #            | x=-4.710        x=-1.210 |                     #
+# for CS screen0 #            | y=0             y=0      |                     #
+# for CS screen0 #            | z=-2.641        z=-2.641 |                     #
+# for CS screen0 #        P1  +--------------------------+ P3                  #
+#                                                                              #
+# ProjectionData screenx * wall        P1   	      P2	             P3#
+################################################################################
+ProjectionData screen0 * wall -4.701 0.0 -2.641  -4.701 2.750 -2.641  -1.201 0.0 -2.641 meters
+ProjectionData screen1 * wall -1.750 0.0 -2.641  -1.750 2.750 -2.641  1.750 0.0 -2.641 meters
+ProjectionData screen2 * wall 1.202 0.0 -2.641  1.202 2.750 -2.641  4.752 0.0 -2.641 meters
+
+
+################################################################################
+# Display mode - mono or stereo                                                #
+################################################################################
+#DisplayMode mono
+DisplayMode stereo
+
+
+################################################################################
+# Cave units for GL coordinates (Meters or feet)                               #
+# - units tracking data will be given in                                       #
+################################################################################
+Units centimeters
+
+
+################################################################################
+# eye separation (cm)                                                          #
+################################################################################
+EyeSeparation 6.5
+
+
+################################################################################
+#InterocularDistance <distance> <units>                                        #
+################################################################################
+InterocularDistance 6.0 cm
+
+
+################################################################################
+# Set the values of the shared memory keys to read                             #
+# the daemon data from                                                         #
+################################################################################
+TrackerDaemonKey  4125
+ControllerDaemonKey  4127
+
+
+################################################################################
+# Non CAVELib specifics...                                                     #
+################################################################################
+
+
+################################################################################
+# Whether client code * server displays use multicast to communicate           #
+# warning - enabling this slows things down (on single system at least...)     #
+################################################################################
+MulticastServerComms   no
+

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE entityTypes SYSTEM "http://dtd.inVRs.org/entityTypes_v1.0a4.dtd">
+<entityTypes version="1.0a4">
+	<entityType typeId="1" name="cube_1x1" fixed="1">
+		<representation copy="false">
+			<file type="VRML" name="cube_1x1.WRL"/>
+		</representation>
+	</entityType>
+	<entityType typeId="2" name="cube_10x10" fixed="0">
+		<representation copy="false">
+			<file type="VRML" name="cube_10x10.WRL"/>
+		</representation>
+	</entityType>
+	<entityType typeId="3" name="cuboid_100x10x10" fixed="0">
+		<representation copy="false">
+			<file type="VRML" name="cuboid_100x10x10.WRL"/>
+		</representation>
+	</entityType>
+	<entityType typeId="4" name="cylinder_10x10" fixed="0">
+		<representation copy="false">
+			<file type="VRML" name="cylinder_10x10.WRL"/>
+		</representation>
+	</entityType>
+	<entityType typeId="5" name="sphere_10x10" fixed="0">
+		<representation copy="false">
+			<file type="VRML" name="sphere_10x10.WRL"/>
+		</representation>
+	</entityType>
+	<entityType typeId="6" name="sphere_1x1" fixed="0">
+		<representation copy="false">
+			<file type="VRML" name="sphere_1x1.WRL"/>
+		</representation>
+	</entityType>
+	<entityType typeId="7" name="CoordinatePlane_10x10" fixed="1">
+		<representation copy="false">
+			<file type="VRML" name="CoordinatePlane.wrl"/>
+		</representation>
+	</entityType>
+	<entityType typeId="10" name="CoordinateSystem" fixed="1">
+		<representation copy="false">
+			<file type="VRML" name="coordinateSystem.wrl"/>
+		</representation>
+	</entityType>
+	<entityType typeId="20" name="inVRsLogo" fixed="0">
+		<representation copy="false">
+			<file type="VRML" name="inVRsLogo.wrl"/>
+			<transformation>
+				<translation x="0.0" y="0.7" z="0.0"/>
+				<scale x="0.3" y="0.3" z="0.3"/>
+			</transformation>
+		</representation>
+	</entityType>
+</entityTypes>

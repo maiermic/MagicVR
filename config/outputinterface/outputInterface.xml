@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<!DOCTYPE outputInterface SYSTEM "http://dtd.inVRs.org/outputInterface_v1.0a4.dtd">
+<outputInterface version="1.0a4">
+	<module name="OpenSGSceneGraphInterface" configFile=""/>
+</outputInterface>

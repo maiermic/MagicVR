@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<!DOCTYPE cursorTransformationModel SYSTEM "http://dtd.inVRs.org/cursorTransformationModel_v1.0a4.dtd">
+<cursorTransformationModel version="1.0a4">
+	<model name="VirtualHandCursorModel"/>
+</cursorTransformationModel>

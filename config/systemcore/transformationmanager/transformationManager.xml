@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE transformationManager SYSTEM "http://dtd.inVRs.org/transformationManager_v1.0a4.dtd">
+<transformationManager version="1.0a4">
+	<mergerList/>
+	<pipeList>
+
+		<!-- local Tracking Pipe -->
+		<pipe srcComponentName="InputInterface" dstComponentName="UserDatabase" pipeType="Any" objectClass="Any" objectType="Any" objectId="Any" fromNetwork="0">
+			<modifier type="TransformationDistributionModifier">
+				<arguments>
+					<arg key="protocol" type="string" value="UDP"/>
+				</arguments>
+			</modifier>
+			<modifier type="TrackingDataWriter"/>
+		</pipe>
+
+		<!-- local Navigation Pipe -->
+		<pipe srcComponentName="NavigationModule" dstComponentName="TransformationManager" pipeType="Any" objectClass="Any" objectType="Any" objectId="Any" fromNetwork="0">
+			<modifier type="ApplyNavigationModifier"/>
+			<modifier type="TransformationDistributionModifier"/>
+			<modifier type="UserTransformationWriter"/>
+			<modifier type="CameraTransformationWriter"/>
+			<modifier type="ApplyUserTransformationModifier"/>
+			<modifier type="ApplyCursorTransformationModifier"/>
+			<modifier type="CursorTransformationWriter"/>
+		</pipe>
+	</pipeList>
+</transformationManager>

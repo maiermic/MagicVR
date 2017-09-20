@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE controllerManager SYSTEM "http://dtd.inVRs.org/controllerManager_v1.0a4.dtd">
+<controllerManager version="1.0a4">
+	<controller buttons="11" axes="2" sensors="2">
+		<device type="GlutMouseDevice">
+			<arguments>
+				<arg key="axisReleaseSpeed" type="float" value="20"/>
+			</arguments>
+			<button deviceIndex="0" controllerIndex="0"/>
+			<button deviceIndex="1" controllerIndex="1"/>
+			<button deviceIndex="2" controllerIndex="2"/>
+			<axis deviceIndex="0" controllerIndex="0">
+				<axisCorrection scale="1" offset="0"/>
+			</axis>
+			<axis deviceIndex="1" controllerIndex="1"/>
+		</device>
+		<device type="GlutCharKeyboardDevice">
+			<button deviceIndex="119" controllerIndex="3" /> <!-- W -->
+			<button deviceIndex="115" controllerIndex="4" /> <!-- S -->
+			<button deviceIndex="97"  controllerIndex="5" /> <!-- A -->
+			<button deviceIndex="100" controllerIndex="6" /> <!-- D -->
+			<button deviceIndex="56"  controllerIndex="7" /> <!-- keypad 8 -->
+			<button deviceIndex="53"  controllerIndex="8" /> <!-- keypad 5 -->
+			<button deviceIndex="52"  controllerIndex="9" /> <!-- keypad 4 -->
+			<button deviceIndex="54"  controllerIndex="10"/> <!-- keypad 6 -->
+		</device>
+		<device type="GlutSensorEmulatorDevice">
+			<arguments>
+				<arg key="numberOfSensors" type="uint" value="2"/>
+				<arg key="switchSensorButton" type="uint" value="256"/>
+				<arg key="switchTransformationTargetButton" type="uint" value="257"/>
+				<arg key="switchAxesButton" type="uint" value="258"/>
+			</arguments>
+			<sensor deviceIndex="0" controllerIndex="0">
+				<coordinateSystemCorrection>
+					<translation x="0" y="0" z="0"/>
+					<scale x="100" y="100" z="100"/>
+				</coordinateSystemCorrection>
+			</sensor>
+			<sensor deviceIndex="1" controllerIndex="1">
+				<coordinateSystemCorrection>
+					<translation x="0" y="0" z="0"/>
+					<scale x="100" y="100" z="100"/>
+				</coordinateSystemCorrection>
+			</sensor>
+		</device>
+	</controller>
+</controllerManager>

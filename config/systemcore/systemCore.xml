@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE systemCore SYSTEM "http://dtd.inVRs.org/systemCore_v1.0a4.dtd">
+<systemCore version="1.0a4">
+	<worldDatabase configFile="worldDatabase.xml"/>
+	<userDatabase configFile="userDatabase.xml"/>
+	<transformationManager configFile="transformationManager.xml"/>
+</systemCore>

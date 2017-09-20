@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE controllerManager SYSTEM "http://dtd.inVRs.org/controllerManager_v1.0a4.dtd">
+<controllerManager version="1.0a4">
+	<controller buttons="3" axes="2" sensors="2">
+		<device type="TrackdDevice">
+			<arguments>
+				<arg key="controllerKey" type="int" value="4128"/>
+				<arg key="trackerKey" type="int" value="4129"/>
+			</arguments>
+			<button deviceIndex="0" controllerIndex="0"/>
+			<button deviceIndex="1" controllerIndex="1"/>
+			<button deviceIndex="2" controllerIndex="2"/>
+			<axis deviceIndex="0" controllerIndex="0">
+				<axisCorrection scale="-1" offset="0"/>
+			</axis>
+			<axis deviceIndex="1" controllerIndex="1">
+				<axisCorrection scale="-1" offset="0"/>
+			</axis>
+			<sensor deviceIndex="0" controllerIndex="0">
+				<coordinateSystemCorrection>
+					<translation x="0" y="0" z="0"/>
+					<rotation x="1" y="0" z="0" angleDeg="0"/>
+					<scale x="1" y="1" z="1"/>
+				</coordinateSystemCorrection>
+			</sensor>
+			<sensor deviceIndex="1" controllerIndex="1">
+				<coordinateSystemCorrection>
+					<translation x="0" y="0" z="0"/>
+					<rotation x="1" y="0" z="0" angleDeg="0"/>
+					<scale x="1" y="1" z="1"/>
+				</coordinateSystemCorrection>
+			</sensor>
+		</device>
+	</controller>
+</controllerManager>

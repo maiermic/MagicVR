@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE worldDatabase SYSTEM "http://dtd.inVRs.org/worldDatabase_v1.0a4.dtd">
+<worldDatabase version="1.0a4">
+	<entityTypes configFile="entities.xml"/>
+	<tiles configFile="tiles.xml"/>
+	<environmentLayout configFile="environmentLayout.xml"/>
+</worldDatabase>
