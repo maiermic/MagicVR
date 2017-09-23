@@ -11,6 +11,7 @@ OSG_USING_NAMESPACE
 
 class Scene {
     const NodeRecPtr _root;
+    const ComponentTransformRecPtr waterUnlockedCT;
 
     void build();
 public:
