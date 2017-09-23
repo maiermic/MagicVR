@@ -11,8 +11,17 @@ include(AddProject)
 set(OPENSG_MODULES OSGBase OSGSystem OSGWindow OSGWindowGLUT OSGDrawable OSGUtil OSGGroup OSGFileIO OSGImageFileIO)
 
 set(EXECUTABLE_OUTPUT_PATH ../exe/)
-add_project(${PROJECT_NAME}
-	MAIN_FILE "apps/main.cpp"
+add_project(${PROJECT_NAME}_cave
+	MAIN_FILE "apps/cave.cpp"
+	SOURCE_DIR "sources/"
+	HEADER_DIR "includes/"
+	CONFIGS "config/mono.csm"
+	OPENSG_MODULES ${OPENSG_MODULES}
+	CSM_MODULE
+	VRPN_MODULE
+)
+add_project(${PROJECT_NAME}_desktop
+	MAIN_FILE "apps/desktop.cpp"
 	SOURCE_DIR "sources/"
 	HEADER_DIR "includes/"
 	CONFIGS "config/mono.csm"
