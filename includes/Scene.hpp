@@ -15,9 +15,9 @@ OSG_USING_NAMESPACE
 
 
 class Scene {
-    const ComponentTransformRecPtr torusCT = ComponentTransformBase::create();
-    const ComponentTransformRecPtr cylinderCT = ComponentTransformBase::create();
-    const SwitchRecPtr switchBox = SwitchBase::create();
+    const ComponentTransformRecPtr torusCT;
+    const ComponentTransformRecPtr cylinderCT;
+    const SwitchRecPtr switchBox;
     const input::Tracker &wand;
 
     void build();
@@ -25,13 +25,7 @@ class Scene {
 public:
     const NodeRecPtr root = Node::create();
 
-    Scene(input::Tracker &wand)
-            : wand(wand) {
-        build();
-        update();
-    }
-
-    ~Scene() {}
+    Scene(input::Tracker &wand);
 
     void update();
 
