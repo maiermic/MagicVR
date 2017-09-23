@@ -11,8 +11,7 @@ int main(int argc, char **argv) {
     ChangeList::setReadWriteDefault();
     osgInit(argc, argv);
 
-    input::Tracker wand; // TODO replace with alternative input device
-    Scene scene(wand);
+    Scene scene;
     MagicVrDesktopGlutFramework framework(scene);
     framework.startFramework(argc, argv);
 }

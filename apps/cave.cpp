@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
         }
 
         input::RemoteManager remoteManager(cfg);
-        Scene scene(remoteManager.wand);
+        Scene scene;
 
         MultiDisplayWindowRefPtr mwin = createAppWindow(cfg, cfg.getBroadcastaddress());
 
@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
                 throw "Scene could not be loaded: '" + std::string(args.sceneFile) + "'";
             }
         } else {
-            root = scene.root;
+            root = scene.root();
         }
 
         // head light fix (3/3)

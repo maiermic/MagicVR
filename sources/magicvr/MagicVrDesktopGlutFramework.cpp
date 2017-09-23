@@ -17,7 +17,7 @@ int MagicVrDesktopGlutFramework::createWindow() {
 }
 
 OSG::Node *MagicVrDesktopGlutFramework::root() {
-    return scene.root;
+    return scene.root();
 }
 
 void MagicVrDesktopGlutFramework::keyboardDown(unsigned char key, int x, int y) {
