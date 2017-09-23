@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project("MagicVR")
 
-
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
 include(AddProject)
