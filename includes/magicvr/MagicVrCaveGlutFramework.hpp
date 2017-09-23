@@ -6,7 +6,7 @@
 #include "glutFramework/GlutFramework.hpp"
 #include "input/RemoteManager.hpp"
 
-class MagicVrGlutFramework : public glutFramework::GlutFramework {
+class MagicVrCaveGlutFramework : public glutFramework::GlutFramework {
     OSGCSM::CAVEConfig &cfg;
 
     OSGCSM::CAVESceneManager &mgr;
@@ -20,7 +20,7 @@ class MagicVrGlutFramework : public glutFramework::GlutFramework {
 
 
 public:
-    MagicVrGlutFramework(OSGCSM::CAVEConfig &cfg, OSGCSM::CAVESceneManager &mgr,
+    MagicVrCaveGlutFramework(OSGCSM::CAVEConfig &cfg, OSGCSM::CAVESceneManager &mgr,
                          input::RemoteManager &remoteManager, Scene &scene,
                          DirectionalLightRecPtr mainLight);
 
