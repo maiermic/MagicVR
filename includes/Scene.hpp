@@ -3,6 +3,7 @@
 
 
 #include <OpenSG/OSGGL.h>
+#include <OpenSG/OSGComponentTransform.h>
 #include <OpenSG/OSGComponentTransformBase.h>
 #include <OpenSG/OSGComponentTransformFields.h>
 #include <OpenSG/OSGSwitchFields.h>

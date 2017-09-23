@@ -1,8 +1,6 @@
 #include <cstdlib>
 #include <iostream>
 
-#include <OSGCSM/OSGCAVESceneManager.h>
-
 #include "Scene.hpp"
 
 
