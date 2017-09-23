@@ -12,6 +12,7 @@ set(OPENSG_MODULES OSGBase OSGSystem OSGWindow OSGWindowGLUT OSGDrawable OSGUtil
 
 set(EXECUTABLE_OUTPUT_PATH ../exe/)
 add_project(${PROJECT_NAME}
+	MAIN_FILE "apps/main.cpp"
 	SOURCE_DIR "sources/"
 	HEADER_DIR "includes/"
 	CONFIGS "config/mono.csm"
