@@ -1,2 +1,2 @@
-#!/bin/bash
-${HOME}/inVRs/latest/bin/csmrenderserver -a 127.0.0.1 -g 800x600+100+100 -w front
+#!/bin/bash 
+/sw/inVRs/rev2647/bin/csmrenderserver -a 127.0.0.1 -g 800x600+100+100 -w front

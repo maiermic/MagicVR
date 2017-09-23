@@ -1,6 +1,7 @@
 build/*
 build_*/*
 exe/*
+start_csm
 start_csm.bat
 start_demo_cave_mono_Release
 start_demo_cave_mono_Release.bat
