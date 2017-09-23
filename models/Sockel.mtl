@@ -1,0 +1,11 @@
+# Blender MTL File: 'Sockel.blend'
+# Material Count: 2
+
+newmtl sockel
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 1
+map_Kd textures/Dark_mountain.jpg
