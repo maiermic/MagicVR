@@ -18,6 +18,7 @@
 #include <OSGCSM/OSGCAVEConfig.h>
 #include <OSGCSM/appctrl.h>
 #include <glutFramework/ExitGlut.hpp>
+#include <magicvr/background.hpp>
 
 #include "Arguments.hpp"
 #include "Scene.hpp"
@@ -27,10 +28,8 @@
 OSG_USING_NAMESPACE
 
 int main(int argc, char **argv) {
-#if WIN32
     OSG::preloadSharedObject("OSGFileIO");
     OSG::preloadSharedObject("OSGImageFileIO");
-#endif
     try {
         // ChangeList needs to be set for OpenSG 1.4
         ChangeList::setReadWriteDefault();
@@ -88,6 +87,7 @@ int main(int argc, char **argv) {
         mgr.getWindow()->init();
         mgr.turnWandOff();
         mgr.setHeadlight(false);
+        mgr.setBackground(0, loadBackground());
 
         MagicVrCaveGlutFramework framework(cfg, mgr, remoteManager, scene, mainLight);
         framework.startFramework(argc, argv);
