@@ -10,7 +10,7 @@ void Scene::build() {
                     .scale(2, 1, 2)
                     .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
                     .addChild(SceneFileHandler::the()->read("models/Water.obj"))
-                    .addChild(buildWaterElementalStone())
+                    .addChild(buildWaterElement())
                     .node();
 
 
@@ -43,7 +43,7 @@ void Scene::build() {
     root()->addChild(realWorldScaleTrans);
 }
 
-const NodeTransitPtr Scene::buildWaterElementalStone() const {
+const NodeTransitPtr Scene::buildWaterElement() const {
     return ComponentTransformNode(waterUnlockedCT)
             .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(-90)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/WaterUnlocked.obj"))

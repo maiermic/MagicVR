@@ -22,7 +22,7 @@ public:
 
     const NodeRecPtr &root() const;
 
-    const NodeTransitPtr buildWaterElementalStone() const;
+    const NodeTransitPtr buildWaterElement() const;
 };
 
 
