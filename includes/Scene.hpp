@@ -23,6 +23,8 @@ public:
     const NodeRecPtr &root() const;
 
     const NodeTransitPtr buildWaterElement() const;
+
+    const NodeTransitPtr buildWaterElementalStone() const;
 };
 
 

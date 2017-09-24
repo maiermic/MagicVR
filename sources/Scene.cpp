@@ -3,18 +3,6 @@
 #include <magicvr/ComponentTransformNode.hpp>
 
 void Scene::build() {
-    /*Water*/
-    const auto waterTrans =
-            ComponentTransformNode()
-                    .translate(0, 1, 0)
-                    .scale(2, 1, 2)
-                    .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
-                    .addChild(SceneFileHandler::the()->read("models/Water.obj"))
-                    .addChild(buildWaterElement())
-                    .node();
-
-
-
     /*SockelVorneLinks*/
     const auto sockelVorneLinksTrans =
             ComponentTransformNode()
@@ -22,7 +10,7 @@ void Scene::build() {
                     .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(0)))
                     .scale(0.5, 1, 0.5)
                     .addChild(SceneFileHandler::the()->read("models/Sockel.obj"))
-                    .addChild(waterTrans)
+                    .addChild(buildWaterElementalStone())
                     .node();
 
     /*realWorldScale
@@ -41,6 +29,16 @@ void Scene::build() {
                     .node();
 
     root()->addChild(realWorldScaleTrans);
+}
+
+const NodeTransitPtr Scene::buildWaterElementalStone() const {
+    return ComponentTransformNode()
+            .translate(0, 1, 0)
+            .scale(2, 1, 2)
+            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
+            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/Water.obj"))
+            .addChild(buildWaterElement())
+            .node();
 }
 
 const NodeTransitPtr Scene::buildWaterElement() const {
