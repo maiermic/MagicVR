@@ -3,6 +3,10 @@
 #include <magicvr/ComponentTransformNode.hpp>
 
 void Scene::build() {
+    root()->addChild(buildRealWorldScale());
+}
+
+const NodeRecPtr Scene::buildRealWorldScale() const {
     /*realWorldScale
      *
      * Modelle, die mit Blender erstellt wurden werden vom
@@ -12,13 +16,10 @@ void Scene::build() {
      *
      * => künftig Translation 1 = 1m
      * => künftig Scale 1 = 100% */
-    const NodeRecPtr realWorldScaleTrans =
-            ComponentTransformNode()
-                    .scale(100)
-                    .addChild(buildFrontLeftPedestal())
-                    .node();
-
-    root()->addChild(realWorldScaleTrans);
+    return ComponentTransformNode()
+            .scale(100)
+            .addChild(buildFrontLeftPedestal())
+            .node();
 }
 
 const NodeTransitPtr Scene::buildFrontLeftPedestal() const {

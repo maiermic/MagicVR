@@ -27,6 +27,8 @@ public:
     const NodeTransitPtr buildWaterElementalStone() const;
 
     const NodeTransitPtr buildFrontLeftPedestal() const;
+
+    const NodeRecPtr buildRealWorldScale() const;
 };
 
 
