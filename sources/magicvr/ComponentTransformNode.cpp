@@ -1,7 +1,10 @@
 #include "magicvr/ComponentTransformNode.hpp"
 
-ComponentTransformNode::ComponentTransformNode() : _trans(OSG::ComponentTransformBase::create()),
-                                                   _node(OSG::makeNodeFor(_trans)) {}
+ComponentTransformNode::ComponentTransformNode() : ComponentTransformNode(OSG::ComponentTransformBase::create()) {}
+
+ComponentTransformNode::ComponentTransformNode(const OSG::ComponentTransformRecPtr &_trans) : _trans(_trans),
+                                                                                              _node(OSG::makeNodeFor(
+                                                                                                      _trans)) {}
 
 const OSG::NodeTransitPtr ComponentTransformNode::node() const {
     return OSG::NodeTransitPtr(_node);

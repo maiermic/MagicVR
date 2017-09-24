@@ -44,8 +44,7 @@ void Scene::build() {
 }
 
 const NodeTransitPtr Scene::buildWaterElementalStone() const {
-    // TODO init waterUnlockedCT
-    return ComponentTransformNode()
+    return ComponentTransformNode(waterUnlockedCT)
             .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(-90)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/WaterUnlocked.obj"))
             .node();
