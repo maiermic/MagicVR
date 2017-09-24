@@ -25,6 +25,8 @@ public:
     const NodeTransitPtr buildWaterElement() const;
 
     const NodeTransitPtr buildWaterElementalStone() const;
+
+    const NodeTransitPtr buildFrontLeftPedestal() const;
 };
 
 

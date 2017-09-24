@@ -3,16 +3,6 @@
 #include <magicvr/ComponentTransformNode.hpp>
 
 void Scene::build() {
-    /*SockelVorneLinks*/
-    const auto sockelVorneLinksTrans =
-            ComponentTransformNode()
-                    .translate(-1, 0, -1)
-                    .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(0)))
-                    .scale(0.5, 1, 0.5)
-                    .addChild(SceneFileHandler::the()->read("models/Sockel.obj"))
-                    .addChild(buildWaterElementalStone())
-                    .node();
-
     /*realWorldScale
      *
      * Modelle, die mit Blender erstellt wurden werden vom
@@ -25,10 +15,20 @@ void Scene::build() {
     const NodeRecPtr realWorldScaleTrans =
             ComponentTransformNode()
                     .scale(100)
-                    .addChild(sockelVorneLinksTrans)
+                    .addChild(buildFrontLeftPedestal())
                     .node();
 
     root()->addChild(realWorldScaleTrans);
+}
+
+const NodeTransitPtr Scene::buildFrontLeftPedestal() const {
+    return ComponentTransformNode()
+            .translate(-1, 0, -1)
+            .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(0)))
+            .scale(0.5, 1, 0.5)
+            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/Sockel.obj"))
+            .addChild(buildWaterElementalStone())
+            .node();
 }
 
 const NodeTransitPtr Scene::buildWaterElementalStone() const {
