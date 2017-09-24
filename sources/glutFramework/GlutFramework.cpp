@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 
+#include <glutFramework/ExitGlut.hpp>
 #include "glutFramework/GlutFramework.hpp"
 
 namespace glutFramework {
@@ -113,7 +114,7 @@ namespace glutFramework {
 		// Subclass and override this method
 		printf( "KeyboardDown: %c = %d\n", key, (int)key );
 		if (key==27) { //27 =- ESC key
-			exit (0); 
+			throw ExitGlut();
 		}
 		
 		keyStates.keyDown( (int)key );

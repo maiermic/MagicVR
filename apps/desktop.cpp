@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <glutFramework/ExitGlut.hpp>
 #include "Scene.hpp"
 #include "magicvr/MagicVrDesktopGlutFramework.hpp"
 
@@ -11,7 +13,11 @@ int main(int argc, char **argv) {
     ChangeList::setReadWriteDefault();
     osgInit(argc, argv);
 
-    Scene scene;
-    MagicVrDesktopGlutFramework framework(scene);
-    framework.startFramework(argc, argv);
+    try {
+        Scene scene;
+        MagicVrDesktopGlutFramework framework(scene);
+        framework.startFramework(argc, argv);
+    } catch (const ExitGlut& e) {
+        std::cout << "clean exit of app\n";
+    }
 }

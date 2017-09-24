@@ -1,3 +1,4 @@
+#include <glutFramework/ExitGlut.hpp>
 #include "magicvr/MagicVrCaveGlutFramework.hpp"
 
 void MagicVrCaveGlutFramework::keyboardDown(unsigned char key, int x, int y) {
@@ -6,8 +7,7 @@ void MagicVrCaveGlutFramework::keyboardDown(unsigned char key, int x, int y) {
     switch (key) {
         case 'q':
         case 27:
-            exit(EXIT_SUCCESS);
-            break;
+            throw ExitGlut();
         case 'e':
             ed = mgr.getEyeSeparation() * .9f;
             std::cout << "Eye distance: " << ed << '\n';

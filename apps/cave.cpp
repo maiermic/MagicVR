@@ -17,6 +17,7 @@
 #include <OSGCSM/OSGCAVESceneManager.h>
 #include <OSGCSM/OSGCAVEConfig.h>
 #include <OSGCSM/appctrl.h>
+#include <glutFramework/ExitGlut.hpp>
 
 #include "Arguments.hpp"
 #include "Scene.hpp"
@@ -98,6 +99,9 @@ int main(int argc, char **argv) {
     catch (const char *e) {
         std::cout << "ERROR: " << e << '\n';
         return EXIT_FAILURE;
+    }
+    catch (const ExitGlut &e) {
+        std::cout << "clean exit of app\n";
     }
     catch (const std::exception &e) {
         std::cout << "ERROR: " << e.what() << '\n';
