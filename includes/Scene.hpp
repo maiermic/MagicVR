@@ -21,6 +21,8 @@ public:
     void update();
 
     const NodeRecPtr &root() const;
+
+    const NodeTransitPtr buildWaterElementalStone() const;
 };
 
 

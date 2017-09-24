@@ -3,15 +3,6 @@
 #include <magicvr/ComponentTransformNode.hpp>
 
 void Scene::build() {
-    /*WaterUnlocked*/
-    const auto waterUnlockedTrans =
-            ComponentTransformNode()
-                    .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(-90)))
-                    .addChild(SceneFileHandler::the()->read("models/WaterUnlocked.obj"))
-                    .node();
-    // TODO init waterUnlockedCT
-
-
     /*Water*/
     const auto waterTrans =
             ComponentTransformNode()
@@ -19,7 +10,7 @@ void Scene::build() {
                     .scale(2, 1, 2)
                     .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
                     .addChild(SceneFileHandler::the()->read("models/Water.obj"))
-                    .addChild(waterUnlockedTrans)
+                    .addChild(buildWaterElementalStone())
                     .node();
 
 
@@ -50,6 +41,14 @@ void Scene::build() {
                     .node();
 
     root()->addChild(realWorldScaleTrans);
+}
+
+const NodeTransitPtr Scene::buildWaterElementalStone() const {
+    // TODO init waterUnlockedCT
+    return ComponentTransformNode()
+            .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(-90)))
+            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/WaterUnlocked.obj"))
+            .node();
 }
 
 void Scene::update() {
