@@ -5,6 +5,7 @@
 #include <OpenSG/OSGVector.h>
 #include <OpenSG/OSGRefCountPtr.h>
 #include <OpenSG/OSGComponentTransform.h>
+#include <OpenSG/OSGTime.h>
 #include "Animation.hpp"
 
 class TranslationAnimation : public Animation {
@@ -21,7 +22,7 @@ public:
                          OSG::Vec3f destination,
                          float duration);
 
-    void animate(float dTime) override;
+    void animate(OSG::Time dTime) override;
 
     float fracTime() const;
 };

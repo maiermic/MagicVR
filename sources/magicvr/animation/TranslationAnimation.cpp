@@ -11,7 +11,7 @@ TranslationAnimation::TranslationAnimation(
                           _animationTime(0) {
 }
 
-void TranslationAnimation::animate(float dTime) {
+void TranslationAnimation::animate(OSG::Time dTime) {
     _animationTime += dTime;
     if (_animationTime >= _duration) {
         _trans->setTranslation(_destination);

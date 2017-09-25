@@ -5,7 +5,7 @@ void Animations::add(std::shared_ptr<Animation> animation) {
     _animations.push_back(animation);
 }
 
-void Animations::animate(float dTime) {
+void Animations::animate(OSG::Time dTime) {
     for (auto animation : _animations) {
         animation->animate(dTime);
     }

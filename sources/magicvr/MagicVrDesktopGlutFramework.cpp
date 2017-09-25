@@ -49,11 +49,11 @@ void MagicVrDesktopGlutFramework::mouseMove(int x, int y) {
     glutPostRedisplay();
 }
 
-void MagicVrDesktopGlutFramework::display(float dTime) {
+void MagicVrDesktopGlutFramework::display(OSG::Time dTime) {
     scene.update(dTime);
-    commitChanges();
+    OSG::commitChangesAndClear();
+    mgr->idle();
     mgr->redraw();
-    OSG::Thread::getCurrentChangeList()->clear();
 }
 
 MagicVrDesktopGlutFramework::MagicVrDesktopGlutFramework(Scene &scene) : scene(scene) {

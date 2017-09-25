@@ -45,6 +45,8 @@
 #include "Keyboard.hpp"
 #include "PerformanceTimer.hpp"
 #include "Vector.hpp"
+#include <OpenSG/OSGTime.h>
+
 
 /** GlutFramework.h
  *
@@ -78,24 +80,24 @@ namespace glutFramework {
 		
 	private:
 		double frameTimeElapsed;
-		
+
 	protected:
 		Keyboard keyStates;
 		PerformanceTimer frameRateTimer;
 		PerformanceTimer displayTimer;
-		
+
 		std::string title;
-		double elapsedTimeInSeconds;  
+		double elapsedTimeInSeconds;
 		static GlutFramework *instance;
 		
-		
+
 		Vector<float> eyeVector;
 		Vector<float> centerVector;
 		Vector<float> upVector;
-		
+
 		float position;
 		float direction;
-		
+
 	public:
 		// Constants
 		const static int FPS = 60;			// Frames per second
@@ -126,7 +128,7 @@ namespace glutFramework {
 		 animation drawing code can be run in the display method.
 		 @param dTime - the change in time (seconds)
 		 */
-		virtual void display(float dTime);
+		virtual void display(OSG::Time dTime)=0;
 		
 		/** Called when the window dimensions change.
 		 @param width - the width of the window in pixels

@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include "Animation.hpp"
+#include <OpenSG/OSGTime.h>
 
 class Animations {
     std::vector<std::shared_ptr<Animation>> _animations;
@@ -13,7 +14,7 @@ class Animations {
 public:
     void add(std::shared_ptr<Animation> animation);
 
-    void animate(float dTime);
+    void animate(OSG::Time dTime);
 
 };
 
