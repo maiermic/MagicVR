@@ -82,7 +82,7 @@ namespace glutFramework {
 		// Subclass and override this method
 		
 		static int frame = 0;
-		std::cout << "GlutFramework Display: Frame: " << frame << ", dt(sec): " << dTime << ", Position: " << position << std::endl;
+//		std::cout << "GlutFramework Display: Frame: " << frame << ", dt(sec): " << dTime << ", Position: " << position << std::endl;
 		++frame;
 		
 		// DEMO: Create a teapot and move it back and forth on the x-axis
@@ -101,18 +101,18 @@ namespace glutFramework {
 	}
 	
 	void GlutFramework::mouseButtonPress(int button, int state, int x, int y) {
-		printf("MouseButtonPress: x: %d y: %d\n", x, y);
+//		printf("MouseButtonPress: x: %d y: %d\n", x, y);
 		
 	}
 	
 	void GlutFramework::mouseMove(int x, int y) {
-		printf("MouseMove: x: %d y: %d\n", x, y);
+//		printf("MouseMove: x: %d y: %d\n", x, y);
 	}
 	
 	void GlutFramework::keyboardDown( unsigned char key, int x, int y ) 
 	{
 		// Subclass and override this method
-		printf( "KeyboardDown: %c = %d\n", key, (int)key );
+//		printf( "KeyboardDown: %c = %d\n", key, (int)key );
 		if (key==27) { //27 =- ESC key
 			throw ExitGlut();
 		}
@@ -123,20 +123,20 @@ namespace glutFramework {
 	void GlutFramework::keyboardUp( unsigned char key, int x, int y ) 
 	{
 		// Subclass and override this method
-		printf( "KeyboardUp: %c \n", key );
+//		printf( "KeyboardUp: %c \n", key );
 		keyStates.keyUp( (int)key );
 	}
 	
 	void GlutFramework::specialKeyboardDown( int key, int x, int y ) 
 	{
 		// Subclass and override this method
-		printf( "SpecialKeyboardDown: %d\n", key );
+//		printf( "SpecialKeyboardDown: %d\n", key );
 	}
 	
 	void GlutFramework::specialKeyboardUp( int key, int x, int y ) 
 	{
 		// Subclass and override this method	
-		printf( "SpecialKeyboardUp: %d \n", key );
+//		printf( "SpecialKeyboardUp: %d \n", key );
 	}
 
 	// ******************************
