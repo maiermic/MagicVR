@@ -65,7 +65,6 @@ void MagicVrCaveGlutFramework::run() {
 }
 
 void MagicVrCaveGlutFramework::display(float dTime) {
-    glutFramework::GlutFramework::display(dTime);
     scene.update(dTime);
     commitChanges();
     mgr.redraw();

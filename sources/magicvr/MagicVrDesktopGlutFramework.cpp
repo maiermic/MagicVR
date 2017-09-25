@@ -50,7 +50,6 @@ void MagicVrDesktopGlutFramework::mouseMove(int x, int y) {
 }
 
 void MagicVrDesktopGlutFramework::display(float dTime) {
-    GlutFramework::display(dTime);
     scene.update(dTime);
     commitChanges();
     mgr->redraw();
