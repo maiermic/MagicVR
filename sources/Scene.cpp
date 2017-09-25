@@ -1,6 +1,7 @@
 #include "Scene.hpp"
 #include <OpenSG/OSGSceneFileHandler.h>
 #include <magicvr/ComponentTransformNode.hpp>
+#include <magicvr/animation/TranslationAnimation.hpp>
 
 void Scene::build() {
     root()->addChild(buildRealWorldScale());
@@ -49,14 +50,25 @@ const NodeTransitPtr Scene::buildWaterElement() const {
             .node();
 }
 
-void Scene::update() {
+void Scene::update(float dTime) {
+    _animations.animate(dTime);
 }
 
 Scene::Scene() : _root(makeNodeFor(Group::create())), waterUnlockedCT(ComponentTransformBase::create()) {
     build();
-    update();
+    update(0);
 }
 
 const NodeRecPtr &Scene::root() const {
     return _root;
+}
+
+void Scene::unlockWater() {
+    const auto trans = waterUnlockedCT->getTranslation();
+    _animations.add(
+            std::shared_ptr<Animation>(
+                    new TranslationAnimation(
+                            waterUnlockedCT,
+                            OSG::Vec3f(trans.x(), trans.y() + 0.5f, trans.z()),
+                            2)));
 }

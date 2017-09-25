@@ -6,19 +6,21 @@
 #include <OpenSG/OSGComponentTransform.h>
 #include <OpenSG/OSGComponentTransformBase.h>
 #include <OpenSG/OSGComponentTransformFields.h>
+#include <magicvr/animation/Animations.hpp>
 
 OSG_USING_NAMESPACE
 
 class Scene {
     const NodeRecPtr _root;
     const ComponentTransformRecPtr waterUnlockedCT;
+    Animations _animations;
 
     void build();
 public:
 
     Scene();
 
-    void update();
+    void update(float dTime);
 
     const NodeRecPtr &root() const;
 
@@ -29,6 +31,8 @@ public:
     const NodeTransitPtr buildFrontLeftPedestal() const;
 
     const NodeRecPtr buildRealWorldScale() const;
+
+    void unlockWater();
 };
 
 

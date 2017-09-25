@@ -29,6 +29,8 @@ public:
     void run() override;
 
     void reshape(int width, int height) override;
+
+    void display(float dTime) override;
 };
 
 

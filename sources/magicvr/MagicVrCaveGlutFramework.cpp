@@ -47,8 +47,6 @@ void MagicVrCaveGlutFramework::run() {
     glutFramework::GlutFramework::run();
     remoteManager.check_tracker();
 
-    scene.update();
-
     const auto speed = 1.f;
     auto head = remoteManager.head;
     mgr.setUserTransform(head.position, head.orientation);
@@ -60,6 +58,15 @@ void MagicVrCaveGlutFramework::run() {
     auto dir = mat * Vec3f(0.f, 0.f, 1.f);
     mainLight->setDirection(dir);
 
+    commitChanges();
+    mgr.redraw();
+    // the changelist should be cleared - else things could be copied multiple times
+    OSG::Thread::getCurrentChangeList()->clear();
+}
+
+void MagicVrCaveGlutFramework::display(float dTime) {
+    glutFramework::GlutFramework::display(dTime);
+    scene.update(dTime);
     commitChanges();
     mgr.redraw();
     // the changelist should be cleared - else things could be copied multiple times

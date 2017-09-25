@@ -25,6 +25,11 @@ OSG::Node *MagicVrDesktopGlutFramework::root() {
 void MagicVrDesktopGlutFramework::keyboardDown(unsigned char key, int x, int y) {
     GlutFramework::keyboardDown(key, x, y);
     mgr->key(key, x, y);
+    switch (key) {
+        case '2':
+            scene.unlockWater();
+            break;
+    }
 }
 
 void MagicVrDesktopGlutFramework::mouseButtonPress(int button, int state, int x, int y) {
@@ -46,7 +51,7 @@ void MagicVrDesktopGlutFramework::mouseMove(int x, int y) {
 
 void MagicVrDesktopGlutFramework::display(float dTime) {
     GlutFramework::display(dTime);
-    scene.update();
+    scene.update(dTime);
     commitChanges();
     mgr->redraw();
     OSG::Thread::getCurrentChangeList()->clear();
