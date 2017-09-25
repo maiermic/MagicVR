@@ -71,7 +71,7 @@ int main(int argc, char **argv) {
         }
 
         // head light fix (3/3)
-        DirectionalLightRecPtr mainLight = DirectionalLight::create();
+        DirectionalLightRecPtr mainLight = DirectionalLightBase::create();
         mainLight->setDiffuse(Color4f(1, 1, 1, 1));
         mainLight->setAmbient(Color4f(0.2, 0.2, 0.2, 1));
         mainLight->setSpecular(Color4f(1, 1, 1, 1));
@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
         std::cout << "number of active walls: "
                   << cfg.getNumActiveWalls()
                   << '\n';
-        auto bg = loadBackground();
+        auto bg = loadBackground(SKYBOX_RES_1024);
         for (int i = 0; i < cfg.getNumActiveWalls(); i++) {
             mgr.setBackground(i, bg);
         }
