@@ -7,6 +7,7 @@
 #include <OpenSG/OSGComponentTransformBase.h>
 #include <OpenSG/OSGComponentTransformFields.h>
 #include <magicvr/animation/Animations.hpp>
+#include <magicvr/ComponentTransformNode.hpp>
 
 OSG_USING_NAMESPACE
 
@@ -50,6 +51,8 @@ class Scene {
     const NodeRecPtr buildRealWorldScale() const;
 
     void unlockElement(const ComponentTransformRecPtr elementCT);
+
+    ComponentTransformNode buildPedestal() const;
 
 public:
 

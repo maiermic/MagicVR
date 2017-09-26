@@ -27,13 +27,18 @@ const NodeRecPtr Scene::buildRealWorldScale() const {
 }
 
 const NodeTransitPtr Scene::buildBackLeftPedestal() const {
-    return ComponentTransformNode()
+    return buildPedestal()
             .translate(-1, 0, 1)
-            .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(0)))
-            .scale(0.5, 1, 0.5)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/Sockel.obj"))
             .addChild(buildEarthElementalStone())
             .node();
+}
+
+ComponentTransformNode Scene::buildPedestal() const {
+    return ComponentTransformNode()
+            .scale(0.5, 1, 0.5)
+            .addChild(
+                    SingletonHolder<SceneFileHandlerBase>::the()
+                            ->read("models/Sockel.obj"));
 }
 
 const NodeTransitPtr Scene::buildEarthElementalStone() const {
@@ -51,11 +56,8 @@ const NodeTransitPtr Scene::buildEarthElement() const {
 }
 
 const NodeTransitPtr Scene::buildFrontRightPedestal() const {
-    return ComponentTransformNode()
+    return buildPedestal()
             .translate(1, 0, -1)
-            .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(0)))
-            .scale(0.5, 1, 0.5)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/Sockel.obj"))
             .addChild(buildFireElementalStone())
             .node();
 }
@@ -75,11 +77,8 @@ const NodeTransitPtr Scene::buildFireElement() const {
 }
 
 const NodeTransitPtr Scene::buildFrontLeftPedestal() const {
-    return ComponentTransformNode()
+    return buildPedestal()
             .translate(-1, 0, -1)
-            .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(0)))
-            .scale(0.5, 1, 0.5)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/Sockel.obj"))
             .addChild(buildWaterElementalStone())
             .node();
 }
@@ -99,11 +98,8 @@ const NodeTransitPtr Scene::buildWaterElement() const {
 }
 
 const NodeTransitPtr Scene::buildBackRightPedestal() const {
-    return ComponentTransformNode()
+    return buildPedestal()
             .translate(1, 0, 1)
-            .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(0)))
-            .scale(0.5, 1, 0.5)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/Sockel.obj"))
             .addChild(buildThunderElementalStone())
             .node();
 }
