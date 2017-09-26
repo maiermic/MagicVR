@@ -27,8 +27,6 @@ class Scene {
 
     const NodeTransitPtr buildFireElementalStone() const;
 
-    const NodeTransitPtr buildFrontRightPedestal() const;
-
     const NodeTransitPtr buildWaterElement() const;
 
     const NodeTransitPtr buildWaterElementalStone() const;
@@ -36,6 +34,8 @@ class Scene {
     const NodeTransitPtr buildBackLeftPedestal() const;
 
     const NodeTransitPtr buildFrontLeftPedestal() const;
+
+    const NodeTransitPtr buildFrontRightPedestal() const;
 
     const NodeRecPtr buildRealWorldScale() const;
 
