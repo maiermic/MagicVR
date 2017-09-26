@@ -47,10 +47,7 @@ const NodeTransitPtr Scene::buildEarthElementalStone() const {
 }
 
 const NodeTransitPtr Scene::buildEarthElement() const {
-    return ComponentTransformNode(earthUnlockedCT)
-            .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(-90)))
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/EarthUnlocked.obj"))
-            .node();
+    return buildElement(earthUnlockedCT, "models/EarthUnlocked.obj");
 }
 
 const NodeTransitPtr Scene::buildFrontRightPedestal() const {
@@ -74,10 +71,7 @@ const NodeTransitPtr Scene::buildFireElementalStone() const {
 }
 
 const NodeTransitPtr Scene::buildFireElement() const {
-    return ComponentTransformNode(fireUnlockedCT)
-            .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(-90)))
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/FireUnlocked.obj"))
-            .node();
+    return buildElement(fireUnlockedCT, "models/FireUnlocked.obj");
 }
 
 const NodeTransitPtr Scene::buildFrontLeftPedestal() const {
@@ -101,10 +95,7 @@ const NodeTransitPtr Scene::buildWaterElementalStone() const {
 }
 
 const NodeTransitPtr Scene::buildWaterElement() const {
-    return ComponentTransformNode(waterUnlockedCT)
-            .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(-90)))
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/WaterUnlocked.obj"))
-            .node();
+    return buildElement(waterUnlockedCT, "models/WaterUnlocked.obj");
 }
 
 const NodeTransitPtr Scene::buildBackRightPedestal() const {
@@ -128,9 +119,14 @@ const NodeTransitPtr Scene::buildThunderElementalStone() const {
 }
 
 const NodeTransitPtr Scene::buildThunderElement() const {
-    return ComponentTransformNode(waterUnlockedCT)
+    return buildElement(thunderUnlockedCT, "models/ThunderUnlocked.obj");
+}
+
+const NodeTransitPtr Scene::buildElement(const ComponentTransformRecPtr &trans,
+                                         const char *modelName) const {
+    return ComponentTransformNode(trans)
             .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(-90)))
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/ThunderUnlocked.obj"))
+            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(modelName))
             .node();
 }
 
