@@ -93,22 +93,20 @@ const NodeRecPtr &Scene::root() const {
     return _root;
 }
 
-void Scene::unlockFire() {
-    const auto trans = fireUnlockedCT->getTranslation();
+void Scene::unlockElement(const ComponentTransformRecPtr elementCT) {
+    const auto trans = elementCT->getTranslation();
     _animations.add(
             std::shared_ptr<Animation>(
                     new TranslationAnimation(
-                            fireUnlockedCT,
+                            elementCT,
                             OSG::Vec3f(trans.x(), trans.y() + 0.5f, trans.z()),
                             2)));
 }
 
+void Scene::unlockFire() {
+    unlockElement(fireUnlockedCT);
+}
+
 void Scene::unlockWater() {
-    const auto trans = waterUnlockedCT->getTranslation();
-    _animations.add(
-            std::shared_ptr<Animation>(
-                    new TranslationAnimation(
-                            waterUnlockedCT,
-                            OSG::Vec3f(trans.x(), trans.y() + 0.5f, trans.z()),
-                            2)));
+    unlockElement(waterUnlockedCT);
 }

@@ -32,6 +32,8 @@ class Scene {
 
     const NodeRecPtr buildRealWorldScale() const;
 
+    void unlockElement(const ComponentTransformRecPtr elementCT);
+
 public:
 
     Scene();
