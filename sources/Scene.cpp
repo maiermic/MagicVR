@@ -22,6 +22,7 @@ const NodeRecPtr Scene::buildRealWorldScale() const {
             .addChild(buildFrontLeftPedestal())
             .addChild(buildFrontRightPedestal())
             .addChild(buildBackLeftPedestal())
+            .addChild(buildBackRightPedestal())
             .node();
 }
 
@@ -106,6 +107,33 @@ const NodeTransitPtr Scene::buildWaterElement() const {
             .node();
 }
 
+const NodeTransitPtr Scene::buildBackRightPedestal() const {
+    return ComponentTransformNode()
+            .translate(1, 0, 1)
+            .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(0)))
+            .scale(0.5, 1, 0.5)
+            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/Sockel.obj"))
+            .addChild(buildThunderElementalStone())
+            .node();
+}
+
+const NodeTransitPtr Scene::buildThunderElementalStone() const {
+    return ComponentTransformNode()
+            .translate(0, 1, 0)
+            .scale(2, 1, 2)
+            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(-30)))
+            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/Thunder.obj"))
+            .addChild(buildThunderElement())
+            .node();
+}
+
+const NodeTransitPtr Scene::buildThunderElement() const {
+    return ComponentTransformNode(waterUnlockedCT)
+            .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(-90)))
+            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read("models/ThunderUnlocked.obj"))
+            .node();
+}
+
 void Scene::update(float dTime) {
     _animations.animate(dTime);
 }
@@ -113,7 +141,8 @@ void Scene::update(float dTime) {
 Scene::Scene() : _root(makeNodeFor(Group::create())),
                  earthUnlockedCT(ComponentTransformBase::create()),
                  fireUnlockedCT(ComponentTransformBase::create()),
-                 waterUnlockedCT(ComponentTransformBase::create()) {
+                 waterUnlockedCT(ComponentTransformBase::create()),
+                 thunderUnlockedCT(ComponentTransformBase::create()) {
     build();
     update(0);
 }
@@ -142,4 +171,8 @@ void Scene::unlockFire() {
 
 void Scene::unlockWater() {
     unlockElement(waterUnlockedCT);
+}
+
+void Scene::unlockThunder() {
+    unlockElement(thunderUnlockedCT);
 }

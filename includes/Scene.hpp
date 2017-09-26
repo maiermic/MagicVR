@@ -15,6 +15,7 @@ class Scene {
     const ComponentTransformRecPtr earthUnlockedCT;
     const ComponentTransformRecPtr fireUnlockedCT;
     const ComponentTransformRecPtr waterUnlockedCT;
+    const ComponentTransformRecPtr thunderUnlockedCT;
     Animations _animations;
 
     void build();
@@ -31,7 +32,13 @@ class Scene {
 
     const NodeTransitPtr buildWaterElementalStone() const;
 
+    const NodeTransitPtr buildThunderElement() const;
+
+    const NodeTransitPtr buildThunderElementalStone() const;
+
     const NodeTransitPtr buildBackLeftPedestal() const;
+
+    const NodeTransitPtr buildBackRightPedestal() const;
 
     const NodeTransitPtr buildFrontLeftPedestal() const;
 
@@ -54,6 +61,8 @@ public:
     void unlockFire();
 
     void unlockWater();
+
+    void unlockThunder();
 };
 
 

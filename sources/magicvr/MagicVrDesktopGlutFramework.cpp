@@ -32,6 +32,9 @@ void MagicVrDesktopGlutFramework::keyboardDown(unsigned char key, int x, int y) 
         case '2':
             scene.unlockWater();
             break;
+        case '3':
+            scene.unlockThunder();
+            break;
         case '4':
             scene.unlockEarth();
             break;
