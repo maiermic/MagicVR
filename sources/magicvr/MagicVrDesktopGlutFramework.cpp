@@ -26,6 +26,9 @@ void MagicVrDesktopGlutFramework::keyboardDown(unsigned char key, int x, int y) 
     GlutFramework::keyboardDown(key, x, y);
     mgr->key(key, x, y);
     switch (key) {
+        case '1':
+            scene.unlockFire();
+            break;
         case '2':
             scene.unlockWater();
             break;
