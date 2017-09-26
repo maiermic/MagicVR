@@ -20,7 +20,7 @@ class Scene {
 
     void build();
 
-    const NodeTransitPtr buildElement(const ComponentTransformRecPtr &trans,
+    const NodeTransitPtr buildElement(const ComponentTransformRecPtr trans,
                                       const char *modelName) const;
 
     const NodeTransitPtr buildEarthElement() const;

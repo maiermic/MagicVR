@@ -14,7 +14,7 @@ class ComponentTransformNode {
 public:
     ComponentTransformNode();
 
-    ComponentTransformNode(const OSG::ComponentTransformRecPtr &_trans);
+    ComponentTransformNode(const OSG::ComponentTransformRecPtr _trans);
 
     ComponentTransformNode &translate(OSG::Real32 x, OSG::Real32 y, OSG::Real32 z);
 

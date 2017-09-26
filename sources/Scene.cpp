@@ -122,7 +122,7 @@ const NodeTransitPtr Scene::buildThunderElement() const {
     return buildElement(thunderUnlockedCT, "models/ThunderUnlocked.obj");
 }
 
-const NodeTransitPtr Scene::buildElement(const ComponentTransformRecPtr &trans,
+const NodeTransitPtr Scene::buildElement(const ComponentTransformRecPtr trans,
                                          const char *modelName) const {
     return ComponentTransformNode(trans)
             .rotate(Quaternion(Vec3f(1, 0, 0), osgDegree2Rad(-90)))
