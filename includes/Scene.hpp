@@ -12,11 +12,16 @@ OSG_USING_NAMESPACE
 
 class Scene {
     const NodeRecPtr _root;
+    const ComponentTransformRecPtr earthUnlockedCT;
     const ComponentTransformRecPtr fireUnlockedCT;
     const ComponentTransformRecPtr waterUnlockedCT;
     Animations _animations;
 
     void build();
+
+    const NodeTransitPtr buildEarthElement() const;
+
+    const NodeTransitPtr buildEarthElementalStone() const;
 
     const NodeTransitPtr buildFireElement() const;
 
@@ -27,6 +32,8 @@ class Scene {
     const NodeTransitPtr buildWaterElement() const;
 
     const NodeTransitPtr buildWaterElementalStone() const;
+
+    const NodeTransitPtr buildBackLeftPedestal() const;
 
     const NodeTransitPtr buildFrontLeftPedestal() const;
 
@@ -41,6 +48,8 @@ public:
     void update(float dTime);
 
     const NodeRecPtr &root() const;
+
+    void unlockEarth();
 
     void unlockFire();
 
