@@ -3,6 +3,7 @@
 
 void MagicVrCaveGlutFramework::keyboardDown(unsigned char key, int x, int y) {
     glutFramework::GlutFramework::keyboardDown(key, x, y);
+    app.keyboardDown(key, x, y);
     Real32 ed;
     switch (key) {
         case 'q':
@@ -31,10 +32,10 @@ void MagicVrCaveGlutFramework::keyboardDown(unsigned char key, int x, int y) {
 }
 
 MagicVrCaveGlutFramework::MagicVrCaveGlutFramework(OSGCSM::CAVEConfig &cfg, OSGCSM::CAVESceneManager &mgr,
-                                           input::RemoteManager &remoteManager, Scene &scene,
+                                           input::RemoteManager &remoteManager, AppController &app,
                                            DirectionalLightRecPtr mainLight)
         : cfg(cfg), mgr(mgr), remoteManager(remoteManager),
-          scene(scene), mainLight(mainLight) {
+          app(app), mainLight(mainLight) {
     title("MagicVR Control Window");
 }
 
@@ -65,7 +66,7 @@ void MagicVrCaveGlutFramework::idle() {
 }
 
 void MagicVrCaveGlutFramework::display(OSG::Time dTime) {
-    scene.update(dTime);
+    app.display(dTime);
     commitChanges();
     mgr.idle();
     mgr.redraw();

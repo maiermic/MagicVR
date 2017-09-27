@@ -3,14 +3,14 @@
 
 #include "GlutFramework.hpp"
 #include <OpenSG/OSGSimpleSceneManager.h>
-#include <Scene.hpp>
+#include "AppController.hpp"
 #include <OpenSG/OSGTime.h>
 
 class MagicVrDesktopGlutFramework : public glutFramework::GlutFramework {
     OSG::SimpleSceneManagerRefPtr mgr; // gets created in createWindow
-    Scene &scene;
+    AppController &app;
 public:
-    MagicVrDesktopGlutFramework(Scene &scene);
+    MagicVrDesktopGlutFramework(AppController &app);
 
     int createWindow() override;
 

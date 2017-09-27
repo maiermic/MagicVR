@@ -21,7 +21,7 @@
 #include <magicvr/background.hpp>
 
 #include "Arguments.hpp"
-#include "Scene.hpp"
+#include <magicvr/AppController.hpp>
 #include "input/RemoteManager.hpp"
 #include "magicvr/MagicVrCaveGlutFramework.hpp"
 
@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
         }
 
         input::RemoteManager remoteManager(cfg);
-        Scene scene;
+        AppController app;
 
         MultiDisplayWindowRefPtr mwin = createAppWindow(cfg, cfg.getBroadcastaddress());
 
@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
                 throw "Scene could not be loaded: '" + std::string(args.sceneFile) + "'";
             }
         } else {
-            root = scene.root();
+            root = app.root();
         }
 
         // head light fix (3/3)
@@ -89,7 +89,7 @@ int main(int argc, char **argv) {
         mgr.setHeadlight(false);
         mgr.setBackground(0, loadBackground());
 
-        MagicVrCaveGlutFramework framework(cfg, mgr, remoteManager, scene, mainLight);
+        MagicVrCaveGlutFramework framework(cfg, mgr, remoteManager, app, mainLight);
         framework.startFramework(argc, argv);
     }
     catch (std::string e) {
