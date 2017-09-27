@@ -126,7 +126,7 @@ const NodeTransitPtr Scene::buildElement(const ComponentTransformRecPtr trans,
             .node();
 }
 
-void Scene::update(float dTime) {
+void Scene::update(OSG::Time dTime) {
     _animations.animate(dTime);
 }
 
