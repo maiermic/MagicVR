@@ -1,5 +1,5 @@
 #include <glutFramework/ExitGlut.hpp>
-#include "glutFramework/GlutFramework.hpp"
+#include "magicvr/GlutFramework.hpp"
 
 namespace glutFramework {
 	GlutFramework *GlutFramework::instance = nullptr;
