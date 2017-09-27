@@ -1,7 +1,7 @@
 #ifndef MAGICVR_MAGICVRDESKTOPGLUTFRAMEWORK_HPP
 #define MAGICVR_MAGICVRDESKTOPGLUTFRAMEWORK_HPP
 
-#include "glutFramework/GlutFramework.hpp"
+#include "GlutFramework.hpp"
 #include <OpenSG/OSGSimpleSceneManager.h>
 #include <Scene.hpp>
 #include <OpenSG/OSGTime.h>

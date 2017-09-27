@@ -17,7 +17,7 @@
 #include <OSGCSM/OSGCAVESceneManager.h>
 #include <OSGCSM/OSGCAVEConfig.h>
 #include <OSGCSM/appctrl.h>
-#include <glutFramework/ExitGlut.hpp>
+#include <magicvr/ExitGlut.hpp>
 #include <magicvr/background.hpp>
 
 #include "Arguments.hpp"

@@ -1,4 +1,4 @@
-#include <glutFramework/ExitGlut.hpp>
+#include <magicvr/ExitGlut.hpp>
 #include "magicvr/MagicVrCaveGlutFramework.hpp"
 
 void MagicVrCaveGlutFramework::keyboardDown(unsigned char key, int x, int y) {
@@ -35,16 +35,16 @@ MagicVrCaveGlutFramework::MagicVrCaveGlutFramework(OSGCSM::CAVEConfig &cfg, OSGC
                                            DirectionalLightRecPtr mainLight)
         : cfg(cfg), mgr(mgr), remoteManager(remoteManager),
           scene(scene), mainLight(mainLight) {
-    title = "MagicVR Control Window";
+    title("MagicVR Control Window");
 }
 
 void MagicVrCaveGlutFramework::reshape(int width, int height) {
-    glutFramework::GlutFramework::reshape(width, height);
     mgr.resize(width, height);
+    clearControlWindow();
 }
 
-void MagicVrCaveGlutFramework::run() {
-    glutFramework::GlutFramework::run();
+void MagicVrCaveGlutFramework::idle() {
+    glutFramework::GlutFramework::idle();
     remoteManager.check_tracker();
 
     const auto speed = 1.f;
@@ -66,7 +66,21 @@ void MagicVrCaveGlutFramework::run() {
 
 void MagicVrCaveGlutFramework::display(OSG::Time dTime) {
     scene.update(dTime);
-    OSG::commitChangesAndClear();
+    commitChanges();
     mgr.idle();
     mgr.redraw();
+    // the changelist should be cleared - else things could be copied multiple times
+    OSG::Thread::getCurrentChangeList()->clear();
+}
+
+int MagicVrCaveGlutFramework::createWindow() {
+    const auto windowId = glutFramework::GlutFramework::createWindow();
+    clearControlWindow();
+    return windowId;
+}
+
+void MagicVrCaveGlutFramework::clearControlWindow() const {
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glutSwapBuffers();
 }

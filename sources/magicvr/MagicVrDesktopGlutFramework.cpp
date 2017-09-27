@@ -42,7 +42,6 @@ void MagicVrDesktopGlutFramework::keyboardDown(unsigned char key, int x, int y) 
 }
 
 void MagicVrDesktopGlutFramework::mouseButtonPress(int button, int state, int x, int y) {
-    GlutFramework::mouseButtonPress(button, state, x, y);
     // react to mouse button presses
     if (state) {
         mgr->mouseButtonRelease(button, x, y);
@@ -53,23 +52,23 @@ void MagicVrDesktopGlutFramework::mouseButtonPress(int button, int state, int x,
 }
 
 void MagicVrDesktopGlutFramework::mouseMove(int x, int y) {
-    GlutFramework::mouseMove(x, y);
     mgr->mouseMove(x, y);
     glutPostRedisplay();
 }
 
 void MagicVrDesktopGlutFramework::display(OSG::Time dTime) {
     scene.update(dTime);
-    OSG::commitChangesAndClear();
+    commitChanges();
     mgr->idle();
     mgr->redraw();
+    // the changelist should be cleared - else things could be copied multiple times
+    OSG::Thread::getCurrentChangeList()->clear();
 }
 
 MagicVrDesktopGlutFramework::MagicVrDesktopGlutFramework(Scene &scene) : scene(scene) {
-    title = "MagicVR";
+    title("MagicVR");
 }
 
 void MagicVrDesktopGlutFramework::reshape(int width, int height) {
-    GlutFramework::reshape(width, height);
     mgr->resize(width, height);
 }
