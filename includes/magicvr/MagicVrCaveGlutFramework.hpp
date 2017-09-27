@@ -19,6 +19,9 @@ class MagicVrCaveGlutFramework : public glutFramework::GlutFramework {
     // head light fix (1/3)
     DirectionalLightRecPtr mainLight;
 
+    int createWindow() override;
+
+    void clearControlWindow() const;
 
 public:
     MagicVrCaveGlutFramework(OSGCSM::CAVEConfig &cfg, OSGCSM::CAVESceneManager &mgr,

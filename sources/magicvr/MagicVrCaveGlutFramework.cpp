@@ -40,6 +40,7 @@ MagicVrCaveGlutFramework::MagicVrCaveGlutFramework(OSGCSM::CAVEConfig &cfg, OSGC
 
 void MagicVrCaveGlutFramework::reshape(int width, int height) {
     mgr.resize(width, height);
+    clearControlWindow();
 }
 
 void MagicVrCaveGlutFramework::idle() {
@@ -70,4 +71,16 @@ void MagicVrCaveGlutFramework::display(OSG::Time dTime) {
     mgr.redraw();
     // the changelist should be cleared - else things could be copied multiple times
     OSG::Thread::getCurrentChangeList()->clear();
+}
+
+int MagicVrCaveGlutFramework::createWindow() {
+    const auto windowId = glutFramework::GlutFramework::createWindow();
+    clearControlWindow();
+    return windowId;
+}
+
+void MagicVrCaveGlutFramework::clearControlWindow() const {
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glutSwapBuffers();
 }
