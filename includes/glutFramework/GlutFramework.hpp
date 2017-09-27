@@ -242,6 +242,8 @@ namespace glutFramework {
 		static void keyboardUpWrapper(unsigned char key, int x, int y);
 		static void specialKeyboardDownWrapper(int key, int x, int y);
 		static void specialKeyboardUpWrapper(int key, int x, int y);
+
+		virtual int createWindow();
 	};
 	
 } // namespace 

@@ -1,8 +1,6 @@
 #include <cstdlib>
 #include <iostream>
 
-#include <OSGCSM/OSGCAVESceneManager.h>
-
 #include "Scene.hpp"
 
 
@@ -35,4 +33,11 @@ void Scene::update() {
 
 void Scene::showBox(bool isVisible) {
     switchBox->setChoice(isVisible);
+}
+
+Scene::Scene(input::Tracker &wand)
+        : wand(wand), cylinderCT(ComponentTransformBase::create()), torusCT(ComponentTransformBase::create()),
+          switchBox(SwitchBase::create()) {
+    build();
+    update();
 }

@@ -52,8 +52,8 @@ namespace glutFramework {
 		glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 		glutInitWindowPosition(WINDOW_X_POSITION, WINDOW_Y_POSITION);
 		glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-		glutCreateWindow(title.c_str()); 
-		
+		createWindow();
+
 		// Function callbacks with wrapper functions
 		glutReshapeFunc(reshapeWrapper);
 		glutMouseFunc(mouseButtonPressWrapper);
@@ -68,7 +68,11 @@ namespace glutFramework {
 		glutIdleFunc(runWrapper); 	// The program run loop
 		glutMainLoop();				// Start the main GLUT thread
 	}
-	
+
+	int GlutFramework::createWindow() {
+		return glutCreateWindow(title.c_str());
+	}
+
 	void GlutFramework::load() {
 		// Subclass and override this method
 	}

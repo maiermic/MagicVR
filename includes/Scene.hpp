@@ -3,6 +3,8 @@
 
 
 #include <OpenSG/OSGGL.h>
+#include <OpenSG/OSGComponentTransform.h>
+#include <OpenSG/OSGComponentTransformBase.h>
 #include <OpenSG/OSGComponentTransformFields.h>
 #include <OpenSG/OSGSwitchFields.h>
 #include <OpenSG/OSGSwitch.h>
@@ -14,9 +16,9 @@ OSG_USING_NAMESPACE
 
 
 class Scene {
-    const ComponentTransformRecPtr torusCT = ComponentTransform::create();
-    const ComponentTransformRecPtr cylinderCT = ComponentTransform::create();
-    const SwitchRecPtr switchBox = Switch::create();
+    const ComponentTransformRecPtr torusCT;
+    const ComponentTransformRecPtr cylinderCT;
+    const SwitchRecPtr switchBox;
     const input::Tracker &wand;
 
     void build();
@@ -24,13 +26,7 @@ class Scene {
 public:
     const NodeRecPtr root = Node::create();
 
-    Scene(input::Tracker &wand)
-            : wand(wand) {
-        build();
-        update();
-    }
-
-    ~Scene() {}
+    Scene(input::Tracker &wand);
 
     void update();
 

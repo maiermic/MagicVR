@@ -1,6 +1,6 @@
-#include "magicvr/MagicVrGlutFramework.hpp"
+#include "magicvr/MagicVrCaveGlutFramework.hpp"
 
-void MagicVrGlutFramework::keyboardDown(unsigned char key, int x, int y) {
+void MagicVrCaveGlutFramework::keyboardDown(unsigned char key, int x, int y) {
     glutFramework::GlutFramework::keyboardDown(key, x, y);
     Real32 ed;
     switch (key) {
@@ -30,7 +30,7 @@ void MagicVrGlutFramework::keyboardDown(unsigned char key, int x, int y) {
     }
 }
 
-MagicVrGlutFramework::MagicVrGlutFramework(OSGCSM::CAVEConfig &cfg, OSGCSM::CAVESceneManager &mgr,
+MagicVrCaveGlutFramework::MagicVrCaveGlutFramework(OSGCSM::CAVEConfig &cfg, OSGCSM::CAVESceneManager &mgr,
                                            input::RemoteManager &remoteManager, Scene &scene,
                                            DirectionalLightRecPtr mainLight)
         : cfg(cfg), mgr(mgr), remoteManager(remoteManager),
@@ -38,12 +38,12 @@ MagicVrGlutFramework::MagicVrGlutFramework(OSGCSM::CAVEConfig &cfg, OSGCSM::CAVE
     title = "MagicVR Control Window";
 }
 
-void MagicVrGlutFramework::reshape(int width, int height) {
+void MagicVrCaveGlutFramework::reshape(int width, int height) {
     glutFramework::GlutFramework::reshape(width, height);
     mgr.resize(width, height);
 }
 
-void MagicVrGlutFramework::run() {
+void MagicVrCaveGlutFramework::run() {
     glutFramework::GlutFramework::run();
     remoteManager.check_tracker();
 

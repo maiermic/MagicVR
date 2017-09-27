@@ -21,7 +21,7 @@
 #include "Arguments.hpp"
 #include "Scene.hpp"
 #include "input/RemoteManager.hpp"
-#include "magicvr/MagicVrGlutFramework.hpp"
+#include "magicvr/MagicVrCaveGlutFramework.hpp"
 
 OSG_USING_NAMESPACE
 
@@ -88,7 +88,7 @@ int main(int argc, char **argv) {
         mgr.turnWandOff();
         mgr.setHeadlight(false);
 
-        MagicVrGlutFramework framework(cfg, mgr, remoteManager, scene, mainLight);
+        MagicVrCaveGlutFramework framework(cfg, mgr, remoteManager, scene, mainLight);
         framework.startFramework(argc, argv);
     }
     catch (std::string e) {
