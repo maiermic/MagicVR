@@ -58,9 +58,11 @@ void MagicVrDesktopGlutFramework::mouseMove(int x, int y) {
 
 void MagicVrDesktopGlutFramework::display(OSG::Time dTime) {
     scene.update(dTime);
-    OSG::commitChangesAndClear();
+    commitChanges();
     mgr->idle();
     mgr->redraw();
+    // the changelist should be cleared - else things could be copied multiple times
+    OSG::Thread::getCurrentChangeList()->clear();
 }
 
 MagicVrDesktopGlutFramework::MagicVrDesktopGlutFramework(Scene &scene) : scene(scene) {

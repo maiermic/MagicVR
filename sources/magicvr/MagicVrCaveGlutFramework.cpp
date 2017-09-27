@@ -65,7 +65,9 @@ void MagicVrCaveGlutFramework::idle() {
 
 void MagicVrCaveGlutFramework::display(OSG::Time dTime) {
     scene.update(dTime);
-    OSG::commitChangesAndClear();
+    commitChanges();
     mgr.idle();
     mgr.redraw();
+    // the changelist should be cleared - else things could be copied multiple times
+    OSG::Thread::getCurrentChangeList()->clear();
 }
