@@ -3,7 +3,7 @@
 
 #include <OSGCSM/OSGCAVESceneManager.h>
 #include <OpenSG/OSGTime.h>
-#include <Scene.hpp>
+#include "AppController.hpp"
 #include "GlutFramework.hpp"
 #include "input/RemoteManager.hpp"
 
@@ -14,7 +14,7 @@ class MagicVrCaveGlutFramework : public glutFramework::GlutFramework {
 
     input::RemoteManager &remoteManager;
 
-    Scene &scene;
+    AppController &app;
 
     // head light fix (1/3)
     DirectionalLightRecPtr mainLight;
@@ -25,7 +25,7 @@ class MagicVrCaveGlutFramework : public glutFramework::GlutFramework {
 
 public:
     MagicVrCaveGlutFramework(OSGCSM::CAVEConfig &cfg, OSGCSM::CAVESceneManager &mgr,
-                         input::RemoteManager &remoteManager, Scene &scene,
+                         input::RemoteManager &remoteManager, AppController &app,
                          DirectionalLightRecPtr mainLight);
 
     void keyboardDown(unsigned char key, int x, int y) override;

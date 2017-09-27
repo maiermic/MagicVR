@@ -19,26 +19,13 @@ int MagicVrDesktopGlutFramework::createWindow() {
 }
 
 OSG::Node *MagicVrDesktopGlutFramework::root() {
-    return scene.root();
+    return app.root();
 }
 
 void MagicVrDesktopGlutFramework::keyboardDown(unsigned char key, int x, int y) {
     GlutFramework::keyboardDown(key, x, y);
     mgr->key(key, x, y);
-    switch (key) {
-        case '1':
-            scene.unlockFire();
-            break;
-        case '2':
-            scene.unlockWater();
-            break;
-        case '3':
-            scene.unlockThunder();
-            break;
-        case '4':
-            scene.unlockEarth();
-            break;
-    }
+    app.keyboardDown(key, x, y);
 }
 
 void MagicVrDesktopGlutFramework::mouseButtonPress(int button, int state, int x, int y) {
@@ -57,7 +44,7 @@ void MagicVrDesktopGlutFramework::mouseMove(int x, int y) {
 }
 
 void MagicVrDesktopGlutFramework::display(OSG::Time dTime) {
-    scene.update(dTime);
+    app.display(dTime);
     commitChanges();
     mgr->idle();
     mgr->redraw();
@@ -65,7 +52,8 @@ void MagicVrDesktopGlutFramework::display(OSG::Time dTime) {
     OSG::Thread::getCurrentChangeList()->clear();
 }
 
-MagicVrDesktopGlutFramework::MagicVrDesktopGlutFramework(Scene &scene) : scene(scene) {
+MagicVrDesktopGlutFramework::MagicVrDesktopGlutFramework(AppController &app)
+        : app(app) {
     title("MagicVR");
 }
 
