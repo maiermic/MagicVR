@@ -35,16 +35,15 @@ MagicVrCaveGlutFramework::MagicVrCaveGlutFramework(OSGCSM::CAVEConfig &cfg, OSGC
                                            DirectionalLightRecPtr mainLight)
         : cfg(cfg), mgr(mgr), remoteManager(remoteManager),
           scene(scene), mainLight(mainLight) {
-    title = "MagicVR Control Window";
+    title("MagicVR Control Window");
 }
 
 void MagicVrCaveGlutFramework::reshape(int width, int height) {
-    glutFramework::GlutFramework::reshape(width, height);
     mgr.resize(width, height);
 }
 
-void MagicVrCaveGlutFramework::run() {
-    glutFramework::GlutFramework::run();
+void MagicVrCaveGlutFramework::idle() {
+    glutFramework::GlutFramework::idle();
     remoteManager.check_tracker();
 
     const auto speed = 1.f;

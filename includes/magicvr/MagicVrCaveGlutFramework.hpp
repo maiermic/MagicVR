@@ -27,7 +27,7 @@ public:
 
     void keyboardDown(unsigned char key, int x, int y) override;
 
-    void run() override;
+    void idle() override;
 
     void reshape(int width, int height) override;
 
