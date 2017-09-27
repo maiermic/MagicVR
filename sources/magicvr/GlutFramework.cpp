@@ -1,4 +1,4 @@
-#include <glutFramework/ExitGlut.hpp>
+#include <magicvr/ExitGlut.hpp>
 #include "magicvr/GlutFramework.hpp"
 
 namespace glutFramework {

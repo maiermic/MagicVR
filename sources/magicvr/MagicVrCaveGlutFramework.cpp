@@ -1,4 +1,4 @@
-#include <glutFramework/ExitGlut.hpp>
+#include <magicvr/ExitGlut.hpp>
 #include "magicvr/MagicVrCaveGlutFramework.hpp"
 
 void MagicVrCaveGlutFramework::keyboardDown(unsigned char key, int x, int y) {

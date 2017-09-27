@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <glutFramework/ExitGlut.hpp>
+#include <magicvr/ExitGlut.hpp>
 #include "Scene.hpp"
 #include "magicvr/MagicVrDesktopGlutFramework.hpp"
 
