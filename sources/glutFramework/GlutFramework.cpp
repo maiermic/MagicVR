@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 
+#include <glutFramework/ExitGlut.hpp>
 #include "glutFramework/GlutFramework.hpp"
 
 namespace glutFramework {
@@ -77,43 +78,25 @@ namespace glutFramework {
 		// Subclass and override this method
 	}
 	
-	void GlutFramework::display(float dTime) {
-		// Subclass and override this method
-		
-		static int frame = 0;
-		std::cout << "GlutFramework Display: Frame: " << frame << ", dt(sec): " << dTime << ", Position: " << position << std::endl;
-		++frame;
-		
-		// DEMO: Create a teapot and move it back and forth on the x-axis
-		glTranslatef(position, 0.0f, 0.0f);
-		glutSolidTeapot(2.5); 
-		if(position > 4 && direction > 0) {
-			direction = -1.0 / FRAME_TIME;
-		} else if(position < -4 && direction < 0) {
-			direction = 1.0 / FRAME_TIME;
-		}		
-		position += direction;
-	}
-	
 	void GlutFramework::reshape(int width, int height) {
 		glViewport(0,0,(GLsizei)width,(GLsizei)height);
 	}
 	
 	void GlutFramework::mouseButtonPress(int button, int state, int x, int y) {
-		printf("MouseButtonPress: x: %d y: %d\n", x, y);
+//		printf("MouseButtonPress: x: %d y: %d\n", x, y);
 		
 	}
 	
 	void GlutFramework::mouseMove(int x, int y) {
-		printf("MouseMove: x: %d y: %d\n", x, y);
+//		printf("MouseMove: x: %d y: %d\n", x, y);
 	}
 	
 	void GlutFramework::keyboardDown( unsigned char key, int x, int y ) 
 	{
 		// Subclass and override this method
-		printf( "KeyboardDown: %c = %d\n", key, (int)key );
+//		printf( "KeyboardDown: %c = %d\n", key, (int)key );
 		if (key==27) { //27 =- ESC key
-			exit (0); 
+			throw ExitGlut();
 		}
 		
 		keyStates.keyDown( (int)key );
@@ -122,20 +105,20 @@ namespace glutFramework {
 	void GlutFramework::keyboardUp( unsigned char key, int x, int y ) 
 	{
 		// Subclass and override this method
-		printf( "KeyboardUp: %c \n", key );
+//		printf( "KeyboardUp: %c \n", key );
 		keyStates.keyUp( (int)key );
 	}
 	
 	void GlutFramework::specialKeyboardDown( int key, int x, int y ) 
 	{
 		// Subclass and override this method
-		printf( "SpecialKeyboardDown: %d\n", key );
+//		printf( "SpecialKeyboardDown: %d\n", key );
 	}
 	
 	void GlutFramework::specialKeyboardUp( int key, int x, int y ) 
 	{
 		// Subclass and override this method	
-		printf( "SpecialKeyboardUp: %d \n", key );
+//		printf( "SpecialKeyboardUp: %d \n", key );
 	}
 
 	// ******************************
@@ -218,39 +201,17 @@ namespace glutFramework {
 	}
 	
 	void GlutFramework::run() {
-		if(frameRateTimer.isStopped()) {	// The initial frame has the timer stopped, start it once
-			frameRateTimer.start();
-		}	
-		
-		frameRateTimer.stop();			// stop the timer and calculate time since last frame
-		double milliseconds = frameRateTimer.getElapsedMilliseconds();
-		frameTimeElapsed += milliseconds;
-		
-		if( frameTimeElapsed >= FRAME_TIME ) {	// If the time exceeds a certain "frame rate" then show the next frame
-			glutPostRedisplay();
-			frameTimeElapsed -= FRAME_TIME;		// remove a "frame" and start counting up again
-		}
-		frameRateTimer.start();			// start the timer
+		glutPostRedisplay();
 	}
-	
+
 	void GlutFramework::displayFramework() {
-		if(displayTimer.isStopped()) {			// Start the timer on the initial frame
-			displayTimer.start();
-		}
-		
-		glClearColor(0.0, 0.0, 0.0, 1.0);
-		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Clear once
-		
-		displayTimer.stop();		// Stop the timer and get the elapsed time in seconds
-		elapsedTimeInSeconds = displayTimer.getElapsedSeconds(); // seconds
-		
-		setupLights();
-		setDisplayMatricies();
-		
-		display(elapsedTimeInSeconds);
-		
-		glutSwapBuffers();
-		displayTimer.start();		// reset the timer to calculate the time for the next frame
+		static OSG::Time prevT = OSG::getSystemTime();
+		OSG::Time currT = OSG::getSystemTime();
+		OSG::Time deltaT = currT - prevT;
+
+		display(deltaT);
+
+		prevT = currT;
 	}
 	
 	// ******************************************************************

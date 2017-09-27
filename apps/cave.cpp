@@ -17,6 +17,8 @@
 #include <OSGCSM/OSGCAVESceneManager.h>
 #include <OSGCSM/OSGCAVEConfig.h>
 #include <OSGCSM/appctrl.h>
+#include <glutFramework/ExitGlut.hpp>
+#include <magicvr/background.hpp>
 
 #include "Arguments.hpp"
 #include "Scene.hpp"
@@ -26,10 +28,8 @@
 OSG_USING_NAMESPACE
 
 int main(int argc, char **argv) {
-#if WIN32
     OSG::preloadSharedObject("OSGFileIO");
     OSG::preloadSharedObject("OSGImageFileIO");
-#endif
     try {
         // ChangeList needs to be set for OpenSG 1.4
         ChangeList::setReadWriteDefault();
@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
         }
 
         input::RemoteManager remoteManager(cfg);
-        Scene scene(remoteManager.wand);
+        Scene scene;
 
         MultiDisplayWindowRefPtr mwin = createAppWindow(cfg, cfg.getBroadcastaddress());
 
@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
                 throw "Scene could not be loaded: '" + std::string(args.sceneFile) + "'";
             }
         } else {
-            root = scene.root;
+            root = scene.root();
         }
 
         // head light fix (3/3)
@@ -87,6 +87,7 @@ int main(int argc, char **argv) {
         mgr.getWindow()->init();
         mgr.turnWandOff();
         mgr.setHeadlight(false);
+        mgr.setBackground(0, loadBackground());
 
         MagicVrCaveGlutFramework framework(cfg, mgr, remoteManager, scene, mainLight);
         framework.startFramework(argc, argv);
@@ -98,6 +99,9 @@ int main(int argc, char **argv) {
     catch (const char *e) {
         std::cout << "ERROR: " << e << '\n';
         return EXIT_FAILURE;
+    }
+    catch (const ExitGlut &e) {
+        std::cout << "clean exit of app\n";
     }
     catch (const std::exception &e) {
         std::cout << "ERROR: " << e.what() << '\n';

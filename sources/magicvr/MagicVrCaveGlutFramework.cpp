@@ -1,3 +1,4 @@
+#include <glutFramework/ExitGlut.hpp>
 #include "magicvr/MagicVrCaveGlutFramework.hpp"
 
 void MagicVrCaveGlutFramework::keyboardDown(unsigned char key, int x, int y) {
@@ -6,8 +7,7 @@ void MagicVrCaveGlutFramework::keyboardDown(unsigned char key, int x, int y) {
     switch (key) {
         case 'q':
         case 27:
-            exit(EXIT_SUCCESS);
-            break;
+            throw ExitGlut();
         case 'e':
             ed = mgr.getEyeSeparation() * .9f;
             std::cout << "Eye distance: " << ed << '\n';
@@ -47,8 +47,6 @@ void MagicVrCaveGlutFramework::run() {
     glutFramework::GlutFramework::run();
     remoteManager.check_tracker();
 
-    scene.update();
-
     const auto speed = 1.f;
     auto head = remoteManager.head;
     mgr.setUserTransform(head.position, head.orientation);
@@ -64,4 +62,11 @@ void MagicVrCaveGlutFramework::run() {
     mgr.redraw();
     // the changelist should be cleared - else things could be copied multiple times
     OSG::Thread::getCurrentChangeList()->clear();
+}
+
+void MagicVrCaveGlutFramework::display(OSG::Time dTime) {
+    scene.update(dTime);
+    OSG::commitChangesAndClear();
+    mgr.idle();
+    mgr.redraw();
 }

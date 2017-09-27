@@ -1,5 +1,6 @@
 #include "magicvr/MagicVrDesktopGlutFramework.hpp"
 #include <OpenSG/OSGGLUTWindow.h>
+#include <magicvr/background.hpp>
 
 using namespace glutFramework;
 
@@ -13,16 +14,31 @@ int MagicVrDesktopGlutFramework::createWindow() {
     mgr->setRoot(root());
     mgr->showAll();
 //    mgr->setHeadlight(false);
+    mgr->setBackground(loadBackground());
     return winid;
 }
 
 OSG::Node *MagicVrDesktopGlutFramework::root() {
-    return scene.root;
+    return scene.root();
 }
 
 void MagicVrDesktopGlutFramework::keyboardDown(unsigned char key, int x, int y) {
     GlutFramework::keyboardDown(key, x, y);
     mgr->key(key, x, y);
+    switch (key) {
+        case '1':
+            scene.unlockFire();
+            break;
+        case '2':
+            scene.unlockWater();
+            break;
+        case '3':
+            scene.unlockThunder();
+            break;
+        case '4':
+            scene.unlockEarth();
+            break;
+    }
 }
 
 void MagicVrDesktopGlutFramework::mouseButtonPress(int button, int state, int x, int y) {
@@ -42,12 +58,11 @@ void MagicVrDesktopGlutFramework::mouseMove(int x, int y) {
     glutPostRedisplay();
 }
 
-void MagicVrDesktopGlutFramework::display(float dTime) {
-    GlutFramework::display(dTime);
-    scene.update();
-    commitChanges();
+void MagicVrDesktopGlutFramework::display(OSG::Time dTime) {
+    scene.update(dTime);
+    OSG::commitChangesAndClear();
+    mgr->idle();
     mgr->redraw();
-    OSG::Thread::getCurrentChangeList()->clear();
 }
 
 MagicVrDesktopGlutFramework::MagicVrDesktopGlutFramework(Scene &scene) : scene(scene) {

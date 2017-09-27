@@ -4,6 +4,7 @@
 #include "glutFramework/GlutFramework.hpp"
 #include <OpenSG/OSGSimpleSceneManager.h>
 #include <Scene.hpp>
+#include <OpenSG/OSGTime.h>
 
 class MagicVrDesktopGlutFramework : public glutFramework::GlutFramework {
     OSG::SimpleSceneManagerRefPtr mgr; // gets created in createWindow
@@ -21,9 +22,10 @@ public:
 
     void mouseMove(int x, int y) override;
 
-    void display(float dTime) override;
+    void display(OSG::Time dTime) override;
 
     void reshape(int width, int height) override;
+
 };
 
 

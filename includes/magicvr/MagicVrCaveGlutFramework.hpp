@@ -2,6 +2,7 @@
 #define MYPROJECT_MAGICVRGLUTFRAMEWORK_HPP
 
 #include <OSGCSM/OSGCAVESceneManager.h>
+#include <OpenSG/OSGTime.h>
 #include <Scene.hpp>
 #include "glutFramework/GlutFramework.hpp"
 #include "input/RemoteManager.hpp"
@@ -29,6 +30,8 @@ public:
     void run() override;
 
     void reshape(int width, int height) override;
+
+    void display(OSG::Time dTime) override;
 };
 
 
