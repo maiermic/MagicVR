@@ -26,7 +26,7 @@ public:
                          OSG::Vec3f destination,
                          float duration);
 
-    void animate(float dTime) override;
+    void animate(OSG::Time dTime) override;
 
     float fracTime() const;
 };

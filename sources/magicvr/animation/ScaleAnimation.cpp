@@ -15,7 +15,7 @@ ScaleAnimation::ScaleAnimation(
                           _animationTime(0) {
 }
 
-void ScaleAnimation::animate(float dTime) {
+void ScaleAnimation::animate(OSG::Time dTime) {
     _animationTime += dTime;
     if (fracTime() >= 1) {
         _trans->setScale(_destination);
