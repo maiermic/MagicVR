@@ -68,6 +68,7 @@ if(WIN32)
   
   set(GLUT_glut_LIBRARY "${GLUT_ROOT_PATH}/lib/${glutlib}" CACHE FILEPATH ${USER_CMAKE_TEXT})
 elseif(IS_MY_LINUX_SYSTEM)
+    message("using environment of my linux system")
     set(BOOST_ROOT /sw/boost/1.53.0/ CACHE PATH ${USER_CMAKE_TEXT})
     set(OPENSG_ROOT /sw/opensg/2.0/2015-01-16/ CACHE PATH ${USER_CMAKE_TEXT})
     set(inVRs_ROOT_DIR /sw/inVRs/rev2647/ CACHE PATH ${USER_CMAKE_TEXT})

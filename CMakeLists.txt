@@ -29,7 +29,12 @@ add_project(${PROJECT_NAME}_desktop
 	CSM_MODULE
 	VRPN_MODULE
 )
-
+if ("${LEAP_LIB_DIR}" STREQUAL "")
+	set(LEAP_LIB_DIR ${CMAKE_CURRENT_LIST_DIR}/lib/leap/x64)
+	message("LEAP_LIB_DIR is not defined, fallback to default: ${LEAP_LIB_DIR}")
+endif ()
+target_link_libraries(${PROJECT_NAME}_cave ${LEAP_LIB_DIR}/libLeap.so -Wl,-rpath,${LEAP_LIB_DIR})
+target_link_libraries(${PROJECT_NAME}_desktop ${LEAP_LIB_DIR}/libLeap.so -Wl,-rpath,${LEAP_LIB_DIR})
 
 if(WIN32)
 	if("${CMAKE_CONFIGURATION_TYPES}" STREQUAL "Release")

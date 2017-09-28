@@ -7,6 +7,7 @@ vendor
 build/*
 build_*/*
 exe/*
+start_csm
 start_csm.bat
 start_demo_cave_Release
 start_demo_cave_Release.bat
