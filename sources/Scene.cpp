@@ -3,6 +3,7 @@
 #include <magicvr/ComponentTransformNode.hpp>
 #include <magicvr/animation/TranslationAnimation.hpp>
 #include "magicvr/animation/ScaleAnimation.hpp"
+#include "magicvr/animation/SequentialAnimation.hpp"
 
 void Scene::build() {
     root()->addChild(buildRealWorldScale());
@@ -148,16 +149,21 @@ void Scene::unlockElement(const ComponentTransformRecPtr elementCT) {
     const auto trans = elementCT->getTranslation();
     _animations.add(
             std::shared_ptr<Animation>(
-                    new TranslationAnimation(
-                            elementCT,
-                            OSG::Vec3f(trans.x(), trans.y() + 0.5f, trans.z()),
-                            2)));
-    _animations.add(
-            std::shared_ptr<Animation>(
-                    new ScaleAnimation(
-                            elementCT,
-                            OSG::Vec3f(2,2,2),
-                            2)));
+                    new SequentialAnimation{
+                            std::shared_ptr<Animation>(
+                                    new TranslationAnimation(
+                                            elementCT,
+                                            OSG::Vec3f(trans.x(),
+                                                       trans.y() + 0.5f,
+                                                       trans.z()),
+                                            2)),
+                            std::shared_ptr<Animation>(
+                                    new ScaleAnimation(
+                                            elementCT,
+                                            OSG::Vec3f(2, 2, 2),
+                                            2))
+                    })
+    );
 }
 
 void Scene::unlockEarth() {
