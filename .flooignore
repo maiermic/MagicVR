@@ -4,6 +4,7 @@ tmp
 vendor
 .idea/workspace.xml
 .idea/misc.xml
+cmake-build-*/*
 build/*
 build_*/*
 exe/*
