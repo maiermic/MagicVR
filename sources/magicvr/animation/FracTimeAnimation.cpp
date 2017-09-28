@@ -7,11 +7,9 @@
 void FracTimeAnimation::animate(OSG::Time dTime) {
 
     _animationTime += dTime;
-    std::cout << "fractime: " << fracTime() << std::endl;
     animateFracTime(fracTime());
     if (_animationTime >= _duration) {
         stop();
-        std::cout << "----------------------" << std::endl;
     }
 }
 
