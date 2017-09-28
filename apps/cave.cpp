@@ -87,7 +87,13 @@ int main(int argc, char **argv) {
         mgr.getWindow()->init();
         mgr.turnWandOff();
         mgr.setHeadlight(false);
-        mgr.setBackground(0, loadBackground());
+        std::cout << "number of active walls: "
+                  << cfg.getNumActiveWalls()
+                  << '\n';
+        auto bg = loadBackground();
+        for (int i = 0; i < cfg.getNumActiveWalls(); i++) {
+            mgr.setBackground(i, bg);
+        }
 
         MagicVrCaveGlutFramework framework(cfg, mgr, remoteManager, app, mainLight);
         framework.startFramework(argc, argv);
