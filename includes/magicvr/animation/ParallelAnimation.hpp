@@ -12,6 +12,11 @@ class ParallelAnimation : public Animation {
     void removeStoppedAnimations();
 
 public:
+    ParallelAnimation() = default;
+
+    ParallelAnimation(
+            std::initializer_list<std::shared_ptr<Animation>> animations);
+
     void add(std::shared_ptr<Animation> animation);
 
     void animate(OSG::Time dTime) override;

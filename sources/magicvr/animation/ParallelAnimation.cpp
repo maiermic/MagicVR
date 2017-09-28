@@ -1,6 +1,11 @@
 #include <algorithm>
 #include "magicvr/animation/ParallelAnimation.hpp"
 
+ParallelAnimation::ParallelAnimation(
+        std::initializer_list<std::shared_ptr<Animation>> animations)
+        : _animations(animations) {
+}
+
 void ParallelAnimation::add(std::shared_ptr<Animation> animation) {
     _animations.push_back(animation);
 }
