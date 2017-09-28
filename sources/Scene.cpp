@@ -147,18 +147,17 @@ const NodeRecPtr &Scene::root() const {
 void Scene::unlockElement(const ComponentTransformRecPtr elementCT) {
     const auto trans = elementCT->getTranslation();
     _animations.add(
-            std::shared_ptr<Animation>(
+            std::shared_ptr<FracTimeAnimation>(
                     new TranslationAnimation(
                             elementCT,
                             OSG::Vec3f(trans.x(), trans.y() + 0.5f, trans.z()),
                             2)));
     _animations.add(
-            std::shared_ptr<Animation>(
+            std::shared_ptr<FracTimeAnimation>(
                     new ScaleAnimation(
-                            elementCT,OSG::Vec3f(2,2,2), 2
-                    )
-            )
-    );
+                            elementCT,
+                            OSG::Vec3f(2,2,2),
+                            2)));
 }
 
 void Scene::unlockEarth() {

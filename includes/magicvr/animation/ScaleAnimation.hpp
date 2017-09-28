@@ -11,24 +11,21 @@
 #include <OpenSG/OSGComponentTransform.h>
 #include "Animation.hpp"
 
-class ScaleAnimation : public Animation {
+class ScaleAnimation : public FracTimeAnimation {
 
     const OSG::ComponentTransformRecPtr _trans;
     const OSG::Vec3f _destination;
     const OSG::Vec3f _start;
     const OSG::Vec3f _movement;
-    float _duration;
-    float _animationTime;
 
 public:
 
     ScaleAnimation(const OSG::ComponentTransformRecPtr trans,
-                         OSG::Vec3f destination,
-                         float duration);
+                   OSG::Vec3f destination,
+                   OSG::Time duration);
 
-    void animate(OSG::Time dTime) override;
-
-    float fracTime() const;
+protected:
+    void animateFracTime(OSG::Time fracTime) override;
 };
 
 

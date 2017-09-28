@@ -7,24 +7,21 @@
 #include <OpenSG/OSGComponentTransform.h>
 #include <OpenSG/OSGTime.h>
 #include "Animation.hpp"
+#include "FracTimeAnimation.hpp"
 
-class TranslationAnimation : public Animation {
+class TranslationAnimation : public FracTimeAnimation {
     const OSG::ComponentTransformRecPtr _trans;
     const OSG::Vec3f _destination;
     const OSG::Vec3f _start;
     const OSG::Vec3f _movement;
-    float _duration;
-    float _animationTime;
 
 public:
 
     TranslationAnimation(const OSG::ComponentTransformRecPtr trans,
                          OSG::Vec3f destination,
-                         float duration);
+                         OSG::Time duration);
 
-    void animate(OSG::Time dTime) override;
-
-    float fracTime() const;
+    void animateFracTime(OSG::Time fracTime) override;
 };
 
 
