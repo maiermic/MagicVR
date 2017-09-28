@@ -1,6 +1,7 @@
 #include <stdio.h>
+#include <Leap/Leap.h>
 #include <magicvr/ExitGlut.hpp>
-#include <magicvr/AppController.hpp>
+#include <magicvr/AppControllerWithLeapSupport.hpp>
 #include "magicvr/MagicVrDesktopGlutFramework.hpp"
 
 
@@ -14,7 +15,9 @@ int main(int argc, char **argv) {
     osgInit(argc, argv);
 
     try {
-        AppController app;
+        Leap::Controller controller;
+        magicvr::leap::FingerTipPosition indexFingerTipPosition(controller, Leap::Finger::TYPE_INDEX);
+        magicvr::AppControllerWithLeapSupport app(indexFingerTipPosition);
         MagicVrDesktopGlutFramework framework(app);
         framework.startFramework(argc, argv);
     } catch (const ExitGlut& e) {

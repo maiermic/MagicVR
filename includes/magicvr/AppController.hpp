@@ -22,7 +22,7 @@ class AppController {
     Scene _scene;
 
 public:
-    void display(OSG::Time dTime);
+    virtual void display(OSG::Time dTime);
 
     void keyboardDown(unsigned char key, int x, int y);
 
