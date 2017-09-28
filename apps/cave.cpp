@@ -22,6 +22,7 @@
 
 #include "Arguments.hpp"
 #include <magicvr/AppController.hpp>
+#include <magicvr/AppControllerWithWandSupport.hpp>
 #include "input/RemoteManager.hpp"
 #include "magicvr/MagicVrCaveGlutFramework.hpp"
 
@@ -55,7 +56,7 @@ int main(int argc, char **argv) {
         }
 
         input::RemoteManager remoteManager(cfg);
-        AppController app;
+        magicvr::AppControllerWithWandSupport app(remoteManager);
 
         MultiDisplayWindowRefPtr mwin = createAppWindow(cfg, cfg.getBroadcastaddress());
 

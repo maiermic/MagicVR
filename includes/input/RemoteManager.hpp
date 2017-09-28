@@ -16,9 +16,20 @@ namespace input {
         vrpn_Analog_Remote* analog = nullptr;
 
     public:
+        enum Button : int {
+            BACK,
+            RIGHT,
+            MIDDLE,
+            LEFT
+        };
+        using Buttons = std::array<bool, 4>;
         Tracker wand;
         Tracker head;
         Vec3f analog_values;
+        /**
+         * Map of Button to boolean, if button is pressed (true).
+         */
+        Buttons buttons;
 
         RemoteManager(OSGCSM::CAVEConfig &cfg);
         ~RemoteManager();
@@ -39,6 +50,7 @@ namespace input {
         void onAnalogChange(const vrpn_ANALOGCB analog);
 
         void onButtonChange(const vrpn_BUTTONCB button);
+
     };
 }
 

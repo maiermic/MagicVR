@@ -35,12 +35,11 @@ void VRPN_CALLBACK callbackOnButtonChange(void *remoteManager, const vrpn_BUTTON
 }
 
 void VRPN_CALLBACK RemoteManager::onButtonChange(const vrpn_BUTTONCB button) {
-    if (button.button == 0) {
-        if (button.state == 1) {
-            print_tracker();
-        }
-        // TODO scene has to be registered to button event
-        // scene->showBox(button.state == 1);
+    const auto buttonNumber = (unsigned long) button.button;
+    if (0 <= buttonNumber && buttonNumber < buttons.size()) {
+        buttons[buttonNumber] = (bool) button.state;
+    } else {
+        std::cerr << "unknown wand button " << buttonNumber << '\n';
     }
 }
 
@@ -54,7 +53,7 @@ void VRPN_CALLBACK RemoteManager::onAnalogChange(const vrpn_ANALOGCB analog) {
 }
 
 RemoteManager::RemoteManager(OSGCSM::CAVEConfig &cfg)
-        : cfg(cfg) {
+        : cfg(cfg), buttons() {
     head.orientation = Quaternion(Vec3f(0.f, 1.f, 0.f), 3.141f);
     // a 1.7m Person 2m in front of the scene
     head.position = Vec3f(0.f, 170.f, 200.f);
