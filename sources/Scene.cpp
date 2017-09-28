@@ -132,7 +132,8 @@ void Scene::update(OSG::Time dTime) {
     _animations.animate(dTime);
 }
 
-Scene::Scene() : _root(makeNodeFor(Group::create())),
+Scene::Scene() : _animations(ParallelAnimation::DO_NOT_STOP_IF_NO_ANIMATIONS),
+                 _root(makeNodeFor(Group::create())),
                  earthUnlockedCT(ComponentTransformBase::create()),
                  fireUnlockedCT(ComponentTransformBase::create()),
                  waterUnlockedCT(ComponentTransformBase::create()),
