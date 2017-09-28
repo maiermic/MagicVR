@@ -6,7 +6,7 @@
 #include "Animation.hpp"
 #include <OpenSG/OSGTime.h>
 
-class Animations {
+class Animations : public Animation {
     std::vector<std::shared_ptr<Animation>> _animations;
 
     void removeStoppedAnimations();
@@ -14,7 +14,7 @@ class Animations {
 public:
     void add(std::shared_ptr<Animation> animation);
 
-    void animate(OSG::Time dTime);
+    void animate(OSG::Time dTime) override;
 
 };
 
