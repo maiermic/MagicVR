@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
         }
 
         input::RemoteManager remoteManager(cfg);
-        magicvr::AppControllerWithWandSupport app(remoteManager.wand);
+        magicvr::AppControllerWithWandSupport app(remoteManager);
 
         MultiDisplayWindowRefPtr mwin = createAppWindow(cfg, cfg.getBroadcastaddress());
 

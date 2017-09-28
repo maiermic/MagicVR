@@ -6,18 +6,22 @@
 
 namespace magicvr {
     AppControllerWithWandSupport::AppControllerWithWandSupport(
-            input::Tracker &wand)
-            : _isRecordingTrajectory(false), _wand(wand) {
+            input::RemoteManager &wand)
+            : _wand(wand) {
         root()->addChild(createMovableNode());
+        root()->addChild(_trajectoryNode.node());
     }
 
     void AppControllerWithWandSupport::display(OSG::Time dTime) {
-        static auto lastWandPosition = _wand.position;
-        if (lastWandPosition != _wand.position) {
-            lastWandPosition = _wand.position;
-            _movableNode.moveTo(_wand.position);
+        static auto lastWandPosition = _wand.wand.position;
+        const bool _isRecordingTrajectory = _wand.buttons[input::RemoteManager::BACK];
+        if (lastWandPosition != _wand.wand.position) {
+            lastWandPosition = _wand.wand.position;
+            _movableNode.moveTo(_wand.wand.position);
             if (_isRecordingTrajectory) {
-                _trajectoryNode.add(_wand.position);
+                _trajectoryNode.add(_wand.wand.position);
+            } else {
+                _trajectoryNode.clear();
             }
         }
         AppController::display(dTime);
