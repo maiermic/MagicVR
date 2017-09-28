@@ -6,7 +6,7 @@
 #include <OpenSG/OSGComponentTransform.h>
 #include <OpenSG/OSGComponentTransformBase.h>
 #include <OpenSG/OSGComponentTransformFields.h>
-#include <magicvr/animation/Animations.hpp>
+#include <magicvr/animation/ParallelAnimation.hpp>
 #include <magicvr/ComponentTransformNode.hpp>
 
 OSG_USING_NAMESPACE
@@ -17,7 +17,7 @@ class Scene {
     const ComponentTransformRecPtr fireUnlockedCT;
     const ComponentTransformRecPtr waterUnlockedCT;
     const ComponentTransformRecPtr thunderUnlockedCT;
-    Animations _animations;
+    ParallelAnimation _animations;
 
     void build();
 

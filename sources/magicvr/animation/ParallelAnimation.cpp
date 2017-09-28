@@ -1,18 +1,18 @@
 #include <algorithm>
-#include "magicvr/animation/Animations.hpp"
+#include "magicvr/animation/ParallelAnimation.hpp"
 
-void Animations::add(std::shared_ptr<Animation> animation) {
+void ParallelAnimation::add(std::shared_ptr<Animation> animation) {
     _animations.push_back(animation);
 }
 
-void Animations::animate(OSG::Time dTime) {
+void ParallelAnimation::animate(OSG::Time dTime) {
     for (auto animation : _animations) {
         animation->animate(dTime);
     }
     removeStoppedAnimations();
 }
 
-void Animations::removeStoppedAnimations() {
+void ParallelAnimation::removeStoppedAnimations() {
     _animations.erase(
             remove_if(begin(_animations),
                       end(_animations),

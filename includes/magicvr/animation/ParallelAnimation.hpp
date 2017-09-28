@@ -6,7 +6,7 @@
 #include "Animation.hpp"
 #include <OpenSG/OSGTime.h>
 
-class Animations : public Animation {
+class ParallelAnimation : public Animation {
     std::vector<std::shared_ptr<Animation>> _animations;
 
     void removeStoppedAnimations();
