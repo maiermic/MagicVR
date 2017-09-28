@@ -4,10 +4,10 @@
 
 #include <magicvr/animation/Animation.hpp>
 #include <memory>
-#include <vector>
+#include <queue>
 
 class SequentialAnimation : public Animation {
-    std::vector<std::shared_ptr<Animation>> _animations;
+    std::queue<std::shared_ptr<Animation>> _animations;
 public:
     SequentialAnimation(
             std::initializer_list<std::shared_ptr<Animation>> animations);

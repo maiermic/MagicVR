@@ -1,13 +1,13 @@
 #include "magicvr/animation/SequentialAnimation.hpp"
-#include <algorithm>
+#include <deque>
 
 void SequentialAnimation::animate(OSG::Time dTime) {
     if (_animations.empty()) {
         stop();
     } else {
-        _animations.back()->animate(dTime);
-        if (_animations.back()->isStopped()) {
-            _animations.pop_back();
+        _animations.front()->animate(dTime);
+        if (_animations.front()->isStopped()) {
+            _animations.pop();
             if (_animations.empty()) {
                 stop();
             }
@@ -17,7 +17,5 @@ void SequentialAnimation::animate(OSG::Time dTime) {
 
 SequentialAnimation::SequentialAnimation(
         std::initializer_list<std::shared_ptr<Animation>> animations)
-        : _animations(animations) {
-    // reverse order to get FIFO
-    std::reverse(std::begin(_animations), std::end(_animations));
+        : _animations(std::deque<std::shared_ptr<Animation>> (animations)) {
 }
