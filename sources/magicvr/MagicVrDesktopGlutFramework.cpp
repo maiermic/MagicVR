@@ -13,7 +13,7 @@ int MagicVrDesktopGlutFramework::createWindow() {
     mgr->setWindow(gwin);
     mgr->setRoot(root());
     mgr->showAll();
-    mgr->setHeadlight(false);
+    mgr->setHeadlight(true);
     mgr->setBackground(loadBackground(SKYBOX_RES_1024)); // 256 | 512 | 1024 | 2048
     return winid;
 }

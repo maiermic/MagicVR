@@ -3,24 +3,13 @@
 TranslationAnimation::TranslationAnimation(
         const OSG::ComponentTransformRecPtr trans,
         OSG::Vec3f destination,
-        float duration) : _trans(trans),
-                          _destination(destination),
-                          _start(trans->getTranslation()),
-                          _movement(_destination - _start),
-                          _duration(duration),
-                          _animationTime(0) {
+        OSG::Time duration) : FracTimeAnimation(duration),
+                              _trans(trans),
+                              _destination(destination),
+                              _start(trans->getTranslation()),
+                              _movement(_destination - _start) {
 }
 
-void TranslationAnimation::animate(OSG::Time dTime) {
-    _animationTime += dTime;
-    if (_animationTime >= _duration) {
-        _trans->setTranslation(_destination);
-        stop();
-    } else {
-        _trans->setTranslation(_start + _movement * fracTime());
-    }
-}
-
-float TranslationAnimation::fracTime() const {
-    return _animationTime / _duration;
+void TranslationAnimation::animateFracTime(OSG::Time fracTime) {
+    _trans->setTranslation(_start + _movement * fracTime);
 }

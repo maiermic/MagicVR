@@ -2,9 +2,16 @@
 #include <OpenSG/OSGSceneFileHandler.h>
 #include <magicvr/ComponentTransformNode.hpp>
 #include <magicvr/animation/TranslationAnimation.hpp>
+#include <magicvr/animation/BezierCurve.hpp>
+#include <magicvr/node/TrajectoryContainerNode.hpp>
+#include <magicvr/animation/BezierAnimation.hpp>
+#include <magicvr/animation/EaseInOutAnimation.hpp>
+#include "magicvr/animation/ScaleAnimation.hpp"
+#include "magicvr/animation/SequentialAnimation.hpp"
 
 void Scene::build() {
     root()->addChild(buildRealWorldScale());
+    root()->addChild(buildBezierCurve());
 }
 
 const NodeRecPtr Scene::buildRealWorldScale() const {
@@ -130,7 +137,8 @@ void Scene::update(OSG::Time dTime) {
     _animations.animate(dTime);
 }
 
-Scene::Scene() : _root(makeNodeFor(Group::create())),
+Scene::Scene() : _animations(ParallelAnimation::DO_NOT_STOP_IF_NO_ANIMATIONS),
+                 _root(makeNodeFor(Group::create())),
                  earthUnlockedCT(ComponentTransformBase::create()),
                  fireUnlockedCT(ComponentTransformBase::create()),
                  waterUnlockedCT(ComponentTransformBase::create()),
@@ -145,12 +153,31 @@ const NodeRecPtr &Scene::root() const {
 
 void Scene::unlockElement(const ComponentTransformRecPtr elementCT) {
     const auto trans = elementCT->getTranslation();
+    const OSG::Time animationDuration = 2;
     _animations.add(
             std::shared_ptr<Animation>(
-                    new TranslationAnimation(
-                            elementCT,
-                            OSG::Vec3f(trans.x(), trans.y() + 0.5f, trans.z()),
-                            2)));
+                    new EaseInOutAnimation(
+                            animationDuration,
+                            std::shared_ptr<Animation>(
+                                    new SequentialAnimation{
+                                            std::shared_ptr<Animation>(
+                                                    new TranslationAnimation(
+                                                            elementCT,
+                                                            OSG::Vec3f(
+                                                                    trans.x(),
+                                                                    trans.y() +
+                                                                    0.5f,
+                                                                    trans.z()),
+                                                            animationDuration)),
+                                            std::shared_ptr<Animation>(
+                                                    new ScaleAnimation(
+                                                            elementCT,
+                                                            OSG::Vec3f(2, 2, 2),
+                                                            animationDuration))
+                                    }
+                            ))
+            )
+    );
 }
 
 void Scene::unlockEarth() {
@@ -167,4 +194,26 @@ void Scene::unlockWater() {
 
 void Scene::unlockThunder() {
     unlockElement(thunderUnlockedCT);
+}
+
+NodeTransitPtr Scene::buildBezierCurve() const {
+    BezierCurve<OSG::Vec2f> bezier2{
+            OSG::Vec2f(0, 0),
+            OSG::Vec2f(0.75, 0),
+            OSG::Vec2f(0.25, 1),
+            OSG::Vec2f(1, 1)
+    };
+    BezierCurve<> bezier{
+            OSG::Vec3f(0, 0, 0),
+            OSG::Vec3f(75, 0, 0),
+            OSG::Vec3f(25, 100, 0),
+            OSG::Vec3f(100, 100, 0)
+    };
+    magicvr::node::TrajectoryContainerNode bezierNode;
+    const float numOfSegments = 21;
+    for (float i = 0; i < numOfSegments; ++i) {
+        bezierNode.add(bezier.atPercentage(i / numOfSegments));
+        std::cout << "(" << bezier2.atPercentage(i / numOfSegments) << ")\n";
+    }
+    return bezierNode.node();
 }
