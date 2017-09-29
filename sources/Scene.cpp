@@ -4,6 +4,8 @@
 #include <magicvr/animation/TranslationAnimation.hpp>
 #include <magicvr/animation/BezierCurve.hpp>
 #include <magicvr/node/TrajectoryContainerNode.hpp>
+#include <magicvr/animation/BezierAnimation.hpp>
+#include <magicvr/animation/EaseInOutAnimation.hpp>
 #include "magicvr/animation/ScaleAnimation.hpp"
 #include "magicvr/animation/SequentialAnimation.hpp"
 
@@ -151,22 +153,30 @@ const NodeRecPtr &Scene::root() const {
 
 void Scene::unlockElement(const ComponentTransformRecPtr elementCT) {
     const auto trans = elementCT->getTranslation();
+    const OSG::Time animationDuration = 2;
     _animations.add(
             std::shared_ptr<Animation>(
-                    new SequentialAnimation{
+                    new EaseInOutAnimation(
+                            animationDuration,
                             std::shared_ptr<Animation>(
-                                    new TranslationAnimation(
-                                            elementCT,
-                                            OSG::Vec3f(trans.x(),
-                                                       trans.y() + 0.5f,
-                                                       trans.z()),
-                                            2)),
-                            std::shared_ptr<Animation>(
-                                    new ScaleAnimation(
-                                            elementCT,
-                                            OSG::Vec3f(2, 2, 2),
-                                            2))
-                    })
+                                    new SequentialAnimation{
+                                            std::shared_ptr<Animation>(
+                                                    new TranslationAnimation(
+                                                            elementCT,
+                                                            OSG::Vec3f(
+                                                                    trans.x(),
+                                                                    trans.y() +
+                                                                    0.5f,
+                                                                    trans.z()),
+                                                            animationDuration)),
+                                            std::shared_ptr<Animation>(
+                                                    new ScaleAnimation(
+                                                            elementCT,
+                                                            OSG::Vec3f(2, 2, 2),
+                                                            animationDuration))
+                                    }
+                            ))
+            )
     );
 }
 
