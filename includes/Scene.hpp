@@ -8,6 +8,7 @@
 #include <OpenSG/OSGComponentTransformFields.h>
 #include <magicvr/animation/ParallelAnimation.hpp>
 #include <magicvr/ComponentTransformNode.hpp>
+#include <magicvr/node/TrajectoryContainerNode.hpp>
 
 OSG_USING_NAMESPACE
 
@@ -69,6 +70,8 @@ public:
     void unlockWater();
 
     void unlockThunder();
+
+    NodeTransitPtr buildBezierCurve() const;
 };
 
 

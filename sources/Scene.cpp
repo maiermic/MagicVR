@@ -2,11 +2,14 @@
 #include <OpenSG/OSGSceneFileHandler.h>
 #include <magicvr/ComponentTransformNode.hpp>
 #include <magicvr/animation/TranslationAnimation.hpp>
+#include <magicvr/animation/BezierCurve.hpp>
+#include <magicvr/node/TrajectoryContainerNode.hpp>
 #include "magicvr/animation/ScaleAnimation.hpp"
 #include "magicvr/animation/SequentialAnimation.hpp"
 
 void Scene::build() {
     root()->addChild(buildRealWorldScale());
+    root()->addChild(buildBezierCurve());
 }
 
 const NodeRecPtr Scene::buildRealWorldScale() const {
@@ -181,4 +184,26 @@ void Scene::unlockWater() {
 
 void Scene::unlockThunder() {
     unlockElement(thunderUnlockedCT);
+}
+
+NodeTransitPtr Scene::buildBezierCurve() const {
+    BezierCurve<OSG::Vec2f> bezier2{
+            OSG::Vec2f(0, 0),
+            OSG::Vec2f(0.75, 0),
+            OSG::Vec2f(0.25, 1),
+            OSG::Vec2f(1, 1)
+    };
+    BezierCurve<> bezier{
+            OSG::Vec3f(0, 0, 0),
+            OSG::Vec3f(75, 0, 0),
+            OSG::Vec3f(25, 100, 0),
+            OSG::Vec3f(100, 100, 0)
+    };
+    magicvr::node::TrajectoryContainerNode bezierNode;
+    const float numOfSegments = 21;
+    for (float i = 0; i < numOfSegments; ++i) {
+        bezierNode.add(bezier.atPercentage(i / numOfSegments));
+        std::cout << "(" << bezier2.atPercentage(i / numOfSegments) << ")\n";
+    }
+    return bezierNode.node();
 }
