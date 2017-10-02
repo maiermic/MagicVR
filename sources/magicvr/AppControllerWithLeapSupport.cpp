@@ -55,6 +55,7 @@ namespace magicvr {
         switch (key) {
             case ' ':
                 _isRecordingTrajectory = false;
+                _tricks.emit(std::move(_trajectoryNode.trajectory()));
                 break;
         }
     }
