@@ -22,7 +22,7 @@ public:
 
     ScaleAnimation(const OSG::ComponentTransformRecPtr trans,
                    OSG::Vec3f destination,
-                   OSG::Time duration);
+                   OSG::Time duration, bool startOver);
 
 protected:
     void animateFracTime(OSG::Time fracTime) override;
