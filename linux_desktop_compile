@@ -5,7 +5,7 @@ if [ ! -d "build_${HOSTNAME}" ]; then
 fi
 cd "build_${HOSTNAME}" && \
 cmake -C ../user_desktop.cmake \
--DCMAKE_CXX_FLAGS="-std=c++11" \
+-DCMAKE_CXX_FLAGS="-std=c++14" \
 .. && make && cd .. && \
 if [ ! -e start_demo_cave ] ; then
 #	echo "#! /bin/bash " > start_demo
