@@ -1,0 +1,8 @@
+//
+// Created by vr2017 on 02.10.17.
+//
+
+#ifndef MAGICVR_PATHSETTINGS_HPP
+#define MAGICVR_PATHSETTINGS_HPP
+
+#endif //MAGICVR_PATHSETTINGS_HPP
