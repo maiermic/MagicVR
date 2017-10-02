@@ -24,3 +24,6 @@ void AppController::keyboardDown(unsigned char key, int x, int y) {
 const NodeRecPtr &AppController::root() const {
     return _scene.root();
 }
+
+void AppController::keyboardUp(unsigned char key, int x, int y) {
+}

@@ -24,6 +24,10 @@ namespace magicvr {
 
         void display(OSG::Time dTime) override;
 
+        void keyboardDown(unsigned char key, int x, int y) override;
+
+        void keyboardUp(unsigned char key, int x, int y) override;
+
     };
 }
 

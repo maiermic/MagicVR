@@ -14,6 +14,8 @@ namespace magicvr {
             _indexFingerTipNode.moveTo(position);
             if (_isRecordingTrajectory) {
                 _trajectoryNode.add(position);
+            } else {
+                _trajectoryNode.clear();
             }
         }
 
@@ -25,6 +27,7 @@ namespace magicvr {
             : _indexFingerTipPosition(_indexFingerTipPosition),
               _isRecordingTrajectory(false) {
         root()->addChild(createIndexFingerTipNode());
+        root()->addChild(_trajectoryNode.node());
     }
 
     NodeTransitPtr AppControllerWithLeapSupport::createIndexFingerTipNode() {
@@ -36,4 +39,23 @@ namespace magicvr {
         return _indexFingerTipNode.node(makeNodeFor(geo));;
     }
 
+    void AppControllerWithLeapSupport::keyboardDown(unsigned char key, int x,
+                                                    int y) {
+        AppController::keyboardDown(key, x, y);
+        switch (key) {
+            case ' ':
+                _isRecordingTrajectory = true;
+                break;
+        }
+    }
+
+    void
+    AppControllerWithLeapSupport::keyboardUp(unsigned char key, int x, int y) {
+        AppController::keyboardUp(key, x, y);
+        switch (key) {
+            case ' ':
+                _isRecordingTrajectory = false;
+                break;
+        }
+    }
 }

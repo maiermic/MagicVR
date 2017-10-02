@@ -28,6 +28,11 @@ void MagicVrDesktopGlutFramework::keyboardDown(unsigned char key, int x, int y) 
     app.keyboardDown(key, x, y);
 }
 
+void MagicVrDesktopGlutFramework::keyboardUp(unsigned char key, int x, int y) {
+    GlutFramework::keyboardUp(key, x, y);
+    app.keyboardUp(key, x, y);
+}
+
 void MagicVrDesktopGlutFramework::mouseButtonPress(int button, int state, int x, int y) {
     // react to mouse button presses
     if (state) {

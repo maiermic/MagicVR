@@ -26,6 +26,8 @@ public:
 
     void reshape(int width, int height) override;
 
+    void keyboardUp(unsigned char key, int x, int y) override;
+
 };
 
 
