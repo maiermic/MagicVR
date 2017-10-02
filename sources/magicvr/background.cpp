@@ -5,6 +5,7 @@
 
 OSG::SkyBackgroundUnrecPtr loadBackground(Resolutions skyboxResolution) {
     std::string resolution = std::to_string((int) skyboxResolution);
+    resolution = "1024";
     std::cout << "skyboxResolution: " << skyboxResolution << std::endl;
 
     std::string filePathBase = Path_Skybox_Root + resolution + Path_Skybox_Prefix + resolution;

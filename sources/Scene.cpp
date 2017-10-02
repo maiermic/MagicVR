@@ -18,7 +18,7 @@ void Scene::build() {
 const NodeTransitPtr Scene::buildStonehenge() const {
     return ComponentTransformNode()
             .translate(-1,0,-2)
-            .scale(0.01f)
+            .scale(0.02f)
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(95)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_Stonehenge))
@@ -933,7 +933,7 @@ const NodeTransitPtr Scene::buildPedestal() const {
 
 const NodeTransitPtr Scene::buildFrontLeftPedestal() const {
     return ComponentTransformNode()
-            .translate(-0.4f, 0, -1.5f)
+            .translate(-0.4f, 0, -1)
             .addChild(buildPedestal())
             .addChild(buildWaterElementalStone())
             .node();
@@ -941,7 +941,7 @@ const NodeTransitPtr Scene::buildFrontLeftPedestal() const {
 
 const NodeTransitPtr Scene::buildFrontRightPedestal() const {
     return ComponentTransformNode()
-            .translate(1.25f, 0, -1.25f)
+            .translate(1.25f, 0, -0.75f)
             .addChild(buildPedestal())
             .addChild(buildFireElementalStone())
             .node();
@@ -949,7 +949,7 @@ const NodeTransitPtr Scene::buildFrontRightPedestal() const {
 
 const NodeTransitPtr Scene::buildBackLeftPedestal() const {
     return ComponentTransformNode()
-            .translate(-1.25f, 0, -1.25f)
+            .translate(-1.25f, 0, -0.75f)
             .addChild(buildPedestal())
             .addChild(buildWindElementalStone())
             .node();
@@ -957,7 +957,7 @@ const NodeTransitPtr Scene::buildBackLeftPedestal() const {
 
 const NodeTransitPtr Scene::buildBackRightPedestal() const {
     return ComponentTransformNode()
-            .translate(0.4f, 0, -1.5f)
+            .translate(0.4f, 0, -1)
             .addChild(buildPedestal())
             .addChild(buildThunderElementalStone())
             .node();

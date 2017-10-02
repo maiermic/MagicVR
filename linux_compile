@@ -6,7 +6,7 @@ fi
 cd "build_${HOSTNAME}" && \
 cmake -C ../user.cmake \
 -DCMAKE_CXX_FLAGS="-std=c++11" \
-.. && make && cd .. && \
+.. && make -j 18 && cd .. && \
 if [ ! -e start_demo_cave ] ; then
 #	echo "#! /bin/bash " > start_demo
 #	echo "./build/main -f config/lrz_cave_vrpn.csm" >> start_demo
