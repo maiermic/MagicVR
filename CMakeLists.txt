@@ -5,6 +5,9 @@ project("MagicVR")
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
 
+include(.conan/conanbuildinfo.cmake)
+conan_basic_setup()
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
 include(AddProject)
 
@@ -35,6 +38,8 @@ if ("${LEAP_LIB_DIR}" STREQUAL "")
 endif ()
 target_link_libraries(${PROJECT_NAME}_cave ${LEAP_LIB_DIR}/libLeap.so -Wl,-rpath,${LEAP_LIB_DIR})
 target_link_libraries(${PROJECT_NAME}_desktop ${LEAP_LIB_DIR}/libLeap.so -Wl,-rpath,${LEAP_LIB_DIR})
+target_link_libraries(${PROJECT_NAME}_cave ${CONAN_LIBS})
+target_link_libraries(${PROJECT_NAME}_desktop ${CONAN_LIBS})
 
 if(WIN32)
 	if("${CMAKE_CONFIGURATION_TYPES}" STREQUAL "Release")
