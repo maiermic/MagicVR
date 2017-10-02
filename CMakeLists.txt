@@ -2,8 +2,16 @@ cmake_minimum_required(VERSION 2.8)
 
 
 project("MagicVR")
+set(CMAKE_CXX_STANDARD 14)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
+include(cmake/enable_cxx_compiler_flag_if_supported.cmake)
+#enable_cxx_compiler_flag_if_supported("-Wall")
+#enable_cxx_compiler_flag_if_supported("-Wextra")
+#enable_cxx_compiler_flag_if_supported("-pedantic")
+#enable_cxx_compiler_flag_if_supported("-g")
+enable_cxx_compiler_flag_if_supported("-Wno-deprecated-declarations")
+enable_cxx_compiler_flag_if_supported("-lGL")
+enable_cxx_compiler_flag_if_supported("-fext-numeric-literals")
 
 include(.conan/conanbuildinfo.cmake)
 conan_basic_setup()
