@@ -6,18 +6,18 @@ void AppController::display(OSG::Time dTime) {
 
 void AppController::keyboardDown(unsigned char key, int x, int y) {
     switch (key) {
-        case '1':
-            _scene.unlockFire();
-            break;
-        case '2':
-            _scene.unlockWater();
-            break;
-        case '3':
-            _scene.unlockThunder();
-            break;
-        case '4':
-            _scene.unlockEarth();
-            break;
+//        case '1':
+//            _scene.unlockFire();
+//            break;
+//        case '2':
+//            _scene.unlockWater();
+//            break;
+//        case '3':
+//            _scene.unlockThunder();
+//            break;
+//        case '4':
+//            _scene.unlockEarth();
+//            break;
         case '5':
             _scene.animateFireBubbles();
             break;
@@ -28,7 +28,7 @@ void AppController::keyboardDown(unsigned char key, int x, int y) {
             _scene.animateThunderBubbles();
             break;
         case '8':
-            _scene.animateEarthBubbles();
+            _scene.animateWindBubbles();
             break;
     }
 }
