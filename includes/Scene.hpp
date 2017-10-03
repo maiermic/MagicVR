@@ -200,6 +200,9 @@ public:
     void animateThunderBubbles();
 
     void animateWindBubbles();
+
+    const NodeTransitPtr buildKapelle() const;
+
 };
 
 

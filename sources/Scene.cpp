@@ -25,6 +25,17 @@ const NodeTransitPtr Scene::buildStonehenge() const {
             .node();
 }
 
+const NodeTransitPtr Scene::buildKapelle() const {
+    return ComponentTransformNode()
+//            .translate(0f,-0.17f,1.8)
+            .translate(0f,-0.35f,5)
+            .scale(12)
+            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(90)))
+            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
+                    Path_Model_Kapelle))
+            .node();
+}
+
 
 const NodeTransitPtr Scene::buildFireBubbles() const {
     return ComponentTransformNode()
@@ -917,7 +928,8 @@ const NodeRecPtr Scene::buildRealWorldScale() const {
     return ComponentTransformNode()
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .scale(100)
-            .addChild(buildStonehenge())
+//            .addChild(buildStonehenge())
+            .addChild(buildKapelle())
             .addChild(buildFrontLeftPedestal())
             .addChild(buildFrontRightPedestal())
             .addChild(buildBackLeftPedestal())

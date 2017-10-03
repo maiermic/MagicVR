@@ -1,0 +1,182 @@
+# Blender MTL File: 'kapelle.blend'
+# Material Count: 20
+
+newmtl AisneMarneweb_clean:Material_1
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean01.jpeg
+
+newmtl AisneMarneweb_clean:Material_11
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean06.jpeg
+
+newmtl AisneMarneweb_clean:Material_13
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean07.jpeg
+
+newmtl AisneMarneweb_clean:Material_15
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean08.jpeg
+
+newmtl AisneMarneweb_clean:Material_17
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean09.jpeg
+
+newmtl AisneMarneweb_clean:Material_19
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean10.jpeg
+
+newmtl AisneMarneweb_clean:Material_21
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean11.jpeg
+
+newmtl AisneMarneweb_clean:Material_23
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean12.jpeg
+
+newmtl AisneMarneweb_clean:Material_25
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean13.jpeg
+
+newmtl AisneMarneweb_clean:Material_27
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean14.jpeg
+
+newmtl AisneMarneweb_clean:Material_29
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean15.jpeg
+
+newmtl AisneMarneweb_clean:Material_3
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean02.jpeg
+
+newmtl AisneMarneweb_clean:Material_31
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean16.jpeg
+
+newmtl AisneMarneweb_clean:Material_5
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean03.jpeg
+
+newmtl AisneMarneweb_clean:Material_7
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean04.jpeg
+
+newmtl AisneMarneweb_clean:Material_9
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 3
+map_Kd textures/AisneMarneweb_clean05.jpeg
+
+newmtl lambert1
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+d 1.000000
+illum 2
+map_Kd textures/ASN_door.jpeg
+
+newmtl lambert2
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+d 1.000000
+illum 2
+map_Kd textures/IMG_5262.jpeg
+
+newmtl stainedglass
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+d 1.000000
+illum 2
+map_Kd textures/ASN_stainedglass.jpeg
+
+newmtl wallpatch
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+d 1.000000
+illum 2
+map_Kd textures/wallpatch2.jpeg
