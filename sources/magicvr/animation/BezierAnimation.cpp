@@ -3,7 +3,7 @@
 BezierAnimation::BezierAnimation(OSG::Time duration,
                                  const BezierCurve<TimeVector> bezier,
                                  const std::shared_ptr<Animation> animation)
-        : FracTimeAnimation(duration),
+        : FracTimeAnimation(duration, false),
           _animation(animation),
           _bezier(bezier) {}
 

@@ -11,9 +11,10 @@
 class FracTimeAnimation : public Animation {
     OSG::Time _duration;
     OSG::Time _animationTime;
+    bool _startOver;
 
 public:
-    explicit FracTimeAnimation(OSG::Time duration);
+    explicit FracTimeAnimation(OSG::Time duration, bool startOver);
 
     void animate(OSG::Time dTime) override;
 
