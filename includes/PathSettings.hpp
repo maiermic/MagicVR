@@ -12,6 +12,7 @@ OSG_USING_NAMESPACE
 
 /// 3D Assets
 static const Char8 *Path_Model_Stonehenge = "models/Stonehenge/Stonehenge.obj";
+static const Char8 *Path_Model_Lantern = "models/Lantern/Lantern.obj";
 
 static const Char8 *Path_Model_Sockel = "models/Sockel/Sockel.obj";
 
@@ -30,13 +31,6 @@ static const Char8 *Path_Model_WindStone = "models/Stones/Stone_Wind.obj";
 static const Char8 *Path_Skybox_Root = "skybox/stonehenge/";
 
 static const Char8 *Path_Skybox_Prefix = "/envMap_cube_";
-
-static const Char8 *Path_Skybox_Left = "_Left";
-static const Char8 *Path_Skybox_Right = "_Right";
-static const Char8 *Path_Skybox_Front = "_Front";
-static const Char8 *Path_Skybox_Back = "_Back";
-static const Char8 *Path_Skybox_Top = "_Top";
-static const Char8 *Path_Skybox_Bottom = "_Bottom";
 
 static const Char8 *Path_Skybox_Suffix = ".png";
 
