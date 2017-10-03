@@ -5,8 +5,15 @@ This document explains how to build and run the project.
 ## Prerequisites
 
 You need to install a C++14 compiler (for example [gcc][gcc] or [clang][clang]),
-[cmake][cmake] and [conan][conan]. Since not all dependencies are available on
-conan's repository, you have to build OpenSG2, VRPN and inVRs from source
+[cmake][cmake] and [conan][conan]. You can install them using
+
+```
+sudo apt-get install g++ cmake python python-pip
+pip install conan
+```
+
+Since not all dependencies are available on conan's repository, you have to
+build OpenSG2, VRPN and inVRs from source
 ([see this description][dependency build instructions]).
 
 [gcc]: https://gcc.gnu.org/
