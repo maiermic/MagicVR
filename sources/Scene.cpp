@@ -901,16 +901,21 @@ void Scene::animateWindBubbles() {
 
 
 const NodeRecPtr Scene::buildRealWorldScale() const {
-    /*realWorldScale
+    /** realWorldScale
      *
-     * Modelle, die mit Blender erstellt wurden werden vom
-     * OSGFileHandler um den Faktor 100 zu klein interpretiert.
+     * Models exported from Blender are interpreted to SMALL by the
+     * OSGFileHandler about the factor 100.
      *
-     * -> Die gesamt Szene auf 100 hochskalieren
+     * -> Scale the whole scene up by 100
      *
-     * => künftig Translation 1 = 1m
-     * => künftig Scale 1 = 100% */
+     * => read/write future Translation as 1 = 1meter
+     * => read/write future Scale as 1 = 100% */
+
+    /**
+     * Since we have a not working Beamer on the right side
+     * of the cave, meanwhile turn the complete scene about 30° to the left */
     return ComponentTransformNode()
+            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .scale(100)
             .addChild(buildStonehenge())
             .addChild(buildFrontLeftPedestal())
