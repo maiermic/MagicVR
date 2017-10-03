@@ -1,52 +1,47 @@
 # How To Build
 
-This document explains how to build and run the examples and tests.
+This document explains how to build and run the project.
 
 ## Prerequisites
 
 You need to install a C++14 compiler (for example [gcc][gcc] or [clang][clang]),
-[cmake][cmake] and [conan][conan].
+[cmake][cmake] and [conan][conan]. Since not all dependencies are available on
+conan's repository, you have to build OpenSG2, VRPN and inVRs from source
+([see this description][dependency build instructions]).
 
 [gcc]: https://gcc.gnu.org/
 [clang]: http://clang.llvm.org/
 [cmake]: https://cmake.org/
 [conan]: https://www.conan.io/
-
+[dependency build instructions]: https://github.com/maiermic/virtual-reality-project-linux-build-instructions
 
 ## Install Dependencies
 
-You need to compile dependencies properly. Otherwise, you may get errors
+Separate from the dependencies you have to build from source (OpenSG2, VRPN
+and inVRs), you need to install the dependencies managed by conan.
+You need to compile them properly. Otherwise, you may get errors
 (like [this][undefined reference error]):
 
 [undefined reference error]: http://stackoverflow.com/q/41408216/1065654
 
 ```
 cd .conan
-conan install -s build_type=Release -s compiler=clang -s compiler.version=3.8 -s compiler.libcxx=libstdc++11 --build=missing
+conan install -s build_type=Release -s compiler=gcc -s compiler.version=5.4 -s compiler.libcxx=libstdc++11 --build=missing
 ```
 
 ## Build
 
-Create build directory (if it does not exist) and change to it:
-```
-mkdir cmake-build-release
-cd cmake-build-release
-```
+Run
 
-### Linux or Mac
-
-```sh
-cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
-cmake --build .
+```
+./linux_desktop_compile
 ```
 
-### Windows
+or if you are in the V2C (LRZ):
 
-```sh
-cmake .. -G "Visual Studio 14 Win64"
-cmake --build . --config Release
 ```
-
+./linux_compile
+```
 
 ### Note
 
@@ -70,12 +65,23 @@ environment variables and run *Tools > CMake > Reload CMake Project*.
 
 ## Run
 
-Binaries of examples and tests are created in the build directory `./cmake-build-release/bin/`.
+There are two CMake targets:
 
-### Tests
+### MagicVR_desktop  
 
-Run all tests
+Use this outside of the V2C (LRZ). Run
 
-```sh
-./cmake-build-release/bin/catch
+```
+./start_demo_desktop_Release
+```
+
+from the project root directory (has to be the working directory).
+Otherwise, the models are not found and you see only black objects.
+
+### MagicVR_cave
+
+If you are in the V2C (LRZ) then run
+
+```
+./start_demo_cave_Release
 ```
