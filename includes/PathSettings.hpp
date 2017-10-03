@@ -27,7 +27,8 @@ static const Char8 *Path_Model_WindStone = "models/Stones/Stone_Wind.obj";
 
 
 /// Skybox
-static const Char8 *Path_Skybox_Root = "skybox/stonehenge/";
+//static const Char8 *Path_Skybox_Root = "skybox/stonehenge/";
+static const Char8 *Path_Skybox_Root = "skybox/stonehenge_new/";
 
 static const Char8 *Path_Skybox_Prefix = "/envMap_cube_";
 
