@@ -1,3 +1,4 @@
+#include <magicvr/animation/BezierCurve.hpp>
 #include "magicvr/MagicTricks.hpp"
 
 #include "trajecmp/functional/functional.hpp"
@@ -22,6 +23,14 @@ namespace magicvr {
 
         const auto input_trajectory_stream =
                 input_trajectory_subject.get_observable();
+        const BezierCurve<> waterBezier{
+                {0,    0,  0},
+                {1.5f, 3,  0},
+                {1.5f, -2, 0},
+                {3,    1,  0},
+        };
+        auto pattern_water_trajectory_stream =
+                rxcpp::observable<>::just(waterBezier.sample(10));
         auto pattern_L_trajectory_stream =
                 rxcpp::observable<>::just(
                         Trajectory{
@@ -64,6 +73,8 @@ namespace magicvr {
                 preprocess(pattern_L_trajectory_stream);
         auto preprocessed_pattern_M_trajectory_stream =
                 preprocess(pattern_M_trajectory_stream);
+        auto preprocessed_pattern_water_trajectory_stream =
+                preprocess(pattern_water_trajectory_stream);
         const trajecmp::distance::neighbours_percentage_range neighbours(0.1);
         const auto modified_hausdorff =
                 trajecmp::distance::modified_hausdorff(neighbours);
@@ -75,6 +86,9 @@ namespace magicvr {
         input_matches_pattern_M_stream =
                 compare(preprocessed_input_trajectory_stream,
                         preprocessed_pattern_M_trajectory_stream);
+        input_matches_pattern_water_stream =
+                compare(preprocessed_input_trajectory_stream,
+                        preprocessed_pattern_water_trajectory_stream);
 
         input_matches_pattern_L_stream | subscribe_with_latest_from(
                 [&](auto distance, auto &&input_trajcetory,
