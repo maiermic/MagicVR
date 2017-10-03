@@ -14,10 +14,10 @@ OSG_USING_NAMESPACE
 
 class Scene {
     const NodeRecPtr _root;
-    const ComponentTransformRecPtr earthUnlockedCT;
-    const ComponentTransformRecPtr fireUnlockedCT;
-    const ComponentTransformRecPtr waterUnlockedCT;
-    const ComponentTransformRecPtr thunderUnlockedCT;
+//    const ComponentTransformRecPtr earthUnlockedCT;
+//    const ComponentTransformRecPtr fireUnlockedCT;
+//    const ComponentTransformRecPtr waterUnlockedCT;
+//    const ComponentTransformRecPtr thunderUnlockedCT;
 
     const ComponentTransformRecPtr fireBubbleCT1;
     const ComponentTransformRecPtr fireBubbleCT2;
@@ -46,36 +46,41 @@ class Scene {
     const ComponentTransformRecPtr thunderBubbleCT7;
     const ComponentTransformRecPtr thunderBubbleCT8;
 
-    const ComponentTransformRecPtr earthBubbleCT1;
-    const ComponentTransformRecPtr earthBubbleCT2;
-    const ComponentTransformRecPtr earthBubbleCT3;
-    const ComponentTransformRecPtr earthBubbleCT4;
-    const ComponentTransformRecPtr earthBubbleCT5;
-    const ComponentTransformRecPtr earthBubbleCT6;
-    const ComponentTransformRecPtr earthBubbleCT7;
-    const ComponentTransformRecPtr earthBubbleCT8;
+    const ComponentTransformRecPtr windBubbleCT1;
+    const ComponentTransformRecPtr windBubbleCT2;
+    const ComponentTransformRecPtr windBubbleCT3;
+    const ComponentTransformRecPtr windBubbleCT4;
+    const ComponentTransformRecPtr windBubbleCT5;
+    const ComponentTransformRecPtr windBubbleCT6;
+    const ComponentTransformRecPtr windBubbleCT7;
+    const ComponentTransformRecPtr windBubbleCT8;
+
+
+
 
 
     ParallelAnimation _animations;
 
     void build();
 
-    const NodeTransitPtr buildElement(const ComponentTransformRecPtr trans,
-                                      const char *modelName) const;
+    const NodeTransitPtr buildStonehenge() const;
 
-    const NodeTransitPtr buildEarthElement() const;
+//    const NodeTransitPtr buildElement(const ComponentTransformRecPtr trans,
+//                                      const char *modelName) const;
 
-    const NodeTransitPtr buildEarthElementalStone() const;
+//    const NodeTransitPtr buildEarthElement() const;
 
-    const NodeTransitPtr buildFireElement() const;
+    const NodeTransitPtr buildWindElementalStone() const;
+
+//    const NodeTransitPtr buildFireElement() const;
 
     const NodeTransitPtr buildFireElementalStone() const;
 
-    const NodeTransitPtr buildWaterElement() const;
+//    const NodeTransitPtr buildWaterElement() const;
 
     const NodeTransitPtr buildWaterElementalStone() const;
 
-    const NodeTransitPtr buildThunderElement() const;
+//    const NodeTransitPtr buildThunderElement() const;
 
     const NodeTransitPtr buildThunderElementalStone() const;
 
@@ -89,36 +94,11 @@ class Scene {
 
     const NodeRecPtr buildRealWorldScale() const;
 
-    void unlockElement(const ComponentTransformRecPtr elementCT);
-
-    ComponentTransformNode buildPedestal() const;
-
-public:
-
-    Scene();
-
-    void update(OSG::Time dTime);
-
-    const NodeRecPtr &root() const;
-
-    void unlockEarth();
-
-    void unlockFire();
-
-    void unlockWater();
-
-    void unlockThunder();
-
-    NodeTransitPtr buildBezierCurve() const;
-    const NodeRecPtr buildTest() const;
-
-    const NodeTransitPtr buildBubble() const;
-
-    void animateFireBubbles();
+//    void unlockElement(const ComponentTransformRecPtr elementCT);
 
     const NodeTransitPtr buildFireBubble1() const;
 
-    const NodeTransitPtr buildBubbles() const;
+//    const NodeTransitPtr buildBubbles() const;
 
     const NodeTransitPtr buildFireBubble8() const;
 
@@ -174,27 +154,52 @@ public:
 
     const NodeTransitPtr buildThunderBubble1() const;
 
-    const NodeTransitPtr buildEarthBubble8() const;
+    const NodeTransitPtr buildWindBubble8() const;
 
-    const NodeTransitPtr buildEarthBubble7() const;
+    const NodeTransitPtr buildWindBubble7() const;
 
-    const NodeTransitPtr buildEarthBubble6() const;
+    const NodeTransitPtr buildWindBubble6() const;
 
-    const NodeTransitPtr buildEarthBubble5() const;
+    const NodeTransitPtr buildWindBubble5() const;
 
-    const NodeTransitPtr buildEarthBubble4() const;
+    const NodeTransitPtr buildWindBubble4() const;
 
-    const NodeTransitPtr buildEarthBubble3() const;
+    const NodeTransitPtr buildWindBubble3() const;
 
-    const NodeTransitPtr buildEarthBubble2() const;
+    const NodeTransitPtr buildWindBubble2() const;
 
-    const NodeTransitPtr buildEarthBubble1() const;
+    const NodeTransitPtr buildWindBubble1() const;
+
+    const NodeTransitPtr buildPedestal() const;
+
+public:
+
+    Scene();
+
+    void update(OSG::Time dTime);
+
+    const NodeRecPtr &root() const;
+
+//    void unlockEarth();
+//
+//    void unlockFire();
+//
+//    void unlockWater();
+//
+//    void unlockThunder();
+
+    NodeTransitPtr buildBezierCurve() const;
+
+
+//    const NodeTransitPtr buildBubble() const;
+
+    void animateFireBubbles();
 
     void animateWaterBubbles();
 
     void animateThunderBubbles();
 
-    void animateEarthBubbles();
+    void animateWindBubbles();
 };
 
 
