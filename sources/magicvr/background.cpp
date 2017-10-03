@@ -4,43 +4,67 @@
 #include "PathSettings.hpp"
 
 OSG::SkyBackgroundUnrecPtr loadBackground(Resolutions skyboxResolution) {
-    std::string resolution = std::to_string((int) skyboxResolution);
-    resolution = "1024";
-    std::cout << "skyboxResolution: " << skyboxResolution << std::endl;
+    auto res = (int) skyboxResolution;
+    std::string resolution = std::to_string(res);
 
-    std::string filePathBase = Path_Skybox_Root + resolution + Path_Skybox_Prefix + resolution;
+    std::cout << "skyboxResolution: " << res << std::endl;
 
-    std::string frontPath = filePathBase + Path_Skybox_Front + Path_Skybox_Suffix;
-    std::string backPath = filePathBase + Path_Skybox_Back + Path_Skybox_Suffix;
-    std::string leftPath = filePathBase + Path_Skybox_Left + Path_Skybox_Suffix;
-    std::string rightPath = filePathBase + Path_Skybox_Right + Path_Skybox_Suffix;
-    std::string topPath = filePathBase + Path_Skybox_Top + Path_Skybox_Suffix;
-    std::string bottomPath = filePathBase + Path_Skybox_Bottom + Path_Skybox_Suffix;
+    /**
+     * Get the Skybox CubeMap image */
+    std::string bgImageFilePath = Path_Skybox_Root + resolution + Path_Skybox_Prefix + resolution + Path_Skybox_Suffix;
 
-    OSG::ImageUnrecPtr imgFront = OSG::ImageFileHandler::the()->read(frontPath.c_str());
+    std::cout << "Skybox ImagePath: " << bgImageFilePath << std::endl;
+    OSG::ImageUnrecPtr mainImage = OSG::ImageFileHandler::the()->read(bgImageFilePath.c_str());
+
+    /**
+     * Create empty images as destinations for subimage */
+    OSG::ImageUnrecPtr imgFront = ImageBase::create();
+    OSG::ImageUnrecPtr imgBack = ImageBase::create();
+    OSG::ImageUnrecPtr imgLeft = ImageBase::create();
+    OSG::ImageUnrecPtr imgRight = ImageBase::create();
+    OSG::ImageUnrecPtr imgTop = ImageBase::create();
+    OSG::ImageUnrecPtr imgBottom = ImageBase::create();
+
+    /**
+     * Easier to change Skybox Images by croping them out
+     * at runtime directly from the CubeMap Image exported from Blender
+     *
+     * Blender exports the environment maps in the format:
+     *
+     * Left   | Back | Right
+     * Bottom | Top  | Front
+     *
+     * While subImage reads - offX from left to right
+     *                      - offY from bottom to top */
+    mainImage->subImage(2 * res, 0  , 0, res, res, 1, imgFront);
+    mainImage->subImage(res    , res, 0, res, res, 1, imgBack);
+    mainImage->subImage(0      , res, 0, res, res, 1, imgLeft);
+    mainImage->subImage(2 * res, res, 0, res, res, 1, imgRight);
+    mainImage->subImage(    res, 0  , 0, res, res, 1, imgTop);
+    mainImage->subImage(0      , 0  , 0, res, res, 1, imgBottom);
+
+    /**
+     * Create Textures and set image to cropped images */
     OSG::TextureObjChunkUnrecPtr texFront = OSG::TextureObjChunk::create();
     texFront->setImage(imgFront);
 
-    OSG::ImageUnrecPtr imgBack = OSG::ImageFileHandler::the()->read(backPath.c_str());
     OSG::TextureObjChunkUnrecPtr texBack = OSG::TextureObjChunk::create();
     texBack->setImage(imgBack);
 
-    OSG::ImageUnrecPtr imgLeft = OSG::ImageFileHandler::the()->read(leftPath.c_str());
     OSG::TextureObjChunkUnrecPtr texLeft = OSG::TextureObjChunk::create();
     texLeft->setImage(imgLeft);
 
-    OSG::ImageUnrecPtr imgRight = OSG::ImageFileHandler::the()->read(rightPath.c_str());
     OSG::TextureObjChunkUnrecPtr texRight = OSG::TextureObjChunk::create();
     texRight->setImage(imgRight);
 
-    OSG::ImageUnrecPtr imgTop = OSG::ImageFileHandler::the()->read(topPath.c_str());
     OSG::TextureObjChunkUnrecPtr texTop = OSG::TextureObjChunk::create();
     texTop->setImage(imgTop);
 
-    OSG::ImageUnrecPtr imgBottom = OSG::ImageFileHandler::the()->read(bottomPath.c_str());
     OSG::TextureObjChunkUnrecPtr texBottom = OSG::TextureObjChunk::create();
     texBottom->setImage(imgBottom);
 
+    /**
+     * Create Skybox and set textures */
     OSG::SkyBackgroundUnrecPtr skyBG = OSG::SkyBackground::create();
     skyBG->setFrontTexture(texFront);
     skyBG->setBackTexture(texBack);
