@@ -21,6 +21,10 @@ namespace magicvr { namespace node {
         std::vector<OSG::Vec3f> &trajectory();
 
         void update();
+
+        TrajectoryContainerNode();
+
+        TrajectoryContainerNode(std::vector<OSG::Vec3f> &&vector);
     };
 
 }}
