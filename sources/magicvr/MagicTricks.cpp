@@ -69,10 +69,10 @@ namespace magicvr {
                 trajecmp::distance::modified_hausdorff(neighbours);
         const auto compare = match_by(modified_hausdorff,
                                       less_than(normalized_size * 0.3));
-        auto input_matches_pattern_L_stream =
+        input_matches_pattern_L_stream =
                 compare(preprocessed_input_trajectory_stream,
                         preprocessed_pattern_L_trajectory_stream);
-        auto input_matches_pattern_M_stream =
+        input_matches_pattern_M_stream =
                 compare(preprocessed_input_trajectory_stream,
                         preprocessed_pattern_M_trajectory_stream);
 
