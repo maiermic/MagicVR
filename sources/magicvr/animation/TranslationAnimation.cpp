@@ -3,7 +3,7 @@
 TranslationAnimation::TranslationAnimation(
         const OSG::ComponentTransformRecPtr trans,
         OSG::Vec3f destination,
-        OSG::Time duration) : FracTimeAnimation(duration),
+        OSG::Time duration, bool startOver) : FracTimeAnimation(duration, startOver),
                               _trans(trans),
                               _destination(destination),
                               _start(trans->getTranslation()),
