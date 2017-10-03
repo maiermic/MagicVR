@@ -27,3 +27,7 @@ const NodeRecPtr &AppController::root() const {
 
 void AppController::keyboardUp(unsigned char key, int x, int y) {
 }
+
+Scene &AppController::scene() {
+    return _scene;
+}

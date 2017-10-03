@@ -29,6 +29,8 @@ public:
     virtual void keyboardUp(unsigned char key, int x, int y);
 
     const NodeRecPtr &root() const;
+
+    Scene &scene();
 };
 
 
