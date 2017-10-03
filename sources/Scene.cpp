@@ -27,8 +27,10 @@ const NodeTransitPtr Scene::buildStonehenge() const {
 
 const NodeTransitPtr Scene::buildKapelle() const {
     return ComponentTransformNode()
-//            .translate(0f,-0.17f,1.8)
-            .translate(0f,-0.35f,5)
+            /* TODO: Decide for position
+             * */
+//            .translate(0,-0.17f,1.8)
+            .translate(0,-0.35f,5)
             .scale(12)
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(90)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(

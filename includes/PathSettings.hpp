@@ -12,7 +12,7 @@ OSG_USING_NAMESPACE
 
 /// 3D Assets
 static const Char8 *Path_Model_Stonehenge = "models/Stonehenge/Stonehenge.obj";
-static const Char8 *Path_Model_Kapele = "models/Kapelle/Kapelle.obj";
+static const Char8 *Path_Model_Kapelle = "models/Kapelle/Kapelle.obj";
 
 static const Char8 *Path_Model_Sockel = "models/Sockel/Sockel.obj";
 
