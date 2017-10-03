@@ -24,9 +24,13 @@ class AppController {
 public:
     virtual void display(OSG::Time dTime);
 
-    void keyboardDown(unsigned char key, int x, int y);
+    virtual void keyboardDown(unsigned char key, int x, int y);
+
+    virtual void keyboardUp(unsigned char key, int x, int y);
 
     const NodeRecPtr &root() const;
+
+    Scene &scene();
 };
 
 

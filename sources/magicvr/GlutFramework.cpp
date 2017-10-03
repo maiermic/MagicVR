@@ -28,6 +28,7 @@ namespace glutFramework {
 		glutDisplayFunc(displayWrapper);
 		glutKeyboardFunc(keyboardDownWrapper);
 		glutKeyboardUpFunc(keyboardUpWrapper);
+		glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
 		glutSpecialFunc(specialKeyboardDownWrapper);
 		glutSpecialUpFunc(specialKeyboardUpWrapper);
 		glutIdleFunc(idleWrapper);

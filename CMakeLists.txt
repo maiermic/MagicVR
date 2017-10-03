@@ -2,8 +2,19 @@ cmake_minimum_required(VERSION 2.8)
 
 
 project("MagicVR")
+set(CMAKE_CXX_STANDARD 14)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
+include(cmake/enable_cxx_compiler_flag_if_supported.cmake)
+#enable_cxx_compiler_flag_if_supported("-Wall")
+#enable_cxx_compiler_flag_if_supported("-Wextra")
+#enable_cxx_compiler_flag_if_supported("-pedantic")
+#enable_cxx_compiler_flag_if_supported("-g")
+enable_cxx_compiler_flag_if_supported("-Wno-deprecated-declarations")
+enable_cxx_compiler_flag_if_supported("-lGL")
+enable_cxx_compiler_flag_if_supported("-fext-numeric-literals")
+
+include(.conan/conanbuildinfo.cmake)
+conan_basic_setup()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
 include(AddProject)
@@ -35,6 +46,8 @@ if ("${LEAP_LIB_DIR}" STREQUAL "")
 endif ()
 target_link_libraries(${PROJECT_NAME}_cave ${LEAP_LIB_DIR}/libLeap.so -Wl,-rpath,${LEAP_LIB_DIR})
 target_link_libraries(${PROJECT_NAME}_desktop ${LEAP_LIB_DIR}/libLeap.so -Wl,-rpath,${LEAP_LIB_DIR})
+target_link_libraries(${PROJECT_NAME}_cave ${CONAN_LIBS})
+target_link_libraries(${PROJECT_NAME}_desktop ${CONAN_LIBS})
 
 if(WIN32)
 	if("${CMAKE_CONFIGURATION_TYPES}" STREQUAL "Release")
