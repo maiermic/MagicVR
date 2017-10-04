@@ -22,8 +22,8 @@ namespace magicvr {
             if (_isRecordingTrajectory) {
                 _trajectoryNode.add(_wand.wand.position);
             } else if (_hasBeenRecordingTrajectory) {
-                _trajectoryNode.clear();
                 _tricks.emit(std::move(_trajectoryNode.trajectory()));
+                _trajectoryNode.clear();
             }
         }
         AppController::display(dTime);
