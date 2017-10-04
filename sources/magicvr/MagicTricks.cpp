@@ -52,6 +52,15 @@ namespace magicvr {
                                 {4, 0, 0},
                         }
                 );
+        auto pattern_lightning_trajectory_stream =
+                rxcpp::observable<>::just(
+                        Trajectory{
+                                {1, 2, 0},
+                                {0, 1, 0},
+                                {1, 1, 0},
+                                {0, 0, 0},
+                        }
+                );
 
         static const auto normalized_size = 100;
         const auto transform = [=](Trajectory &trajectory) {
@@ -80,6 +89,8 @@ namespace magicvr {
                 preprocess(pattern_water_trajectory_stream);
         auto preprocessed_pattern_wind_trajectory_stream =
                 preprocess(pattern_wind_trajectory_stream);
+        auto preprocessed_pattern_lightning_trajectory_stream =
+                preprocess(pattern_lightning_trajectory_stream);
         const trajecmp::distance::neighbours_percentage_range neighbours(0.1);
         const auto modified_hausdorff =
                 trajecmp::distance::modified_hausdorff(neighbours);
@@ -97,6 +108,9 @@ namespace magicvr {
         input_matches_pattern_wind_stream =
                 compare(preprocessed_input_trajectory_stream,
                         preprocessed_pattern_wind_trajectory_stream);
+        input_matches_pattern_lightning_stream =
+                compare(preprocessed_input_trajectory_stream,
+                        preprocessed_pattern_lightning_trajectory_stream);
 
         input_matches_pattern_L_stream | subscribe_with_latest_from(
                 [&](auto distance, auto &&input_trajcetory,
