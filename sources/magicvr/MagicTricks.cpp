@@ -46,14 +46,14 @@ namespace magicvr {
         auto pattern_fire_trajectory_stream =
                 rxcpp::observable<>::just(
                         Trajectory{
-                                {0, 0, 0},
+                                {0,  0, 0},
                                 {-1, 3, 0},
-                                {1, 2, 0},
-                                {2, 5, 0},
-                                {2, 5, 0},
-                                {3, 2, 0},
-                                {5, 3, 0},
-                                {4, 0, 0},
+                                {1,  2, 0},
+                                {2,  5, 0},
+                                {2,  5, 0},
+                                {3,  2, 0},
+                                {5,  3, 0},
+                                {4,  0, 0},
                         }
                 );
 
