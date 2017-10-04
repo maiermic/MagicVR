@@ -21,6 +21,7 @@ namespace magicvr {
         using trajecmp::compare::less_than;
         using trajecmp::compare::match_by;
         using trajecmp::util::subscribe_with_latest_from;
+        using trajecmp::geometry::min_bounding_sphere;
 
         const auto input_trajectory_stream =
                 input_trajectory_subject.get_observable();
@@ -67,18 +68,25 @@ namespace magicvr {
                 rxcpp::observable<>::just(quaterCircleFromAbove.sample(10));
 
         static const auto normalized_size = 100;
-        const auto transform = [=](Trajectory &trajectory) {
-            const auto mbs =
-                    trajecmp::geometry::min_bounding_sphere(trajectory);
+        static const auto scale_mbs = [=](auto &mbs) {
             return trajecmp::transform::scale_to_const<normalized_size>(
-                    mbs.radius * 2)(
-                    trajecmp::transform::translate_by(
-                            trajecmp::geometry::negative_vector_of(mbs.center))(
-                            trajectory)
+                    mbs.radius * 2
             );
         };
+        static const auto translate_mbs = [=](auto &mbs) {
+            return trajecmp::transform::translate_by(
+                    trajecmp::geometry::negative_vector_of(mbs.center));
+        };
+        static const auto transform = [&](Trajectory &trajectory) {
+            using trajecmp::functional::operator|;
+            const auto mbs = min_bounding_sphere(trajectory);
+            return trajecmp::functional::pipe(
+                    translate_mbs(mbs),
+                    scale_mbs(mbs)
+            )(trajectory);
+        };
 
-        const auto preprocess = [&transform](auto &&trajectory_stream) {
+        static const auto preprocess = [&transform](auto &&trajectory_stream) {
             return trajectory_stream
                     .filter(has_min_num_points(2))
                     .map(transform);
@@ -106,7 +114,8 @@ namespace magicvr {
                         preprocess(pattern_fire_trajectory_stream));
         input_matches_pattern_quaterCircleFromAbove_stream =
                 compare(preprocessed_input_trajectory_stream,
-                        preprocess(pattern_quaterCircleFromAbove_trajectory_stream));
+                        preprocess(
+                                pattern_quaterCircleFromAbove_trajectory_stream));
     }
 
     void MagicTricks::emit(MagicTricks::Trajectory &&trajectory) const {
