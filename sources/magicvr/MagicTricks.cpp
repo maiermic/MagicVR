@@ -57,6 +57,15 @@ namespace magicvr {
                         }
                 );
 
+        const BezierCurve<> quaterCircleFromAbove{
+                {0, 1, 0},
+                {1, 1, 0},
+                {1, 0, 0},
+                {1, 0, 0},
+        };
+        auto pattern_quaterCircleFromAbove_trajectory_stream =
+                rxcpp::observable<>::just(quaterCircleFromAbove.sample(10));
+
         static const auto normalized_size = 100;
         const auto transform = [=](Trajectory &trajectory) {
             const auto mbs =
@@ -95,6 +104,9 @@ namespace magicvr {
         input_matches_pattern_fire_stream =
                 compare(preprocessed_input_trajectory_stream,
                         preprocess(pattern_fire_trajectory_stream));
+        input_matches_pattern_quaterCircleFromAbove_stream =
+                compare(preprocessed_input_trajectory_stream,
+                        preprocess(pattern_quaterCircleFromAbove_trajectory_stream));
     }
 
     void MagicTricks::emit(MagicTricks::Trajectory &&trajectory) const {

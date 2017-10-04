@@ -57,4 +57,7 @@ AppController::AppController() {
     _tricks.input_matches_pattern_wind_stream.subscribe([&](double distance) {
         this->scene().animateWindBubbles();
     });
+    _tricks.input_matches_pattern_quaterCircleFromAbove_stream.subscribe([&](double distance) {
+        this->scene().animateWindBubbles();
+    });
 }
