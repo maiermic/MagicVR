@@ -15,6 +15,7 @@ int MagicVrDesktopGlutFramework::createWindow() {
     mgr->showAll();
     mgr->setHeadlight(true);
     mgr->setBackground(loadBackground(SKYBOX_RES_1024)); // 256 | 512 | 1024 | 2048
+    _navigator.simpleSceneManager(mgr);
     return winid;
 }
 
@@ -26,11 +27,13 @@ void MagicVrDesktopGlutFramework::keyboardDown(unsigned char key, int x, int y) 
     GlutFramework::keyboardDown(key, x, y);
     mgr->key(key, x, y);
     app.keyboardDown(key, x, y);
+    _navigator.keyboardDown(key);
 }
 
 void MagicVrDesktopGlutFramework::keyboardUp(unsigned char key, int x, int y) {
     GlutFramework::keyboardUp(key, x, y);
     app.keyboardUp(key, x, y);
+    _navigator.keyboardUp(key);
 }
 
 void MagicVrDesktopGlutFramework::mouseButtonPress(int button, int state, int x, int y) {
@@ -50,6 +53,7 @@ void MagicVrDesktopGlutFramework::mouseMove(int x, int y) {
 
 void MagicVrDesktopGlutFramework::display(OSG::Time dTime) {
     app.display(dTime);
+    _navigator.update();
     commitChanges();
     mgr->idle();
     mgr->redraw();
@@ -58,7 +62,8 @@ void MagicVrDesktopGlutFramework::display(OSG::Time dTime) {
 }
 
 MagicVrDesktopGlutFramework::MagicVrDesktopGlutFramework(AppController &app)
-        : app(app) {
+        : app(app),
+          _navigator() {
     title("MagicVR");
 }
 

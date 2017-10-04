@@ -4,11 +4,14 @@
 #include "GlutFramework.hpp"
 #include <OpenSG/OSGSimpleSceneManager.h>
 #include "AppController.hpp"
+#include "SimpleSceneManagerNavigator.hpp"
 #include <OpenSG/OSGTime.h>
 
 class MagicVrDesktopGlutFramework : public glutFramework::GlutFramework {
     OSG::SimpleSceneManagerRefPtr mgr; // gets created in createWindow
     AppController &app;
+    magicvr::SimpleSceneManagerNavigator _navigator;
+
 public:
     MagicVrDesktopGlutFramework(AppController &app);
 
