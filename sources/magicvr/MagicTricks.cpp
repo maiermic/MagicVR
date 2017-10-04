@@ -1,3 +1,5 @@
+#include <magicvr/animation/BezierCurve.hpp>
+#include <magicvr/Spiral.hpp>
 #include "magicvr/MagicTricks.hpp"
 
 #include "trajecmp/functional/functional.hpp"
@@ -22,21 +24,35 @@ namespace magicvr {
 
         const auto input_trajectory_stream =
                 input_trajectory_subject.get_observable();
-        auto pattern_L_trajectory_stream =
+        const BezierCurve<> waterBezier{
+                {0,    0,  0},
+                {1.5f, 3,  0},
+                {1.5f, -2, 0},
+                {3,    1,  0},
+        };
+        auto pattern_water_trajectory_stream =
+                rxcpp::observable<>::just(waterBezier.sample(10));
+        auto pattern_wind_trajectory_stream =
+                rxcpp::observable<>::just(Spiral().sample());
+        auto pattern_lightning_trajectory_stream =
                 rxcpp::observable<>::just(
                         Trajectory{
-                                {0, 2, 0},
+                                {1, 2, 0},
+                                {0, 1, 0},
+                                {1, 1, 0},
                                 {0, 0, 0},
-                                {1, 0, 0},
                         }
                 );
-        auto pattern_M_trajectory_stream =
+        auto pattern_fire_trajectory_stream =
                 rxcpp::observable<>::just(
                         Trajectory{
                                 {0, 0, 0},
-                                {1, 4, 0},
-                                {2, 0, 0},
-                                {3, 4, 0},
+                                {-1, 3, 0},
+                                {1, 2, 0},
+                                {2, 5, 0},
+                                {2, 5, 0},
+                                {3, 2, 0},
+                                {5, 3, 0},
                                 {4, 0, 0},
                         }
                 );
@@ -60,38 +76,25 @@ namespace magicvr {
         };
         auto preprocessed_input_trajectory_stream =
                 preprocess(input_trajectory_stream);
-        auto preprocessed_pattern_L_trajectory_stream =
-                preprocess(pattern_L_trajectory_stream);
-        auto preprocessed_pattern_M_trajectory_stream =
-                preprocess(pattern_M_trajectory_stream);
+
         const trajecmp::distance::neighbours_percentage_range neighbours(0.1);
         const auto modified_hausdorff =
                 trajecmp::distance::modified_hausdorff(neighbours);
         const auto compare = match_by(modified_hausdorff,
                                       less_than(normalized_size * 0.3));
-        input_matches_pattern_L_stream =
-                compare(preprocessed_input_trajectory_stream,
-                        preprocessed_pattern_L_trajectory_stream);
-        input_matches_pattern_M_stream =
-                compare(preprocessed_input_trajectory_stream,
-                        preprocessed_pattern_M_trajectory_stream);
 
-        input_matches_pattern_L_stream | subscribe_with_latest_from(
-                [&](auto distance, auto &&input_trajcetory,
-                    auto &&pattern_trajcetory) {
-                    std::cout << "L: " << distance << '\n';
-                },
-                preprocessed_input_trajectory_stream,
-                preprocessed_pattern_L_trajectory_stream
-        );
-        input_matches_pattern_M_stream | subscribe_with_latest_from(
-                [&](auto distance, auto &&input_trajcetory,
-                    auto &&pattern_trajcetory) {
-                    std::cout << "M: " << distance << '\n';
-                },
-                preprocessed_input_trajectory_stream,
-                preprocessed_pattern_M_trajectory_stream
-        );
+        input_matches_pattern_water_stream =
+                compare(preprocessed_input_trajectory_stream,
+                        preprocess(pattern_water_trajectory_stream));
+        input_matches_pattern_wind_stream =
+                compare(preprocessed_input_trajectory_stream,
+                        preprocess(pattern_wind_trajectory_stream));
+        input_matches_pattern_lightning_stream =
+                compare(preprocessed_input_trajectory_stream,
+                        preprocess(pattern_lightning_trajectory_stream));
+        input_matches_pattern_fire_stream =
+                compare(preprocessed_input_trajectory_stream,
+                        preprocess(pattern_fire_trajectory_stream));
     }
 
     void MagicTricks::emit(MagicTricks::Trajectory &&trajectory) const {

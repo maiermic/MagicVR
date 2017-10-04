@@ -6,6 +6,7 @@
 #include <magicvr/node/TrajectoryContainerNode.hpp>
 #include <magicvr/animation/BezierAnimation.hpp>
 #include <magicvr/animation/EaseInOutAnimation.hpp>
+#include <magicvr/Spiral.hpp>
 #include "magicvr/animation/ScaleAnimation.hpp"
 #include "magicvr/animation/SequentialAnimation.hpp"
 #include "PathSettings.hpp"
@@ -13,6 +14,7 @@
 void Scene::build() {
     root()->addChild(buildRealWorldScale());
 //    root()->addChild(buildBezierCurve());
+    root()->addChild(buildSpiral());
 }
 
 const NodeTransitPtr Scene::buildStonehenge() const {
@@ -1106,23 +1108,15 @@ const NodeRecPtr &Scene::root() const {
 //}
 
 NodeTransitPtr Scene::buildBezierCurve() const {
-    BezierCurve<OSG::Vec2f> bezier2{
-            OSG::Vec2f(0, 0),
-            OSG::Vec2f(0.75, 0),
-            OSG::Vec2f(0.25, 1),
-            OSG::Vec2f(1, 1)
+    const BezierCurve<> bezier{
+            {0,   0,   0},
+            {75,  0,   0},
+            {25,  100, 0},
+            {100, 100, 0}
     };
-    BezierCurve<> bezier{
-            OSG::Vec3f(0, 0, 0),
-            OSG::Vec3f(75, 0, 0),
-            OSG::Vec3f(25, 100, 0),
-            OSG::Vec3f(100, 100, 0)
-    };
-    magicvr::node::TrajectoryContainerNode bezierNode;
-    const float numOfSegments = 21;
-    for (float i = 0; i < numOfSegments; ++i) {
-        bezierNode.add(bezier.atPercentage(i / numOfSegments));
-        std::cout << "(" << bezier2.atPercentage(i / numOfSegments) << ")\n";
-    }
-    return bezierNode.node();
+    return magicvr::node::TrajectoryContainerNode(bezier.sample(21)).node();
+}
+
+NodeTransitPtr Scene::buildSpiral() const {
+    return magicvr::node::TrajectoryContainerNode(Spiral().sample()).node();
 }

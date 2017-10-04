@@ -33,4 +33,16 @@ namespace magicvr { namespace node {
         }
     }
 
+    TrajectoryContainerNode::TrajectoryContainerNode()
+            : _node(), _trajectory() {
+    }
+
+    TrajectoryContainerNode::TrajectoryContainerNode(
+            std::vector<Vec3f> &&trajectory)
+            : _node(), _trajectory(trajectory) {
+        for (auto p : trajectory) {
+            _node.add(p);
+        }
+    }
+
 }}

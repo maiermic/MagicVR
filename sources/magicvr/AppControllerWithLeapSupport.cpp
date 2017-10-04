@@ -28,12 +28,6 @@ namespace magicvr {
               _isRecordingTrajectory(false) {
         root()->addChild(createIndexFingerTipNode());
         root()->addChild(_trajectoryNode.node());
-        _tricks.input_matches_pattern_L_stream.subscribe([&](double distance) {
-            this->scene().animateThunderBubbles();
-        });
-        _tricks.input_matches_pattern_M_stream.subscribe([&](double distance) {
-            this->scene().animateWaterBubbles();
-        });
     }
 
     NodeTransitPtr AppControllerWithLeapSupport::createIndexFingerTipNode() {

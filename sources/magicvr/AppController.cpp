@@ -43,3 +43,18 @@ void AppController::keyboardUp(unsigned char key, int x, int y) {
 Scene &AppController::scene() {
     return _scene;
 }
+
+AppController::AppController() {
+    _tricks.input_matches_pattern_lightning_stream.subscribe([&](double distance) {
+        this->scene().animateThunderBubbles();
+    });
+    _tricks.input_matches_pattern_fire_stream.subscribe([&](double distance) {
+        this->scene().animateFireBubbles();
+    });
+    _tricks.input_matches_pattern_water_stream.subscribe([&](double distance) {
+        this->scene().animateWaterBubbles();
+    });
+    _tricks.input_matches_pattern_wind_stream.subscribe([&](double distance) {
+        this->scene().animateWindBubbles();
+    });
+}

@@ -14,17 +14,20 @@ namespace magicvr {
 
     void AppControllerWithWandSupport::display(OSG::Time dTime) {
         static auto lastWandPosition = _wand.wand.position;
+        static bool _hasBeenRecordingTrajectory = false;
         const bool _isRecordingTrajectory = _wand.buttons[input::RemoteManager::BACK];
         if (lastWandPosition != _wand.wand.position) {
             lastWandPosition = _wand.wand.position;
             _movableNode.moveTo(_wand.wand.position);
             if (_isRecordingTrajectory) {
                 _trajectoryNode.add(_wand.wand.position);
-            } else {
+            } else if (_hasBeenRecordingTrajectory) {
+                _tricks.emit(std::move(_trajectoryNode.trajectory()));
                 _trajectoryNode.clear();
             }
         }
         AppController::display(dTime);
+        _hasBeenRecordingTrajectory = _isRecordingTrajectory;
     }
 
     NodeTransitPtr AppControllerWithWandSupport::createMovableNode() {

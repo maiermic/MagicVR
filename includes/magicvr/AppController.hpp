@@ -4,6 +4,7 @@
 
 #include <Scene.hpp>
 #include "AppModel.hpp"
+#include "MagicTricks.hpp"
 
 /**
  * Controller of the app logic, model and view (-model).
@@ -21,7 +22,12 @@ class AppController {
      */
     Scene _scene;
 
+protected:
+    magicvr::MagicTricks _tricks;
+
 public:
+    AppController();
+
     virtual void display(OSG::Time dTime);
 
     virtual void keyboardDown(unsigned char key, int x, int y);
