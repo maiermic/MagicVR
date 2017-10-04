@@ -7,7 +7,6 @@
 #include <magicvr/node/MovableNode.hpp>
 #include <magicvr/node/TrajectoryContainerNode.hpp>
 #include "AppController.hpp"
-#include "MagicTricks.hpp"
 
 namespace magicvr {
     class AppControllerWithLeapSupport : public AppController {
@@ -16,7 +15,6 @@ namespace magicvr {
         node::TrajectoryContainerNode _trajectoryNode;
         util::VectorConverter _vectorConverter;
         bool _isRecordingTrajectory;
-        MagicTricks _tricks;
 
         NodeTransitPtr createIndexFingerTipNode();
 
