@@ -37,6 +37,9 @@ namespace magicvr {
         _tricks.input_matches_pattern_water_stream.subscribe([&](double distance) {
             this->scene().animateWaterBubbles();
         });
+        _tricks.input_matches_pattern_wind_stream.subscribe([&](double distance) {
+            this->scene().animateWindBubbles();
+        });
     }
 
     NodeTransitPtr AppControllerWithLeapSupport::createIndexFingerTipNode() {
