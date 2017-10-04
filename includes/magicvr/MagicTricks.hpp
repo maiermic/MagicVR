@@ -20,8 +20,6 @@ namespace magicvr {
     class MagicTricks {
     public:
         using Trajectory = std::vector<OSG::Vec3f>;
-        rxcpp::observable<double> input_matches_pattern_L_stream;
-        rxcpp::observable<double> input_matches_pattern_M_stream;
         rxcpp::observable<double> input_matches_pattern_water_stream;
         rxcpp::observable<double> input_matches_pattern_wind_stream;
         rxcpp::observable<double> input_matches_pattern_lightning_stream;

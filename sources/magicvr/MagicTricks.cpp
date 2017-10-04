@@ -34,24 +34,6 @@ namespace magicvr {
                 rxcpp::observable<>::just(waterBezier.sample(10));
         auto pattern_wind_trajectory_stream =
                 rxcpp::observable<>::just(Spiral().sample());
-        auto pattern_L_trajectory_stream =
-                rxcpp::observable<>::just(
-                        Trajectory{
-                                {0, 2, 0},
-                                {0, 0, 0},
-                                {1, 0, 0},
-                        }
-                );
-        auto pattern_M_trajectory_stream =
-                rxcpp::observable<>::just(
-                        Trajectory{
-                                {0, 0, 0},
-                                {1, 4, 0},
-                                {2, 0, 0},
-                                {3, 4, 0},
-                                {4, 0, 0},
-                        }
-                );
         auto pattern_lightning_trajectory_stream =
                 rxcpp::observable<>::just(
                         Trajectory{
@@ -94,10 +76,6 @@ namespace magicvr {
         };
         auto preprocessed_input_trajectory_stream =
                 preprocess(input_trajectory_stream);
-        auto preprocessed_pattern_L_trajectory_stream =
-                preprocess(pattern_L_trajectory_stream);
-        auto preprocessed_pattern_M_trajectory_stream =
-                preprocess(pattern_M_trajectory_stream);
         auto preprocessed_pattern_water_trajectory_stream =
                 preprocess(pattern_water_trajectory_stream);
         auto preprocessed_pattern_wind_trajectory_stream =
@@ -111,12 +89,6 @@ namespace magicvr {
                 trajecmp::distance::modified_hausdorff(neighbours);
         const auto compare = match_by(modified_hausdorff,
                                       less_than(normalized_size * 0.3));
-        input_matches_pattern_L_stream =
-                compare(preprocessed_input_trajectory_stream,
-                        preprocessed_pattern_L_trajectory_stream);
-        input_matches_pattern_M_stream =
-                compare(preprocessed_input_trajectory_stream,
-                        preprocessed_pattern_M_trajectory_stream);
         input_matches_pattern_water_stream =
                 compare(preprocessed_input_trajectory_stream,
                         preprocessed_pattern_water_trajectory_stream);
@@ -129,23 +101,6 @@ namespace magicvr {
         input_matches_pattern_fire_stream =
                 compare(preprocessed_input_trajectory_stream,
                         preprocessed_pattern_fire_trajectory_stream);
-
-        input_matches_pattern_L_stream | subscribe_with_latest_from(
-                [&](auto distance, auto &&input_trajcetory,
-                    auto &&pattern_trajcetory) {
-                    std::cout << "L: " << distance << '\n';
-                },
-                preprocessed_input_trajectory_stream,
-                preprocessed_pattern_L_trajectory_stream
-        );
-        input_matches_pattern_M_stream | subscribe_with_latest_from(
-                [&](auto distance, auto &&input_trajcetory,
-                    auto &&pattern_trajcetory) {
-                    std::cout << "M: " << distance << '\n';
-                },
-                preprocessed_input_trajectory_stream,
-                preprocessed_pattern_M_trajectory_stream
-        );
     }
 
     void MagicTricks::emit(MagicTricks::Trajectory &&trajectory) const {
