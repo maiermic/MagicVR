@@ -76,31 +76,25 @@ namespace magicvr {
         };
         auto preprocessed_input_trajectory_stream =
                 preprocess(input_trajectory_stream);
-        auto preprocessed_pattern_water_trajectory_stream =
-                preprocess(pattern_water_trajectory_stream);
-        auto preprocessed_pattern_wind_trajectory_stream =
-                preprocess(pattern_wind_trajectory_stream);
-        auto preprocessed_pattern_lightning_trajectory_stream =
-                preprocess(pattern_lightning_trajectory_stream);
-        auto preprocessed_pattern_fire_trajectory_stream =
-                preprocess(pattern_fire_trajectory_stream);
+
         const trajecmp::distance::neighbours_percentage_range neighbours(0.1);
         const auto modified_hausdorff =
                 trajecmp::distance::modified_hausdorff(neighbours);
         const auto compare = match_by(modified_hausdorff,
                                       less_than(normalized_size * 0.3));
+
         input_matches_pattern_water_stream =
                 compare(preprocessed_input_trajectory_stream,
-                        preprocessed_pattern_water_trajectory_stream);
+                        preprocess(pattern_water_trajectory_stream));
         input_matches_pattern_wind_stream =
                 compare(preprocessed_input_trajectory_stream,
-                        preprocessed_pattern_wind_trajectory_stream);
+                        preprocess(pattern_wind_trajectory_stream));
         input_matches_pattern_lightning_stream =
                 compare(preprocessed_input_trajectory_stream,
-                        preprocessed_pattern_lightning_trajectory_stream);
+                        preprocess(pattern_lightning_trajectory_stream));
         input_matches_pattern_fire_stream =
                 compare(preprocessed_input_trajectory_stream,
-                        preprocessed_pattern_fire_trajectory_stream);
+                        preprocess(pattern_fire_trajectory_stream));
     }
 
     void MagicTricks::emit(MagicTricks::Trajectory &&trajectory) const {
