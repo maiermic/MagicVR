@@ -6,13 +6,15 @@
 #include <magicvr/node/TrajectoryContainerNode.hpp>
 #include <magicvr/animation/BezierAnimation.hpp>
 #include <magicvr/animation/EaseInOutAnimation.hpp>
+#include <magicvr/Spiral.hpp>
 #include "magicvr/animation/ScaleAnimation.hpp"
 #include "magicvr/animation/SequentialAnimation.hpp"
 #include "PathSettings.hpp"
 
 void Scene::build() {
     root()->addChild(buildRealWorldScale());
-    root()->addChild(buildBezierCurve());
+//    root()->addChild(buildBezierCurve());
+    root()->addChild(buildSpiral());
 }
 
 const NodeTransitPtr Scene::buildStonehenge() const {
@@ -1113,4 +1115,8 @@ NodeTransitPtr Scene::buildBezierCurve() const {
             {100, 100, 0}
     };
     return magicvr::node::TrajectoryContainerNode(bezier.sample(21)).node();
+}
+
+NodeTransitPtr Scene::buildSpiral() const {
+    return magicvr::node::TrajectoryContainerNode(Spiral().sample()).node();
 }

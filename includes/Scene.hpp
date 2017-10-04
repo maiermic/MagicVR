@@ -200,6 +200,8 @@ public:
     void animateThunderBubbles();
 
     void animateWindBubbles();
+
+    NodeTransitPtr buildSpiral() const;
 };
 
 
