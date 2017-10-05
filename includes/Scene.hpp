@@ -201,6 +201,8 @@ public:
 
     void animateWindBubbles();
 
+    const NodeTransitPtr buildLantern() const;
+
     NodeTransitPtr buildSpiral() const;
 };
 
