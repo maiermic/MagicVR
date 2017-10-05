@@ -14,12 +14,13 @@
 #include <range/v3/to_container.hpp>
 #include <magicvr/ranges/view/Circle.hpp>
 #include <magicvr/ranges/view/rotate.hpp>
-#include "magicvr/animation/ScaleAnimation.hpp"
-#include "magicvr/animation/SequentialAnimation.hpp"
+#include <magicvr/animation/ScaleAnimation.hpp>
+#include <magicvr/animation/SequentialAnimation.hpp>
 #include "PathSettings.hpp"
 #include <magicvr/animation/BezierTranslationAnimation.hpp>
 #include <input/Tracker.hpp>
 #include <OpenSG/OSGSimpleGeometry.h>
+#include <magicvr/animation/AnimationContainer.hpp>
 
 void Scene::build() {
     root()->addChild(buildRealWorldScale());
@@ -101,22 +102,6 @@ const NodeTransitPtr Scene::buildKapelle() const {
             .node();
 }
 
-
-const NodeTransitPtr Scene::buildFireBubbles() const {
-    return ComponentTransformNode()
-            .translate(0, 0.1f, 0)
-            .scale(1)
-            .addChild(buildFireBubble1())
-            .addChild(buildFireBubble2())
-            .addChild(buildFireBubble3())
-            .addChild(buildFireBubble4())
-            .addChild(buildFireBubble5())
-            .addChild(buildFireBubble6())
-            .addChild(buildFireBubble7())
-            .addChild(buildFireBubble8())
-            .node();
-}
-
 const NodeTransitPtr Scene::buildWaterBubbles() const {
     return ComponentTransformNode()
             .translate(0, 0.1f, 0)
@@ -161,80 +146,6 @@ const NodeTransitPtr Scene::buildEarthBubbles() const {
             .addChild(buildWindBubble8())
             .node();
 }
-
-
-const NodeTransitPtr Scene::buildFireBubble1() const {
-    return ComponentTransformNode(fireBubbleCT1)
-            .translate(0, 0, 0)
-            .scale(1)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_FireBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildFireBubble2() const {
-    return ComponentTransformNode(fireBubbleCT2)
-            .translate(0, 0, 0)
-            .scale(0.9)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_FireBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildFireBubble3() const {
-    return ComponentTransformNode(fireBubbleCT3)
-            .translate(0, 0, 0)
-            .scale(0.8)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_FireBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildFireBubble4() const {
-    return ComponentTransformNode(fireBubbleCT4)
-            .translate(0, 0, 0)
-            .scale(0.7)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_FireBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildFireBubble5() const {
-    return ComponentTransformNode(fireBubbleCT5)
-            .translate(0, 0, 0)
-            .scale(0.6)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_FireBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildFireBubble6() const {
-    return ComponentTransformNode(fireBubbleCT6)
-            .translate(0, 0, 0)
-            .scale(0.5)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_FireBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildFireBubble7() const {
-    return ComponentTransformNode(fireBubbleCT7)
-            .translate(0, 0, 0)
-            .scale(0.4)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_FireBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildFireBubble8() const {
-    return ComponentTransformNode(fireBubbleCT8)
-            .translate(0, 0, 0)
-            .scale(0.3)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_FireBubble))
-            .node();
-}
-
 
 const NodeTransitPtr Scene::buildWaterBubble1() const {
     return ComponentTransformNode(waterBubbleCT1)
@@ -457,131 +368,7 @@ const NodeTransitPtr Scene::buildWindBubble8() const {
 
 void Scene::animateFireBubbles() {
     _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    fireBubbleCT1,
-                                    Vec3f(0, 1, 0),
-                                    3 * 1, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    fireBubbleCT1,
-                                    Vec3f(0, 0, 0),
-                                    3 * 1, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    fireBubbleCT2,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.9, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    fireBubbleCT2,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.9, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    fireBubbleCT3,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.8, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    fireBubbleCT3,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.8, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    fireBubbleCT4,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.7, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    fireBubbleCT4,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.7, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    fireBubbleCT5,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.6, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    fireBubbleCT5,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.6, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    fireBubbleCT6,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.5, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    fireBubbleCT6,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.5, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    fireBubbleCT7,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.4, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    fireBubbleCT7,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.4, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    fireBubbleCT8,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.3, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    fireBubbleCT8,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.3, true))
-            }
+            new AnimationContainer(_fireBubbles.animation())
     ));
 }
 
@@ -1081,7 +868,7 @@ const NodeTransitPtr Scene::buildFireElementalStone() const {
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(-30)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_FireStone))
-            .addChild(buildFireBubbles())
+            .addChild(_fireBubbles.node())
             .node();
 }
 
@@ -1125,14 +912,16 @@ void Scene::update(OSG::Time dTime) {
 
 Scene::Scene() : _animations(ParallelAnimation::DO_NOT_STOP_IF_NO_ANIMATIONS),
                  _root(makeNodeFor(Group::create())),
-                 fireBubbleCT1(ComponentTransformBase::create()),
-                 fireBubbleCT2(ComponentTransformBase::create()),
-                 fireBubbleCT3(ComponentTransformBase::create()),
-                 fireBubbleCT4(ComponentTransformBase::create()),
-                 fireBubbleCT5(ComponentTransformBase::create()),
-                 fireBubbleCT6(ComponentTransformBase::create()),
-                 fireBubbleCT7(ComponentTransformBase::create()),
-                 fireBubbleCT8(ComponentTransformBase::create()),
+                 _fireBubbles(Path_Model_FireBubble, {
+                    1,
+                    0.9,
+                    0.8,
+                    0.7,
+                    0.6,
+                    0.5,
+                    0.4,
+                    0.3
+                 }),
                  waterBubbleCT1(ComponentTransformBase::create()),
                  waterBubbleCT2(ComponentTransformBase::create()),
                  waterBubbleCT3(ComponentTransformBase::create()),
@@ -1165,51 +954,6 @@ Scene::Scene() : _animations(ParallelAnimation::DO_NOT_STOP_IF_NO_ANIMATIONS),
 const NodeRecPtr &Scene::root() const {
     return _root;
 }
-
-//void Scene::unlockElement(const ComponentTransformRecPtr elementCT) {
-//    const auto trans = elementCT->getTranslation();
-//    const OSG::Time animationDuration = 2;
-//    _animations.add(
-//            std::shared_ptr<Animation>(
-//                    new EaseInOutAnimation(
-//                            animationDuration,
-//                            std::shared_ptr<Animation>(
-//                                    new SequentialAnimation{
-//                                            std::shared_ptr<Animation>(
-//                                                    new TranslationAnimation(
-//                                                            elementCT,
-//                                                            OSG::Vec3f(
-//                                                                    trans.x(),
-//                                                                    trans.y() +
-//                                                                    0.5f,
-//                                                                    trans.z()),
-//                                                            animationDuration, false)),
-//                                            std::shared_ptr<Animation>(
-//                                                    new ScaleAnimation(
-//                                                            elementCT,
-//                                                            OSG::Vec3f(2, 2, 2),
-//                                                            animationDuration, false))
-//                                    }
-//                            ))
-//            )
-//    );
-//}
-
-//void Scene::unlockEarth() {
-//    unlockElement(earthUnlockedCT);
-//}
-//
-//void Scene::unlockFire() {
-//    unlockElement(fireUnlockedCT);
-//}
-//
-//void Scene::unlockWater() {
-//    unlockElement(waterUnlockedCT);
-//}
-//
-//void Scene::unlockThunder() {
-//    unlockElement(thunderUnlockedCT);
-//}
 
 NodeTransitPtr Scene::buildBezierCurve() const {
     const BezierCurve<> bezier{

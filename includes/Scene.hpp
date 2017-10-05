@@ -11,6 +11,7 @@
 #include <magicvr/node/TrajectoryContainerNode.hpp>
 #include <input/Tracker.hpp>
 #include <magicvr/node/MovableNode.hpp>
+#include <magicvr/animation/BubbleAnimationsNode.hpp>
 
 OSG_USING_NAMESPACE
 
@@ -26,14 +27,7 @@ class Scene {
 //    const ComponentTransformRecPtr waterUnlockedCT;
 //    const ComponentTransformRecPtr thunderUnlockedCT;
 
-    const ComponentTransformRecPtr fireBubbleCT1;
-    const ComponentTransformRecPtr fireBubbleCT2;
-    const ComponentTransformRecPtr fireBubbleCT3;
-    const ComponentTransformRecPtr fireBubbleCT4;
-    const ComponentTransformRecPtr fireBubbleCT5;
-    const ComponentTransformRecPtr fireBubbleCT6;
-    const ComponentTransformRecPtr fireBubbleCT7;
-    const ComponentTransformRecPtr fireBubbleCT8;
+    magicvr::animation::BubbleAnimationsNode _fireBubbles;
 
     const ComponentTransformRecPtr waterBubbleCT1;
     const ComponentTransformRecPtr waterBubbleCT2;
@@ -102,27 +96,6 @@ class Scene {
 
     const NodeRecPtr buildRealWorldScale();
 
-//    void unlockElement(const ComponentTransformRecPtr elementCT);
-
-    const NodeTransitPtr buildFireBubble1() const;
-
-//    const NodeTransitPtr buildBubbles() const;
-
-    const NodeTransitPtr buildFireBubble8() const;
-
-    const NodeTransitPtr buildFireBubble7() const;
-
-    const NodeTransitPtr buildFireBubble6() const;
-
-    const NodeTransitPtr buildFireBubble5() const;
-
-    const NodeTransitPtr buildFireBubble2() const;
-
-    const NodeTransitPtr buildFireBubble3() const;
-
-    const NodeTransitPtr buildFireBubble4() const;
-
-    const NodeTransitPtr buildFireBubbles() const;
 
     const NodeTransitPtr buildWaterBubbles() const;
 
