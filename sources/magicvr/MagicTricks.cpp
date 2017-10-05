@@ -1,8 +1,16 @@
-#include <magicvr/animation/BezierCurve.hpp>
-#include <magicvr/Spiral.hpp>
 #include "magicvr/MagicTricks.hpp"
 
-#include "trajecmp/functional/functional.hpp"
+#include <OpenSG/OSGVector.h>
+#include <OpenSG/OSGQuaternion.h>
+
+#include <range/v3/utility/functional.hpp>
+
+#include <magicvr/animation/BezierCurve.hpp>
+#include <magicvr/Spiral.hpp>
+#include <magicvr/ranges/view/rotate.hpp>
+#include <magicvr/DrawingDirection.hpp>
+
+//#include "trajecmp/functional/functional.hpp"
 #include "trajecmp/distance/modified_hausdorff.hpp"
 #include "trajecmp/geometry/min_bounding_sphere.hpp"
 #include "trajecmp/geometry/vector.hpp"
@@ -21,6 +29,7 @@ namespace magicvr {
         using trajecmp::compare::less_than;
         using trajecmp::compare::match_by;
         using trajecmp::util::subscribe_with_latest_from;
+        using trajecmp::geometry::min_bounding_sphere;
 
         const auto input_trajectory_stream =
                 input_trajectory_subject.get_observable();
@@ -67,24 +76,66 @@ namespace magicvr {
                 rxcpp::observable<>::just(quaterCircleFromAbove.sample(10));
 
         static const auto normalized_size = 100;
-        const auto transform = [=](Trajectory &trajectory) {
-            const auto mbs =
-                    trajecmp::geometry::min_bounding_sphere(trajectory);
+        const auto scale_mbs = [=](auto &mbs) {
             return trajecmp::transform::scale_to_const<normalized_size>(
-                    mbs.radius * 2)(
-                    trajecmp::transform::translate_by(
-                            trajecmp::geometry::negative_vector_of(mbs.center))(
-                            trajectory)
+                    mbs.radius * 2
             );
         };
+        const auto translate_mbs = [=](auto &mbs) {
+            return trajecmp::transform::translate_by(
+                    trajecmp::geometry::negative_vector_of(mbs.center));
+        };
+        const auto rotate_y_with_direction =
+                [=](DrawingDirection drawingDirection) {
+                    return [=](Trajectory &&trajectory) {
+                        const auto first = trajectory.front();
+                        const OSG::Vec3f xzVec(first.x(), 0, first.z());
+                        return trajectory |
+                               magicvr::ranges::view::rotate(
+                                       OSG::Quaternion(
+                                               xzVec,
+                                               OSG::Vec3f(drawingDirection, 0, 0)
+                                       )
+                               ) |
+                               ::ranges::to_vector;
+                    };
+                };
+        const auto transform_with_direction = [&](DrawingDirection drawingDirection) {
+                return [&](Trajectory &trajectory) {
+                    const auto mbs = min_bounding_sphere(trajectory);
+                    return trajectory |
+                           ::ranges::make_pipeable(translate_mbs(mbs)) |
+                           ::ranges::make_pipeable(scale_mbs(mbs)) |
+                           ::ranges::make_pipeable(rotate_y_with_direction(drawingDirection));
+                };
+        };
+        const auto transformWithoutRotation = [&](Trajectory &trajectory) {
+            const auto mbs = min_bounding_sphere(trajectory);
+            return trajectory |
+                   ::ranges::make_pipeable(translate_mbs(mbs)) |
+                   ::ranges::make_pipeable(scale_mbs(mbs));
+        };
 
-        const auto preprocess = [&transform](auto &&trajectory_stream) {
+        const auto make_preprocess = [](auto transform) {
+                return [=](auto &&trajectory_stream) {
+                    return trajectory_stream
+                            .filter(has_min_num_points(2))
+                            .map(transform);
+                };
+        };
+        const auto preprocess_left =
+                make_preprocess(transform_with_direction(LEFT));
+        const auto preprocess_right =
+                make_preprocess(transform_with_direction(RIGHT));
+        const auto preprocessWithoutRotation = [&transformWithoutRotation](auto &&trajectory_stream) {
             return trajectory_stream
                     .filter(has_min_num_points(2))
-                    .map(transform);
+                    .map(transformWithoutRotation);
         };
-        auto preprocessed_input_trajectory_stream =
-                preprocess(input_trajectory_stream);
+        left_preprocessed_input_trajectory_stream =
+                preprocess_left(input_trajectory_stream);
+        right_preprocessed_input_trajectory_stream =
+                preprocess_right(input_trajectory_stream);
 
         const trajecmp::distance::neighbours_percentage_range neighbours(0.1);
         const auto modified_hausdorff =
@@ -93,20 +144,25 @@ namespace magicvr {
                                       less_than(normalized_size * 0.3));
 
         input_matches_pattern_water_stream =
-                compare(preprocessed_input_trajectory_stream,
-                        preprocess(pattern_water_trajectory_stream));
+                compare(right_preprocessed_input_trajectory_stream,
+                        preprocess_right(pattern_water_trajectory_stream));
         input_matches_pattern_wind_stream =
-                compare(preprocessed_input_trajectory_stream,
-                        preprocess(pattern_wind_trajectory_stream));
+                compare(left_preprocessed_input_trajectory_stream,
+                        preprocess_left(pattern_wind_trajectory_stream));
         input_matches_pattern_lightning_stream =
-                compare(preprocessed_input_trajectory_stream,
-                        preprocess(pattern_lightning_trajectory_stream));
+                compare(left_preprocessed_input_trajectory_stream,
+                        preprocess_left(pattern_lightning_trajectory_stream));
         input_matches_pattern_fire_stream =
-                compare(preprocessed_input_trajectory_stream,
-                        preprocess(pattern_fire_trajectory_stream));
+                compare(right_preprocessed_input_trajectory_stream,
+                        preprocess_right(pattern_fire_trajectory_stream));
         input_matches_pattern_quaterCircleFromAbove_stream =
-                compare(preprocessed_input_trajectory_stream,
-                        preprocess(pattern_quaterCircleFromAbove_trajectory_stream));
+                compare(right_preprocessed_input_trajectory_stream,
+                        preprocess_right(
+                                pattern_quaterCircleFromAbove_trajectory_stream));
+        preprocessed_pattern_lightning_trajectory_stream =
+                preprocess_left(pattern_lightning_trajectory_stream);
+        preprocessedWithoutRotation_input_trajectory_stream =
+                preprocessWithoutRotation(input_trajectory_stream);
     }
 
     void MagicTricks::emit(MagicTricks::Trajectory &&trajectory) const {

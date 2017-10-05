@@ -16,10 +16,11 @@ OSG_USING_NAMESPACE
 
 class Scene {
     const NodeRecPtr _root;
-    magicvr::node::TrajectoryContainerNode _shootLightCurve;
-    magicvr::node::MovableNode _shootLightCurve1;
-    magicvr::node::MovableNode _shootLightCurve2;
-    magicvr::node::MovableNode _shootLightCurve3;
+
+    magicvr::node::TrajectoryContainerNode _inputTrajectoryNode;
+    magicvr::node::TrajectoryContainerNode _preprocessedInputTrajectoryNode;
+    magicvr::node::TrajectoryContainerNode _patternTrajectoryNode;
+
 //    const ComponentTransformRecPtr earthUnlockedCT;
 //    const ComponentTransformRecPtr fireUnlockedCT;
 //    const ComponentTransformRecPtr waterUnlockedCT;
@@ -220,6 +221,13 @@ public:
     void shootLight(input::Tracker wand, Vec3f destination);
 
     const NodeTransitPtr buildScenesModels();
+
+    void showInputTrajectory(std::vector<OSG::Vec3f> &&trajectory);
+
+    void showPreprocessedInputTrajectory(std::vector<OSG::Vec3f> &&trajectory);
+
+    void showPatternTrajectory(std::vector<OSG::Vec3f> &&trajectory);
+
 };
 
 
