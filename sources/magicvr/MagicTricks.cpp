@@ -1,8 +1,15 @@
-#include <magicvr/animation/BezierCurve.hpp>
-#include <magicvr/Spiral.hpp>
 #include "magicvr/MagicTricks.hpp"
 
-#include "trajecmp/functional/functional.hpp"
+#include <OpenSG/OSGVector.h>
+#include <OpenSG/OSGQuaternion.h>
+
+#include <range/v3/utility/functional.hpp>
+
+#include <magicvr/animation/BezierCurve.hpp>
+#include <magicvr/Spiral.hpp>
+#include <magicvr/ranges/view/rotate.hpp>
+
+//#include "trajecmp/functional/functional.hpp"
 #include "trajecmp/distance/modified_hausdorff.hpp"
 #include "trajecmp/geometry/min_bounding_sphere.hpp"
 #include "trajecmp/geometry/vector.hpp"
@@ -77,13 +84,37 @@ namespace magicvr {
             return trajecmp::transform::translate_by(
                     trajecmp::geometry::negative_vector_of(mbs.center));
         };
+        static const auto rotate_y_using_first_point_and_mbs = [=](auto &mbs) {
+            return [&](Trajectory &&trajectory) {
+                const auto first = trajectory.front();
+                const OSG::Vec2f xzVec(first.x(), first.z());
+                std::cout << "angle: "
+                          << OSG::osgRad2Degree(
+                                  xzVec.enclosedAngle(OSG::Vec2f(1, 0)))
+                          << '\n';
+                return trajectory |
+                       magicvr::ranges::view::rotate(
+                               OSG::Quaternion(
+                                       OSG::Vec3f(0, 1, 0),
+                                       xzVec.enclosedAngle(OSG::Vec2f(1, 0))
+                               )
+                       ) |
+                       ::ranges::to_vector;
+            };
+        };
         static const auto transform = [&](Trajectory &trajectory) {
-            using trajecmp::functional::operator|;
             const auto mbs = min_bounding_sphere(trajectory);
-            return trajecmp::functional::pipe(
-                    translate_mbs(mbs),
-                    scale_mbs(mbs)
-            )(trajectory);
+            return trajectory |
+                   ::ranges::make_pipeable(translate_mbs(mbs)) |
+                   ::ranges::make_pipeable(scale_mbs(mbs)) |
+                   ::ranges::make_pipeable(
+                           rotate_y_using_first_point_and_mbs(mbs));
+        };
+        static const auto transformWithoutRotation = [&](Trajectory &trajectory) {
+            const auto mbs = min_bounding_sphere(trajectory);
+            return trajectory |
+                   ::ranges::make_pipeable(translate_mbs(mbs)) |
+                   ::ranges::make_pipeable(scale_mbs(mbs));
         };
 
         static const auto preprocess = [&transform](auto &&trajectory_stream) {
@@ -91,7 +122,12 @@ namespace magicvr {
                     .filter(has_min_num_points(2))
                     .map(transform);
         };
-        auto preprocessed_input_trajectory_stream =
+        static const auto preprocessWithoutRotation = [&transform](auto &&trajectory_stream) {
+            return trajectory_stream
+                    .filter(has_min_num_points(2))
+                    .map(transformWithoutRotation);
+        };
+        preprocessed_input_trajectory_stream =
                 preprocess(input_trajectory_stream);
 
         const trajecmp::distance::neighbours_percentage_range neighbours(0.1);
@@ -116,6 +152,10 @@ namespace magicvr {
                 compare(preprocessed_input_trajectory_stream,
                         preprocess(
                                 pattern_quaterCircleFromAbove_trajectory_stream));
+        preprocessed_pattern_lightning_trajectory_stream =
+                preprocess(pattern_lightning_trajectory_stream);
+        preprocessedWithoutRotation_input_trajectory_stream =
+                preprocessWithoutRotation(input_trajectory_stream);
     }
 
     void MagicTricks::emit(MagicTricks::Trajectory &&trajectory) const {

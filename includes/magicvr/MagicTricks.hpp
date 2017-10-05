@@ -26,6 +26,10 @@ namespace magicvr {
         rxcpp::observable<double> input_matches_pattern_fire_stream;
         rxcpp::observable<double> input_matches_pattern_quaterCircleFromAbove_stream;
 
+        rxcpp::observable<Trajectory> preprocessed_pattern_lightning_trajectory_stream;
+        rxcpp::observable<Trajectory> preprocessedWithoutRotation_input_trajectory_stream;
+        rxcpp::observable<Trajectory> preprocessed_input_trajectory_stream;
+
         MagicTricks();
 
         void emit(Trajectory &&trajectory) const;
