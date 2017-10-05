@@ -87,18 +87,10 @@ namespace magicvr {
         static const auto rotate_y_using_first_point_and_mbs = [=](auto &mbs) {
             return [&](Trajectory &&trajectory) {
                 const auto first = trajectory.front();
-                const OSG::Vec2f xzVec(first.x(), first.z());
-                std::cout << "angle: "
-                          << OSG::osgRad2Degree(
-                                  xzVec.enclosedAngle(OSG::Vec2f(1, 0)))
-                          << '\n';
+                const OSG::Vec3f xzVec(first.x(), 0, first.z());
+                const OSG::Quaternion rotation(xzVec, OSG::Vec3f(1, 0, 0));
                 return trajectory |
-                       magicvr::ranges::view::rotate(
-                               OSG::Quaternion(
-                                       OSG::Vec3f(0, 1, 0),
-                                       xzVec.enclosedAngle(OSG::Vec2f(1, 0))
-                               )
-                       ) |
+                       magicvr::ranges::view::rotate(rotation) |
                        ::ranges::to_vector;
             };
         };
