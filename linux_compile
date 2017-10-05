@@ -5,7 +5,7 @@ if [ ! -d "build_${HOSTNAME}" ]; then
 fi
 cd "build_${HOSTNAME}" && \
 cmake -C ../user.cmake \
-.. && make -j 18 && cd .. && \
+.. && make -j 24 && cd .. && \
 if [ ! -e start_demo_cave ] ; then
 #	echo "#! /bin/bash " > start_demo
 #	echo "./build/main -f config/lrz_cave_vrpn.csm" >> start_demo
