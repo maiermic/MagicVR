@@ -28,7 +28,8 @@ namespace magicvr {
 
         rxcpp::observable<Trajectory> preprocessed_pattern_lightning_trajectory_stream;
         rxcpp::observable<Trajectory> preprocessedWithoutRotation_input_trajectory_stream;
-        rxcpp::observable<Trajectory> preprocessed_input_trajectory_stream;
+        rxcpp::observable<Trajectory> left_preprocessed_input_trajectory_stream;
+        rxcpp::observable<Trajectory> right_preprocessed_input_trajectory_stream;
 
         MagicTricks();
 

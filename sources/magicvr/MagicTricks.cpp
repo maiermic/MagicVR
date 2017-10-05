@@ -8,6 +8,7 @@
 #include <magicvr/animation/BezierCurve.hpp>
 #include <magicvr/Spiral.hpp>
 #include <magicvr/ranges/view/rotate.hpp>
+#include <magicvr/DrawingDirection.hpp>
 
 //#include "trajecmp/functional/functional.hpp"
 #include "trajecmp/distance/modified_hausdorff.hpp"
@@ -84,23 +85,29 @@ namespace magicvr {
             return trajecmp::transform::translate_by(
                     trajecmp::geometry::negative_vector_of(mbs.center));
         };
-        const auto rotate_y_using_first_point_and_mbs = [=](auto &mbs) {
-            return [&](Trajectory &&trajectory) {
-                const auto first = trajectory.front();
-                const OSG::Vec3f xzVec(first.x(), 0, first.z());
-                const OSG::Quaternion rotation(xzVec, OSG::Vec3f(1, 0, 0));
-                return trajectory |
-                       magicvr::ranges::view::rotate(rotation) |
-                       ::ranges::to_vector;
-            };
-        };
-        const auto transform = [&](Trajectory &trajectory) {
-            const auto mbs = min_bounding_sphere(trajectory);
-            return trajectory |
-                   ::ranges::make_pipeable(translate_mbs(mbs)) |
-                   ::ranges::make_pipeable(scale_mbs(mbs)) |
-                   ::ranges::make_pipeable(
-                           rotate_y_using_first_point_and_mbs(mbs));
+        const auto rotate_y_with_direction =
+                [=](DrawingDirection drawingDirection) {
+                    return [&](Trajectory &&trajectory) {
+                        const auto first = trajectory.front();
+                        const OSG::Vec3f xzVec(first.x(), 0, first.z());
+                        return trajectory |
+                               magicvr::ranges::view::rotate(
+                                       OSG::Quaternion(
+                                               xzVec,
+                                               OSG::Vec3f(drawingDirection, 0, 0)
+                                       )
+                               ) |
+                               ::ranges::to_vector;
+                    };
+                };
+        const auto transform_with_direction = [&](DrawingDirection drawingDirection) {
+                return [&](Trajectory &trajectory) {
+                    const auto mbs = min_bounding_sphere(trajectory);
+                    return trajectory |
+                           ::ranges::make_pipeable(translate_mbs(mbs)) |
+                           ::ranges::make_pipeable(scale_mbs(mbs)) |
+                           ::ranges::make_pipeable(rotate_y_with_direction(drawingDirection));
+                };
         };
         const auto transformWithoutRotation = [&](Trajectory &trajectory) {
             const auto mbs = min_bounding_sphere(trajectory);
@@ -109,18 +116,26 @@ namespace magicvr {
                    ::ranges::make_pipeable(scale_mbs(mbs));
         };
 
-        const auto preprocess = [&transform](auto &&trajectory_stream) {
-            return trajectory_stream
-                    .filter(has_min_num_points(2))
-                    .map(transform);
+        const auto make_preprocess = [](auto transform) {
+                return [=](auto &&trajectory_stream) {
+                    return trajectory_stream
+                            .filter(has_min_num_points(2))
+                            .map(transform);
+                };
         };
+        const auto preprocess_left =
+                make_preprocess(transform_with_direction(LEFT));
+        const auto preprocess_right =
+                make_preprocess(transform_with_direction(RIGHT));
         const auto preprocessWithoutRotation = [&transformWithoutRotation](auto &&trajectory_stream) {
             return trajectory_stream
                     .filter(has_min_num_points(2))
                     .map(transformWithoutRotation);
         };
-        preprocessed_input_trajectory_stream =
-                preprocess(input_trajectory_stream);
+        left_preprocessed_input_trajectory_stream =
+                preprocess_left(input_trajectory_stream);
+        right_preprocessed_input_trajectory_stream =
+                preprocess_right(input_trajectory_stream);
 
         const trajecmp::distance::neighbours_percentage_range neighbours(0.1);
         const auto modified_hausdorff =
@@ -129,23 +144,23 @@ namespace magicvr {
                                       less_than(normalized_size * 0.3));
 
         input_matches_pattern_water_stream =
-                compare(preprocessed_input_trajectory_stream,
-                        preprocess(pattern_water_trajectory_stream));
+                compare(right_preprocessed_input_trajectory_stream,
+                        preprocess_right(pattern_water_trajectory_stream));
         input_matches_pattern_wind_stream =
-                compare(preprocessed_input_trajectory_stream,
-                        preprocess(pattern_wind_trajectory_stream));
+                compare(left_preprocessed_input_trajectory_stream,
+                        preprocess_left(pattern_wind_trajectory_stream));
         input_matches_pattern_lightning_stream =
-                compare(preprocessed_input_trajectory_stream,
-                        preprocess(pattern_lightning_trajectory_stream));
+                compare(left_preprocessed_input_trajectory_stream,
+                        preprocess_left(pattern_lightning_trajectory_stream));
         input_matches_pattern_fire_stream =
-                compare(preprocessed_input_trajectory_stream,
-                        preprocess(pattern_fire_trajectory_stream));
+                compare(right_preprocessed_input_trajectory_stream,
+                        preprocess_right(pattern_fire_trajectory_stream));
         input_matches_pattern_quaterCircleFromAbove_stream =
-                compare(preprocessed_input_trajectory_stream,
-                        preprocess(
+                compare(right_preprocessed_input_trajectory_stream,
+                        preprocess_right(
                                 pattern_quaterCircleFromAbove_trajectory_stream));
         preprocessed_pattern_lightning_trajectory_stream =
-                preprocess(pattern_lightning_trajectory_stream);
+                preprocess_left(pattern_lightning_trajectory_stream);
         preprocessedWithoutRotation_input_trajectory_stream =
                 preprocessWithoutRotation(input_trajectory_stream);
     }

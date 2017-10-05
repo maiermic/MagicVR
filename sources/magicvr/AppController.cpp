@@ -64,9 +64,9 @@ AppController::AppController() {
     _tricks.preprocessed_pattern_lightning_trajectory_stream.subscribe([&](Trajectory trajectory) {
         this->scene().showPatternTrajectory(std::move(trajectory));
     });
-    _tricks.preprocessed_input_trajectory_stream.subscribe([&](Trajectory trajectory) {
-        this->scene().showInputTrajectory(std::move(trajectory));
-    });
+//    _tricks.preprocessed_input_trajectory_stream.subscribe([&](Trajectory trajectory) {
+//        this->scene().showInputTrajectory(std::move(trajectory));
+//    });
     _tricks.preprocessedWithoutRotation_input_trajectory_stream.subscribe([&](Trajectory trajectory) {
         this->scene().showPreprocessedInputTrajectory(std::move(trajectory));
     });
