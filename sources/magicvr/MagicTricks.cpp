@@ -87,7 +87,7 @@ namespace magicvr {
         };
         const auto rotate_y_with_direction =
                 [=](DrawingDirection drawingDirection) {
-                    return [&](Trajectory &&trajectory) {
+                    return [=](Trajectory &&trajectory) {
                         const auto first = trajectory.front();
                         const OSG::Vec3f xzVec(first.x(), 0, first.z());
                         return trajectory |
