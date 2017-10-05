@@ -102,94 +102,6 @@ const NodeTransitPtr Scene::buildKapelle() const {
             .node();
 }
 
-const NodeTransitPtr Scene::buildEarthBubbles() const {
-    return ComponentTransformNode()
-            .translate(0, 0.1f, 0)
-            .scale(1)
-            .addChild(buildWindBubble1())
-            .addChild(buildWindBubble2())
-            .addChild(buildWindBubble3())
-            .addChild(buildWindBubble4())
-            .addChild(buildWindBubble5())
-            .addChild(buildWindBubble6())
-            .addChild(buildWindBubble7())
-            .addChild(buildWindBubble8())
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWindBubble1() const {
-    return ComponentTransformNode(windBubbleCT1)
-            .translate(0, 0, 0)
-            .scale(1)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WindBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWindBubble2() const {
-    return ComponentTransformNode(windBubbleCT2)
-            .translate(0, 0, 0)
-            .scale(0.9)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WindBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWindBubble3() const {
-    return ComponentTransformNode(windBubbleCT3)
-            .translate(0, 0, 0)
-            .scale(0.8)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WindBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWindBubble4() const {
-    return ComponentTransformNode(windBubbleCT4)
-            .translate(0, 0, 0)
-            .scale(0.7)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WindBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWindBubble5() const {
-    return ComponentTransformNode(windBubbleCT5)
-            .translate(0, 0, 0)
-            .scale(0.6)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WindBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWindBubble6() const {
-    return ComponentTransformNode(windBubbleCT6)
-            .translate(0, 0, 0)
-            .scale(0.5)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WindBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWindBubble7() const {
-    return ComponentTransformNode(windBubbleCT7)
-            .translate(0, 0, 0)
-            .scale(0.4)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WindBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWindBubble8() const {
-    return ComponentTransformNode(windBubbleCT8)
-            .translate(0, 0, 0)
-            .scale(0.3)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WindBubble))
-            .node();
-}
-
-
 void Scene::animateFireBubbles() {
     _animations.add(std::shared_ptr<Animation>(
             new AnimationContainer(_fireBubbles.animation())
@@ -210,131 +122,7 @@ void Scene::animateThunderBubbles() {
 
 void Scene::animateWindBubbles() {
     _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    windBubbleCT1,
-                                    Vec3f(0, 1, 0),
-                                    3 * 1, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    windBubbleCT1,
-                                    Vec3f(0, 0, 0),
-                                    3 * 1, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    windBubbleCT2,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.9, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    windBubbleCT2,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.9, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    windBubbleCT3,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.8, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    windBubbleCT3,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.8, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    windBubbleCT4,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.7, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    windBubbleCT4,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.7, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    windBubbleCT5,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.6, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    windBubbleCT5,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.6, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    windBubbleCT6,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.5, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    windBubbleCT6,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.5, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    windBubbleCT7,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.4, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    windBubbleCT7,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.4, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    windBubbleCT8,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.3, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    windBubbleCT8,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.3, true))
-            }
+            new AnimationContainer(_windBubbles.animation())
     ));
 }
 
@@ -477,7 +265,7 @@ const NodeTransitPtr Scene::buildWindElementalStone() const {
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_WindStone))
-            .addChild(buildEarthBubbles())
+            .addChild(_windBubbles.node())
             .node();
 }
 
@@ -518,14 +306,16 @@ Scene::Scene() : _animations(ParallelAnimation::DO_NOT_STOP_IF_NO_ANIMATIONS),
                     0.4,
                     0.3
                  }),
-                 windBubbleCT1(ComponentTransformBase::create()),
-                 windBubbleCT2(ComponentTransformBase::create()),
-                 windBubbleCT3(ComponentTransformBase::create()),
-                 windBubbleCT4(ComponentTransformBase::create()),
-                 windBubbleCT5(ComponentTransformBase::create()),
-                 windBubbleCT6(ComponentTransformBase::create()),
-                 windBubbleCT7(ComponentTransformBase::create()),
-                 windBubbleCT8(ComponentTransformBase::create()),
+                 _windBubbles(Path_Model_WindBubble, {
+                    1,
+                    0.9,
+                    0.8,
+                    0.7,
+                    0.6,
+                    0.5,
+                    0.4,
+                    0.3
+                 }),
                  lightBubbleCT(ComponentTransformBase::create()) {
     build();
     update(0);
