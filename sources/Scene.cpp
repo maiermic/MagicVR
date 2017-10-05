@@ -1,5 +1,9 @@
 #include "Scene.hpp"
 #include <OpenSG/OSGSceneFileHandler.h>
+#include <OpenSG/OSGQuaternion.h>
+#include <OpenSG/OSGMaterialGroup.h>
+#include <OpenSG/OSGImage.h>
+#include <OpenSG/OSGSimpleTexturedMaterial.h>
 #include <magicvr/ComponentTransformNode.hpp>
 #include <magicvr/animation/TranslationAnimation.hpp>
 #include <magicvr/animation/BezierCurve.hpp>
@@ -7,6 +11,9 @@
 #include <magicvr/animation/BezierAnimation.hpp>
 #include <magicvr/animation/EaseInOutAnimation.hpp>
 #include <magicvr/Spiral.hpp>
+#include <range/v3/to_container.hpp>
+#include <magicvr/ranges/view/Circle.hpp>
+#include <magicvr/ranges/view/rotate.hpp>
 #include "magicvr/animation/ScaleAnimation.hpp"
 #include "magicvr/animation/SequentialAnimation.hpp"
 #include "PathSettings.hpp"
@@ -17,7 +24,49 @@
 void Scene::build() {
     root()->addChild(buildRealWorldScale());
 //    root()->addChild(buildBezierCurve());
-    root()->addChild(buildSpiral());
+//    root()->addChild(buildSpiral());
+
+    ComponentTransformNode trajectoryNodes;
+    trajectoryNodes.translate(0, 200, -100);
+
+    const SimpleMaterialRecPtr red_material = OSG::SimpleMaterialBase::create();
+    red_material->setDiffuse(Color3f(1,0.4f,0));
+    red_material->setAmbient(Color3f(0.8f, 0.2f, 0.2f));
+    const MaterialGroupRecPtr red_material_group = MaterialGroupBase::create();
+    red_material_group->setMaterial(red_material);
+    const NodeTransitPtr pattern_trajectory_node_with_material = makeNodeFor(red_material_group);
+    pattern_trajectory_node_with_material->addChild(_patternTrajectoryNode.node());
+    trajectoryNodes.addChild(pattern_trajectory_node_with_material);
+
+    const SimpleMaterialRecPtr green_material = OSG::SimpleMaterialBase::create();
+    green_material->setDiffuse(Color3f(0,1, 0.8f));
+    green_material->setAmbient(Color3f(0.2f, 0.8f, 0.2f));
+    const MaterialGroupRecPtr green_material_group = MaterialGroupBase::create();
+    green_material_group->setMaterial(green_material);
+    const NodeTransitPtr input_trajectory_node_with_material = makeNodeFor(green_material_group);
+    input_trajectory_node_with_material->addChild(_inputTrajectoryNode.node());
+    trajectoryNodes.addChild(input_trajectory_node_with_material);
+
+    trajectoryNodes.addChild(_preprocessedInputTrajectoryNode.node());
+//    root()->addChild(_inputTrajectoryNode.node());
+//    root()->addChild(_patternTrajectoryNode.node());
+    root()->addChild(trajectoryNodes.node());
+
+    auto c =
+            magicvr::ranges::view::Circle(100).sample(0, 360, 10) |
+            ranges::view::transform([](OSG::Vec2f v) {
+                return OSG::Vec3f(v.x(), v.y(), 0);
+            }) |
+            magicvr::ranges::view::rotate(
+                    OSG::Quaternion(
+                            OSG::Vec3f(0.f, 1.f, 0.f),
+                            OSG::osgDegree2Rad(90)
+                    )
+            ) |
+            ranges::to_vector;
+//    root()->addChild(
+//            magicvr::node::TrajectoryContainerNode(std::move(c)).node()
+//    );
 }
 
 const NodeTransitPtr Scene::buildStonehenge() const {
@@ -1176,10 +1225,27 @@ NodeTransitPtr Scene::buildSpiral() const {
     return magicvr::node::TrajectoryContainerNode(Spiral().sample()).node();
 }
 
+
 const NodeTransitPtr Scene::buildLightBubble() const {
     return ComponentTransformNode(lightBubbleCT)
             .scale(0.8)
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_ThunderBubble))
             .node();
+}
+
+void Scene::showInputTrajectory(std::vector<OSG::Vec3f> &&trajectory) {
+    _inputTrajectoryNode.trajectory() = trajectory;
+    _inputTrajectoryNode.update();
+}
+
+void Scene::showPreprocessedInputTrajectory(
+        std::vector<OSG::Vec3f> &&trajectory) {
+    _preprocessedInputTrajectoryNode.trajectory() = trajectory;
+    _preprocessedInputTrajectoryNode.update();
+}
+
+void Scene::showPatternTrajectory(std::vector<OSG::Vec3f> &&trajectory) {
+    _patternTrajectoryNode.trajectory() = trajectory;
+    _patternTrajectoryNode.update();
 }
