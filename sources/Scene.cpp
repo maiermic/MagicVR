@@ -18,7 +18,6 @@ void Scene::build() {
     root()->addChild(buildRealWorldScale());
 //    root()->addChild(buildBezierCurve());
     root()->addChild(buildSpiral());
-    root()->addChild(_shootLightCurve.node());
 }
 
 const NodeTransitPtr Scene::buildStonehenge() const {
@@ -941,10 +940,6 @@ void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {
             destination
     };
 
-    _shootLightCurve1.moveTo(worldWandPosition);
-    _shootLightCurve2.moveTo(worldWandPosition + wandDirection);
-    _shootLightCurve3.moveTo(destination);
-
     _animations.add(std::shared_ptr<Animation>(
             new BezierTranslationAnimation(lightBubbleCT, curve, 3)
     ));
@@ -952,9 +947,6 @@ void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {
 
 
 const NodeRecPtr Scene::buildRealWorldScale() {
-    _shootLightCurve1.node(makeBox(0.1, 0.1, 0.1, true, true, true));
-    _shootLightCurve2.node(makeBox(0.1, 0.1, 0.1, true, true, true));
-    _shootLightCurve3.node(makeBox(0.1, 0.1, 0.1, true, true, true));
     /** realWorldScale
      *
      * Models exported from Blender are interpreted to SMALL by the
@@ -973,9 +965,6 @@ const NodeRecPtr Scene::buildRealWorldScale() {
             .scale(100)
             .addChild(buildScenesModels())
             .addChild(buildLightBubble())
-            .addChild(_shootLightCurve1.node())
-            .addChild(_shootLightCurve2.node())
-            .addChild(_shootLightCurve3.node())
             .node();
 }
 

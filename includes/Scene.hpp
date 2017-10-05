@@ -16,10 +16,6 @@ OSG_USING_NAMESPACE
 
 class Scene {
     const NodeRecPtr _root;
-    magicvr::node::TrajectoryContainerNode _shootLightCurve;
-    magicvr::node::MovableNode _shootLightCurve1;
-    magicvr::node::MovableNode _shootLightCurve2;
-    magicvr::node::MovableNode _shootLightCurve3;
 //    const ComponentTransformRecPtr earthUnlockedCT;
 //    const ComponentTransformRecPtr fireUnlockedCT;
 //    const ComponentTransformRecPtr waterUnlockedCT;
