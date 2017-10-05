@@ -71,7 +71,7 @@ void Scene::build() {
 
 const NodeTransitPtr Scene::buildStonehenge() const {
     return ComponentTransformNode()
-            .translate(-2.5f,0,1)
+            .translate(-1.5f,0,-0.5f)
             .scale(1)
 //            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(0)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
@@ -1019,7 +1019,7 @@ const NodeRecPtr Scene::buildRealWorldScale() {
 
 const NodeTransitPtr Scene::buildScenesModels() {
     return ComponentTransformNode()
-            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(210)))
+            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .addChild(buildStonehenge())
 //            .addChild(buildLantern())
 //            .addChild(buildKapelle())
@@ -1043,7 +1043,7 @@ const NodeTransitPtr Scene::buildPedestal() const {
 
 const NodeTransitPtr Scene::buildFrontLeftPedestal() const {
     return ComponentTransformNode()
-            .translate(-0.4f, 0, -1)
+            .translate(-0.4f, 0, -1.05f)
             .addChild(buildPedestal())
             .addChild(buildWaterElementalStone())
             .node();
@@ -1051,7 +1051,7 @@ const NodeTransitPtr Scene::buildFrontLeftPedestal() const {
 
 const NodeTransitPtr Scene::buildFrontRightPedestal() const {
     return ComponentTransformNode()
-            .translate(1.25f, 0, -0.75f)
+            .translate(1.25f, 0, -0.8f)
             .addChild(buildPedestal())
             .addChild(buildFireElementalStone())
             .node();
@@ -1059,7 +1059,7 @@ const NodeTransitPtr Scene::buildFrontRightPedestal() const {
 
 const NodeTransitPtr Scene::buildBackLeftPedestal() const {
     return ComponentTransformNode()
-            .translate(-1.25f, 0, -0.75f)
+            .translate(-1.25f, -0.15f, -1.8f)
             .addChild(buildPedestal())
             .addChild(buildWindElementalStone())
             .node();
@@ -1067,7 +1067,7 @@ const NodeTransitPtr Scene::buildBackLeftPedestal() const {
 
 const NodeTransitPtr Scene::buildBackRightPedestal() const {
     return ComponentTransformNode()
-            .translate(0.4f, 0, -1)
+            .translate(0.4f, 0, -0.75f)
             .addChild(buildPedestal())
             .addChild(buildThunderElementalStone())
             .node();
