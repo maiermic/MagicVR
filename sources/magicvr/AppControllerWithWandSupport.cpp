@@ -39,4 +39,14 @@ namespace magicvr {
         return _movableNode.node(makeNodeFor(geo));;
     }
 
+    void AppControllerWithWandSupport::keyboardDown(unsigned char key, int x,
+                                                    int y) {
+        AppController::keyboardDown(key, x, y);
+        switch (key){
+            case '5':
+                scene().shootLight(_wand.wand,Vec3f(0,0,0));
+                break;
+        }
+    }
+
 }

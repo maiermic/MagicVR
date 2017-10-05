@@ -10,6 +10,8 @@
 #include "magicvr/animation/ScaleAnimation.hpp"
 #include "magicvr/animation/SequentialAnimation.hpp"
 #include "PathSettings.hpp"
+#include <magicvr/animation/BezierTranslationAnimation.hpp>
+#include <input/Tracker.hpp>
 
 void Scene::build() {
     root()->addChild(buildRealWorldScale());
@@ -923,6 +925,22 @@ void Scene::animateWindBubbles() {
     ));
 }
 
+void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination){
+
+    OSG::Vec3f wandDirection;
+
+    BezierCurve<> curve{
+            wand.position,
+            wandDirection,
+            destination,
+            destination
+    };
+
+    _animations.add(std::shared_ptr<Animation>(
+        new BezierTranslationAnimation(lightBubbleCT,curve,3)
+    ));
+}
+
 
 const NodeRecPtr Scene::buildRealWorldScale() const {
     /** realWorldScale
@@ -948,6 +966,7 @@ const NodeRecPtr Scene::buildRealWorldScale() const {
             .addChild(buildFrontRightPedestal())
             .addChild(buildBackLeftPedestal())
             .addChild(buildBackRightPedestal())
+            .addChild(buildLightBubble())
             .node();
 }
 
@@ -1077,7 +1096,8 @@ Scene::Scene() : _animations(ParallelAnimation::DO_NOT_STOP_IF_NO_ANIMATIONS),
                  windBubbleCT5(ComponentTransformBase::create()),
                  windBubbleCT6(ComponentTransformBase::create()),
                  windBubbleCT7(ComponentTransformBase::create()),
-                 windBubbleCT8(ComponentTransformBase::create()) {
+                 windBubbleCT8(ComponentTransformBase::create()),
+                lightBubbleCT(ComponentTransformBase::create()){
     build();
     update(0);
 }
@@ -1143,4 +1163,12 @@ NodeTransitPtr Scene::buildBezierCurve() const {
 
 NodeTransitPtr Scene::buildSpiral() const {
     return magicvr::node::TrajectoryContainerNode(Spiral().sample()).node();
+}
+
+const NodeTransitPtr Scene::buildLightBubble() const {
+    return ComponentTransformNode(lightBubbleCT)
+            .scale(0.8)
+            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
+                    Path_Model_ThunderBubble))
+            .node();
 }

@@ -2,7 +2,7 @@
 // Created by vr2017 on 01.10.17.
 //
 
-#include "BubbleAnimation.hpp"
+#include "magicvr/animation/BubbleAnimation.hpp"
 
 BubbleAnimation::BubbleAnimation(bool stopIfNoAnimations,
                                      std::initializer_list<std::shared_ptr<Animation>> animations)

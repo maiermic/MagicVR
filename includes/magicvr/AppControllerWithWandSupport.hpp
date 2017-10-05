@@ -20,6 +20,8 @@ namespace magicvr {
         AppControllerWithWandSupport(input::RemoteManager &wand);
 
         void display(OSG::Time dTime) override;
+
+        void keyboardDown(unsigned char key, int x, int y) override;
     };
 }
 
