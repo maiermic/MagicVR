@@ -9,6 +9,8 @@
 #include <magicvr/animation/ParallelAnimation.hpp>
 #include <magicvr/ComponentTransformNode.hpp>
 #include <magicvr/node/TrajectoryContainerNode.hpp>
+#include <input/Tracker.hpp>
+#include <magicvr/node/MovableNode.hpp>
 
 OSG_USING_NAMESPACE
 
@@ -60,6 +62,7 @@ class Scene {
     const ComponentTransformRecPtr windBubbleCT7;
     const ComponentTransformRecPtr windBubbleCT8;
 
+    const ComponentTransformRecPtr lightBubbleCT;
 
 
 
@@ -97,7 +100,7 @@ class Scene {
 
     const NodeTransitPtr buildFrontRightPedestal() const;
 
-    const NodeRecPtr buildRealWorldScale() const;
+    const NodeRecPtr buildRealWorldScale();
 
 //    void unlockElement(const ComponentTransformRecPtr elementCT);
 
@@ -175,6 +178,8 @@ class Scene {
 
     const NodeTransitPtr buildWindBubble1() const;
 
+    const NodeTransitPtr buildLightBubble() const;
+
     const NodeTransitPtr buildPedestal() const;
 
 public:
@@ -213,11 +218,16 @@ public:
 
     NodeTransitPtr buildSpiral() const;
 
+    void shootLight(input::Tracker wand, Vec3f destination);
+
+    const NodeTransitPtr buildScenesModels();
+
     void showInputTrajectory(std::vector<OSG::Vec3f> &&trajectory);
 
     void showPreprocessedInputTrajectory(std::vector<OSG::Vec3f> &&trajectory);
 
     void showPatternTrajectory(std::vector<OSG::Vec3f> &&trajectory);
+
 };
 
 

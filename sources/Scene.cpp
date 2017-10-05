@@ -17,6 +17,9 @@
 #include "magicvr/animation/ScaleAnimation.hpp"
 #include "magicvr/animation/SequentialAnimation.hpp"
 #include "PathSettings.hpp"
+#include <magicvr/animation/BezierTranslationAnimation.hpp>
+#include <input/Tracker.hpp>
+#include <OpenSG/OSGSimpleGeometry.h>
 
 void Scene::build() {
     root()->addChild(buildRealWorldScale());
@@ -68,8 +71,7 @@ void Scene::build() {
 
 const NodeTransitPtr Scene::buildStonehenge() const {
     return ComponentTransformNode()
-            .translate(-1, 0, -2)
-            .translate(-1,0.5,-2)
+            .translate(-1, 0.5, -2)
             .scale(0.02f)
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(95)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
@@ -79,7 +81,7 @@ const NodeTransitPtr Scene::buildStonehenge() const {
 
 const NodeTransitPtr Scene::buildLantern() const {
     return ComponentTransformNode()
-            .translate(0,0,0)
+            .translate(0, 0, 0)
             .scale(0.1f)
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_Lantern))
@@ -91,7 +93,7 @@ const NodeTransitPtr Scene::buildKapelle() const {
             /* TODO: Decide for position
              * */
 //            .translate(0,-0.17f,1.8)
-            .translate(0,-0.35f,5)
+            .translate(0, -0.35f, 5)
             .scale(12)
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(90)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
@@ -973,8 +975,27 @@ void Scene::animateWindBubbles() {
     ));
 }
 
+void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {
 
-const NodeRecPtr Scene::buildRealWorldScale() const {
+    OSG::Vec3f wandDirection;
+    wand.orientation.multVec(OSG::Vec3f(0, 0, -1), wandDirection);
+    wandDirection.normalize();
+
+    auto worldWandPosition = wand.position / 100;
+    BezierCurve<> curve{
+            worldWandPosition,
+            worldWandPosition + wandDirection,
+            destination,
+            destination
+    };
+
+    _animations.add(std::shared_ptr<Animation>(
+            new BezierTranslationAnimation(lightBubbleCT, curve, 3)
+    ));
+}
+
+
+const NodeRecPtr Scene::buildRealWorldScale() {
     /** realWorldScale
      *
      * Models exported from Blender are interpreted to SMALL by the
@@ -989,8 +1010,16 @@ const NodeRecPtr Scene::buildRealWorldScale() const {
      * Since we have a not working Beamer on the right side
      * of the cave, meanwhile turn the complete scene about 30° to the left */
     return ComponentTransformNode()
-            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
+//            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .scale(100)
+            .addChild(buildScenesModels())
+            .addChild(buildLightBubble())
+            .node();
+}
+
+const NodeTransitPtr Scene::buildScenesModels() {
+    return ComponentTransformNode()
+            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(210)))
             .addChild(buildStonehenge())
 //            .addChild(buildLantern())
 //            .addChild(buildKapelle())
@@ -1127,7 +1156,8 @@ Scene::Scene() : _animations(ParallelAnimation::DO_NOT_STOP_IF_NO_ANIMATIONS),
                  windBubbleCT5(ComponentTransformBase::create()),
                  windBubbleCT6(ComponentTransformBase::create()),
                  windBubbleCT7(ComponentTransformBase::create()),
-                 windBubbleCT8(ComponentTransformBase::create()) {
+                 windBubbleCT8(ComponentTransformBase::create()),
+                 lightBubbleCT(ComponentTransformBase::create()) {
     build();
     update(0);
 }
@@ -1193,6 +1223,15 @@ NodeTransitPtr Scene::buildBezierCurve() const {
 
 NodeTransitPtr Scene::buildSpiral() const {
     return magicvr::node::TrajectoryContainerNode(Spiral().sample()).node();
+}
+
+
+const NodeTransitPtr Scene::buildLightBubble() const {
+    return ComponentTransformNode(lightBubbleCT)
+            .scale(0.8)
+            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
+                    Path_Model_ThunderBubble))
+            .node();
 }
 
 void Scene::showInputTrajectory(std::vector<OSG::Vec3f> &&trajectory) {
