@@ -45,6 +45,7 @@ Scene &AppController::scene() {
 }
 
 AppController::AppController() {
+    using Trajectory = std::vector<OSG::Vec3f>;
     _tricks.input_matches_pattern_lightning_stream.subscribe([&](double distance) {
         this->scene().animateThunderBubbles();
     });
@@ -59,5 +60,14 @@ AppController::AppController() {
     });
     _tricks.input_matches_pattern_quaterCircleFromAbove_stream.subscribe([&](double distance) {
         this->scene().animateWindBubbles();
+    });
+    _tricks.preprocessed_pattern_lightning_trajectory_stream.subscribe([&](Trajectory trajectory) {
+        this->scene().showPatternTrajectory(std::move(trajectory));
+    });
+//    _tricks.preprocessed_input_trajectory_stream.subscribe([&](Trajectory trajectory) {
+//        this->scene().showInputTrajectory(std::move(trajectory));
+//    });
+    _tricks.preprocessedWithoutRotation_input_trajectory_stream.subscribe([&](Trajectory trajectory) {
+        this->scene().showPreprocessedInputTrajectory(std::move(trajectory));
     });
 }
