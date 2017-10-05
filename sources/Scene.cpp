@@ -23,28 +23,31 @@ void Scene::build() {
 //    root()->addChild(buildBezierCurve());
 //    root()->addChild(buildSpiral());
 
+    ComponentTransformNode trajectoryNodes;
+    trajectoryNodes.translate(0, 200, -100);
 
     const SimpleMaterialRecPtr red_material = OSG::SimpleMaterialBase::create();
     red_material->setDiffuse(Color3f(1,0.4f,0));
     red_material->setAmbient(Color3f(0.8f, 0.2f, 0.2f));
     const MaterialGroupRecPtr red_material_group = MaterialGroupBase::create();
     red_material_group->setMaterial(red_material);
-    const NodeRecPtr pattern_trajectory_node_with_material = makeNodeFor(red_material_group);
+    const NodeTransitPtr pattern_trajectory_node_with_material = makeNodeFor(red_material_group);
     pattern_trajectory_node_with_material->addChild(_patternTrajectoryNode.node());
-    root()->addChild(pattern_trajectory_node_with_material);
+    trajectoryNodes.addChild(pattern_trajectory_node_with_material);
 
     const SimpleMaterialRecPtr green_material = OSG::SimpleMaterialBase::create();
     green_material->setDiffuse(Color3f(0,1, 0.8f));
     green_material->setAmbient(Color3f(0.2f, 0.8f, 0.2f));
     const MaterialGroupRecPtr green_material_group = MaterialGroupBase::create();
     green_material_group->setMaterial(green_material);
-    const NodeRecPtr input_trajectory_node_with_material = makeNodeFor(green_material_group);
+    const NodeTransitPtr input_trajectory_node_with_material = makeNodeFor(green_material_group);
     input_trajectory_node_with_material->addChild(_inputTrajectoryNode.node());
-    root()->addChild(input_trajectory_node_with_material);
+    trajectoryNodes.addChild(input_trajectory_node_with_material);
 
-    root()->addChild(_preprocessedInputTrajectoryNode.node());
+    trajectoryNodes.addChild(_preprocessedInputTrajectoryNode.node());
 //    root()->addChild(_inputTrajectoryNode.node());
 //    root()->addChild(_patternTrajectoryNode.node());
+    root()->addChild(trajectoryNodes.node());
 
     auto c =
             magicvr::ranges::view::Circle(100).sample(0, 360, 10) |
