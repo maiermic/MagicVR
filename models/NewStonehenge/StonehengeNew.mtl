@@ -1,0 +1,98 @@
+# Blender MTL File: 'StonehengeNew.blend'
+# Material Count: 8
+
+newmtl 01___Default
+Ns 9.803922
+Ka 0.588200 0.588200 0.588200
+Kd 0.588200 0.588200 0.588200
+Ks 0.000000 0.000000 0.000000
+Ke 0.588200 0.588200 0.588200
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd textures/terrain_day.jpg
+map_Ka textures/terrain_day.jpg
+
+newmtl 01___Defaultfff
+Ns 9.803922
+Ka 0.588200 0.588200 0.588200
+Kd 0.588200 0.588200 0.588200
+Ks 0.000000 0.000000 0.000000
+Ke 0.588200 0.588200 0.588200
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd textures/close_rocks_day.jpg
+map_Ka textures/close_rocks_day.jpg
+
+newmtl 01___Defaultfffddd
+Ns 9.803922
+Ka 0.588200 0.588200 0.588200
+Kd 0.588200 0.588200 0.588200
+Ks 0.000000 0.000000 0.000000
+Ke 0.588200 0.588200 0.588200
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd textures/small_rocks_day.jpg
+map_Ka textures/small_rocks_day.jpg
+
+newmtl 01___Defaultfffdddddd
+Ns 9.803922
+Ka 0.588200 0.588200 0.588200
+Kd 0.588200 0.588200 0.588200
+Ks 0.000000 0.000000 0.000000
+Ke 0.588200 0.588200 0.588200
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd textures/middle_rocks_day.jpg
+map_Ka textures/middle_rocks_day.jpg
+
+newmtl 01___Defaultfffddddddddd
+Ns 9.803922
+Ka 0.588200 0.588200 0.588200
+Kd 0.588200 0.588200 0.588200
+Ks 0.000000 0.000000 0.000000
+Ke 0.588200 0.588200 0.588200
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd textures/koster.jpg
+map_Ka textures/koster.jpg
+
+newmtl 01___Defaultfffff
+Ns 9.803922
+Ka 0.588200 0.588200 0.588200
+Kd 0.588200 0.588200 0.588200
+Ks 0.000000 0.000000 0.000000
+Ke 0.588200 0.588200 0.588200
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd textures/far_rocks_day.jpg
+map_Ka textures/far_rocks_day.jpg
+
+newmtl 01___Defaultfffffdddd
+Ns 9.803922
+Ka 0.588200 0.588200 0.588200
+Kd 0.588200 0.588200 0.588200
+Ks 0.000000 0.000000 0.000000
+Ke 0.588200 0.588200 0.588200
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd textures/Bfar_rocks_day.jpg
+map_Ka textures/Bfar_rocks_day.jpg
+
+newmtl 01___Defaultffffffff
+Ns 9.803922
+Ka 0.588200 0.588200 0.588200
+Kd 0.588200 0.588200 0.588200
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd textures/right_rocks_day.jpg
+map_Ka textures/right_rocks_day.jpg

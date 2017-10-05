@@ -11,7 +11,8 @@
 OSG_USING_NAMESPACE
 
 /// 3D Assets
-static const Char8 *Path_Model_Stonehenge = "models/Stonehenge/Stonehenge.obj";
+//static const Char8 *Path_Model_Stonehenge = "models/Stonehenge/Stonehenge.obj";
+static const Char8 *Path_Model_NewStonehenge = "models/NewStonehenge/StonehengeNew.obj";
 static const Char8 *Path_Model_Lantern = "models/Lantern/Lantern.obj";
 static const Char8 *Path_Model_Kapelle = "models/Kapelle/Kapelle.obj";
 
@@ -29,6 +30,7 @@ static const Char8 *Path_Model_WindStone = "models/Stones/Stone_Wind.obj";
 
 
 /// Skybox
+//static const Char8 *Path_Skybox_Root = "skybox/stonehenge_old/";
 //static const Char8 *Path_Skybox_Root = "skybox/stonehenge/";
 static const Char8 *Path_Skybox_Root = "skybox/stonehenge_new/";
 
