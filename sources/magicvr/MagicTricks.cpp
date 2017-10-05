@@ -75,16 +75,16 @@ namespace magicvr {
                 rxcpp::observable<>::just(quaterCircleFromAbove.sample(10));
 
         static const auto normalized_size = 100;
-        static const auto scale_mbs = [=](auto &mbs) {
+        const auto scale_mbs = [=](auto &mbs) {
             return trajecmp::transform::scale_to_const<normalized_size>(
                     mbs.radius * 2
             );
         };
-        static const auto translate_mbs = [=](auto &mbs) {
+        const auto translate_mbs = [=](auto &mbs) {
             return trajecmp::transform::translate_by(
                     trajecmp::geometry::negative_vector_of(mbs.center));
         };
-        static const auto rotate_y_using_first_point_and_mbs = [=](auto &mbs) {
+        const auto rotate_y_using_first_point_and_mbs = [=](auto &mbs) {
             return [&](Trajectory &&trajectory) {
                 const auto first = trajectory.front();
                 const OSG::Vec3f xzVec(first.x(), 0, first.z());
@@ -94,7 +94,7 @@ namespace magicvr {
                        ::ranges::to_vector;
             };
         };
-        static const auto transform = [&](Trajectory &trajectory) {
+        const auto transform = [&](Trajectory &trajectory) {
             const auto mbs = min_bounding_sphere(trajectory);
             return trajectory |
                    ::ranges::make_pipeable(translate_mbs(mbs)) |
@@ -102,19 +102,19 @@ namespace magicvr {
                    ::ranges::make_pipeable(
                            rotate_y_using_first_point_and_mbs(mbs));
         };
-        static const auto transformWithoutRotation = [&](Trajectory &trajectory) {
+        const auto transformWithoutRotation = [&](Trajectory &trajectory) {
             const auto mbs = min_bounding_sphere(trajectory);
             return trajectory |
                    ::ranges::make_pipeable(translate_mbs(mbs)) |
                    ::ranges::make_pipeable(scale_mbs(mbs));
         };
 
-        static const auto preprocess = [&transform](auto &&trajectory_stream) {
+        const auto preprocess = [&transform](auto &&trajectory_stream) {
             return trajectory_stream
                     .filter(has_min_num_points(2))
                     .map(transform);
         };
-        static const auto preprocessWithoutRotation = [&transform](auto &&trajectory_stream) {
+        const auto preprocessWithoutRotation = [&transformWithoutRotation](auto &&trajectory_stream) {
             return trajectory_stream
                     .filter(has_min_num_points(2))
                     .map(transformWithoutRotation);
