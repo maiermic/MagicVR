@@ -54,10 +54,10 @@ void MagicVrCaveGlutFramework::idle() {
     mgr.setTranslation(mgr.getTranslation() + speed * remoteManager.analog_values);
 
     // head light fix (2/3)
-    Matrix4f mat;
-    mat.setRotate(head.orientation);
-    auto dir = mat * Vec3f(0.f, 0.f, 1.f);
-    mainLight->setDirection(dir);
+//    Matrix4f mat;
+//    mat.setRotate(head.orientation);
+//    auto dir = mat * Vec3f(0.f, 0.f, 1.f);
+//    mainLight->setDirection(dir);
 
     commitChanges();
     mgr.redraw();
