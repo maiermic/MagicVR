@@ -28,15 +28,7 @@ class Scene {
 //    const ComponentTransformRecPtr thunderUnlockedCT;
 
     magicvr::animation::BubbleAnimationsNode _fireBubbles;
-
-    const ComponentTransformRecPtr waterBubbleCT1;
-    const ComponentTransformRecPtr waterBubbleCT2;
-    const ComponentTransformRecPtr waterBubbleCT3;
-    const ComponentTransformRecPtr waterBubbleCT4;
-    const ComponentTransformRecPtr waterBubbleCT5;
-    const ComponentTransformRecPtr waterBubbleCT6;
-    const ComponentTransformRecPtr waterBubbleCT7;
-    const ComponentTransformRecPtr waterBubbleCT8;
+    magicvr::animation::BubbleAnimationsNode _waterBubbles;
 
     const ComponentTransformRecPtr thunderBubbleCT1;
     const ComponentTransformRecPtr thunderBubbleCT2;
@@ -97,27 +89,9 @@ class Scene {
     const NodeRecPtr buildRealWorldScale();
 
 
-    const NodeTransitPtr buildWaterBubbles() const;
-
     const NodeTransitPtr buildThunderBubbles() const;
 
     const NodeTransitPtr buildEarthBubbles() const;
-
-    const NodeTransitPtr buildWaterBubble1() const;
-
-    const NodeTransitPtr buildWaterBubble2() const;
-
-    const NodeTransitPtr buildWaterBubble3() const;
-
-    const NodeTransitPtr buildWaterBubble4() const;
-
-    const NodeTransitPtr buildWaterBubble5() const;
-
-    const NodeTransitPtr buildWaterBubble6() const;
-
-    const NodeTransitPtr buildWaterBubble7() const;
-
-    const NodeTransitPtr buildWaterBubble8() const;
 
     const NodeTransitPtr buildThunderBubble8() const;
 

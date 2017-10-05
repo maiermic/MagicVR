@@ -102,21 +102,6 @@ const NodeTransitPtr Scene::buildKapelle() const {
             .node();
 }
 
-const NodeTransitPtr Scene::buildWaterBubbles() const {
-    return ComponentTransformNode()
-            .translate(0, 0.1f, 0)
-            .scale(1)
-            .addChild(buildWaterBubble1())
-            .addChild(buildWaterBubble2())
-            .addChild(buildWaterBubble3())
-            .addChild(buildWaterBubble4())
-            .addChild(buildWaterBubble5())
-            .addChild(buildWaterBubble6())
-            .addChild(buildWaterBubble7())
-            .addChild(buildWaterBubble8())
-            .node();
-}
-
 const NodeTransitPtr Scene::buildThunderBubbles() const {
     return ComponentTransformNode()
             .translate(0, 0.1f, 0)
@@ -146,79 +131,6 @@ const NodeTransitPtr Scene::buildEarthBubbles() const {
             .addChild(buildWindBubble8())
             .node();
 }
-
-const NodeTransitPtr Scene::buildWaterBubble1() const {
-    return ComponentTransformNode(waterBubbleCT1)
-            .translate(0, 0, 0)
-            .scale(1)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WaterBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWaterBubble2() const {
-    return ComponentTransformNode(waterBubbleCT2)
-            .translate(0, 0, 0)
-            .scale(0.9)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WaterBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWaterBubble3() const {
-    return ComponentTransformNode(waterBubbleCT3)
-            .translate(0, 0, 0)
-            .scale(0.8)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WaterBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWaterBubble4() const {
-    return ComponentTransformNode(waterBubbleCT4)
-            .translate(0, 0, 0)
-            .scale(0.7)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WaterBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWaterBubble5() const {
-    return ComponentTransformNode(waterBubbleCT5)
-            .translate(0, 0, 0)
-            .scale(0.6)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WaterBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWaterBubble6() const {
-    return ComponentTransformNode(waterBubbleCT6)
-            .translate(0, 0, 0)
-            .scale(0.5)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WaterBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWaterBubble7() const {
-    return ComponentTransformNode(waterBubbleCT7)
-            .translate(0, 0, 0)
-            .scale(0.4)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WaterBubble))
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWaterBubble8() const {
-    return ComponentTransformNode(waterBubbleCT8)
-            .translate(0, 0, 0)
-            .scale(0.3)
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WaterBubble))
-            .node();
-}
-
 
 const NodeTransitPtr Scene::buildThunderBubble1() const {
     return ComponentTransformNode(thunderBubbleCT1)
@@ -374,131 +286,7 @@ void Scene::animateFireBubbles() {
 
 void Scene::animateWaterBubbles() {
     _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    waterBubbleCT1,
-                                    Vec3f(0, 1, 0),
-                                    3 * 1, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    waterBubbleCT1,
-                                    Vec3f(0, 0, 0),
-                                    3 * 1, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    waterBubbleCT2,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.9, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    waterBubbleCT2,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.9, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    waterBubbleCT3,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.8, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    waterBubbleCT3,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.8, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    waterBubbleCT4,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.7, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    waterBubbleCT4,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.7, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    waterBubbleCT5,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.6, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    waterBubbleCT5,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.6, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    waterBubbleCT6,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.5, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    waterBubbleCT6,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.5, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    waterBubbleCT7,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.4, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    waterBubbleCT7,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.4, true))
-            }
-    ));
-
-    _animations.add(std::shared_ptr<Animation>(
-            new ParallelAnimation{
-                    std::shared_ptr<Animation>(
-                            new TranslationAnimation(
-                                    waterBubbleCT8,
-                                    Vec3f(0, 1, 0),
-                                    3 * 0.3, true)),
-
-                    std::shared_ptr<Animation>(
-                            new ScaleAnimation(
-                                    waterBubbleCT8,
-                                    Vec3f(0, 0, 0),
-                                    3 * 0.3, true))
-            }
+            new AnimationContainer(_waterBubbles.animation())
     ));
 }
 
@@ -879,7 +667,7 @@ const NodeTransitPtr Scene::buildWaterElementalStone() const {
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_WaterStone))
-            .addChild(buildWaterBubbles())
+            .addChild(_waterBubbles.node())
             .node();
 }
 
@@ -922,14 +710,16 @@ Scene::Scene() : _animations(ParallelAnimation::DO_NOT_STOP_IF_NO_ANIMATIONS),
                     0.4,
                     0.3
                  }),
-                 waterBubbleCT1(ComponentTransformBase::create()),
-                 waterBubbleCT2(ComponentTransformBase::create()),
-                 waterBubbleCT3(ComponentTransformBase::create()),
-                 waterBubbleCT4(ComponentTransformBase::create()),
-                 waterBubbleCT5(ComponentTransformBase::create()),
-                 waterBubbleCT6(ComponentTransformBase::create()),
-                 waterBubbleCT7(ComponentTransformBase::create()),
-                 waterBubbleCT8(ComponentTransformBase::create()),
+                 _waterBubbles(Path_Model_WaterBubble, {
+                    1,
+                    0.9,
+                    0.8,
+                    0.7,
+                    0.6,
+                    0.5,
+                    0.4,
+                    0.3
+                 }),
                  thunderBubbleCT1(ComponentTransformBase::create()),
                  thunderBubbleCT2(ComponentTransformBase::create()),
                  thunderBubbleCT3(ComponentTransformBase::create()),
