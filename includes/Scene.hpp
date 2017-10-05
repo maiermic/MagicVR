@@ -10,11 +10,16 @@
 #include <magicvr/ComponentTransformNode.hpp>
 #include <magicvr/node/TrajectoryContainerNode.hpp>
 #include <input/Tracker.hpp>
+#include <magicvr/node/MovableNode.hpp>
 
 OSG_USING_NAMESPACE
 
 class Scene {
     const NodeRecPtr _root;
+    magicvr::node::TrajectoryContainerNode _shootLightCurve;
+    magicvr::node::MovableNode _shootLightCurve1;
+    magicvr::node::MovableNode _shootLightCurve2;
+    magicvr::node::MovableNode _shootLightCurve3;
 //    const ComponentTransformRecPtr earthUnlockedCT;
 //    const ComponentTransformRecPtr fireUnlockedCT;
 //    const ComponentTransformRecPtr waterUnlockedCT;
@@ -94,7 +99,7 @@ class Scene {
 
     const NodeTransitPtr buildFrontRightPedestal() const;
 
-    const NodeRecPtr buildRealWorldScale() const;
+    const NodeRecPtr buildRealWorldScale();
 
 //    void unlockElement(const ComponentTransformRecPtr elementCT);
 
@@ -213,6 +218,8 @@ public:
     NodeTransitPtr buildSpiral() const;
 
     void shootLight(input::Tracker wand, Vec3f destination);
+
+    const NodeTransitPtr buildScenesModels();
 };
 
 

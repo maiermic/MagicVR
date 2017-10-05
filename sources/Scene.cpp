@@ -12,16 +12,18 @@
 #include "PathSettings.hpp"
 #include <magicvr/animation/BezierTranslationAnimation.hpp>
 #include <input/Tracker.hpp>
+#include <OpenSG/OSGSimpleGeometry.h>
 
 void Scene::build() {
     root()->addChild(buildRealWorldScale());
 //    root()->addChild(buildBezierCurve());
     root()->addChild(buildSpiral());
+    root()->addChild(_shootLightCurve.node());
 }
 
 const NodeTransitPtr Scene::buildStonehenge() const {
     return ComponentTransformNode()
-            .translate(-1,0.5,-2)
+            .translate(-1, 0.5, -2)
             .scale(0.02f)
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(95)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
@@ -31,7 +33,7 @@ const NodeTransitPtr Scene::buildStonehenge() const {
 
 const NodeTransitPtr Scene::buildLantern() const {
     return ComponentTransformNode()
-            .translate(0,0,0)
+            .translate(0, 0, 0)
             .scale(0.1f)
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_Lantern))
@@ -43,7 +45,7 @@ const NodeTransitPtr Scene::buildKapelle() const {
             /* TODO: Decide for position
              * */
 //            .translate(0,-0.17f,1.8)
-            .translate(0,-0.35f,5)
+            .translate(0, -0.35f, 5)
             .scale(12)
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(90)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
@@ -291,7 +293,7 @@ const NodeTransitPtr Scene::buildThunderBubble4() const {
             .translate(0, 0, 0)
             .scale(0.7)
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                            Path_Model_ThunderBubble))
+                    Path_Model_ThunderBubble))
             .node();
 }
 
@@ -925,24 +927,34 @@ void Scene::animateWindBubbles() {
     ));
 }
 
-void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination){
+void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {
 
     OSG::Vec3f wandDirection;
+    wand.orientation.multVec(OSG::Vec3f(0, 0, -1), wandDirection);
+    wandDirection.normalize();
 
+    auto worldWandPosition = wand.position / 100;
     BezierCurve<> curve{
-            wand.position,
-            wandDirection,
+            worldWandPosition,
+            worldWandPosition + wandDirection,
             destination,
             destination
     };
 
+    _shootLightCurve1.moveTo(worldWandPosition);
+    _shootLightCurve2.moveTo(worldWandPosition + wandDirection);
+    _shootLightCurve3.moveTo(destination);
+
     _animations.add(std::shared_ptr<Animation>(
-        new BezierTranslationAnimation(lightBubbleCT,curve,3)
+            new BezierTranslationAnimation(lightBubbleCT, curve, 3)
     ));
 }
 
 
-const NodeRecPtr Scene::buildRealWorldScale() const {
+const NodeRecPtr Scene::buildRealWorldScale() {
+    _shootLightCurve1.node(makeBox(0.1, 0.1, 0.1, true, true, true));
+    _shootLightCurve2.node(makeBox(0.1, 0.1, 0.1, true, true, true));
+    _shootLightCurve3.node(makeBox(0.1, 0.1, 0.1, true, true, true));
     /** realWorldScale
      *
      * Models exported from Blender are interpreted to SMALL by the
@@ -957,8 +969,19 @@ const NodeRecPtr Scene::buildRealWorldScale() const {
      * Since we have a not working Beamer on the right side
      * of the cave, meanwhile turn the complete scene about 30° to the left */
     return ComponentTransformNode()
-            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
+//            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .scale(100)
+            .addChild(buildScenesModels())
+            .addChild(buildLightBubble())
+            .addChild(_shootLightCurve1.node())
+            .addChild(_shootLightCurve2.node())
+            .addChild(_shootLightCurve3.node())
+            .node();
+}
+
+const NodeTransitPtr Scene::buildScenesModels() {
+    return ComponentTransformNode()
+            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(210)))
             .addChild(buildStonehenge())
 //            .addChild(buildLantern())
 //            .addChild(buildKapelle())
@@ -966,7 +989,6 @@ const NodeRecPtr Scene::buildRealWorldScale() const {
             .addChild(buildFrontRightPedestal())
             .addChild(buildBackLeftPedestal())
             .addChild(buildBackRightPedestal())
-            .addChild(buildLightBubble())
             .node();
 }
 
@@ -1097,7 +1119,7 @@ Scene::Scene() : _animations(ParallelAnimation::DO_NOT_STOP_IF_NO_ANIMATIONS),
                  windBubbleCT6(ComponentTransformBase::create()),
                  windBubbleCT7(ComponentTransformBase::create()),
                  windBubbleCT8(ComponentTransformBase::create()),
-                lightBubbleCT(ComponentTransformBase::create()){
+                 lightBubbleCT(ComponentTransformBase::create()) {
     build();
     update(0);
 }
