@@ -206,6 +206,11 @@ public:
 
     void animateWindBubbles();
 
+    const NodeTransitPtr buildKapelle() const;
+
+
+    const NodeTransitPtr buildLantern() const;
+
     NodeTransitPtr buildSpiral() const;
 
     void showInputTrajectory(std::vector<OSG::Vec3f> &&trajectory);

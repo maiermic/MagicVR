@@ -69,10 +69,33 @@ void Scene::build() {
 const NodeTransitPtr Scene::buildStonehenge() const {
     return ComponentTransformNode()
             .translate(-1, 0, -2)
+            .translate(-1,0.5,-2)
             .scale(0.02f)
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(95)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_Stonehenge))
+            .node();
+}
+
+const NodeTransitPtr Scene::buildLantern() const {
+    return ComponentTransformNode()
+            .translate(0,0,0)
+            .scale(0.1f)
+            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
+                    Path_Model_Lantern))
+            .node();
+}
+
+const NodeTransitPtr Scene::buildKapelle() const {
+    return ComponentTransformNode()
+            /* TODO: Decide for position
+             * */
+//            .translate(0,-0.17f,1.8)
+            .translate(0,-0.35f,5)
+            .scale(12)
+            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(90)))
+            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
+                    Path_Model_Kapelle))
             .node();
 }
 
@@ -969,6 +992,8 @@ const NodeRecPtr Scene::buildRealWorldScale() const {
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .scale(100)
             .addChild(buildStonehenge())
+//            .addChild(buildLantern())
+//            .addChild(buildKapelle())
             .addChild(buildFrontLeftPedestal())
             .addChild(buildFrontRightPedestal())
             .addChild(buildBackLeftPedestal())
