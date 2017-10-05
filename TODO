@@ -1,0 +1,27 @@
+1. beschwörung
+-> erzeugt graue Kugel an wand
+
+2. Element
+-> Kugel wird zu Element
+
+3. Multiplikation
+(-> Mach mehrere Kugeln)
+-> Kugel wird größer
+
+4. Schießen
+-> Schießt X Kugeln
+-> Kugel an wand wird dabei kleiner bis 0
+
+
+Blitz -> Laterne
+Feuer -> Feuerstelle -> entfacht   -> füge mehr FeuerBubblesAnimationen hinzu
+Wind -> Lässt Irgendwas schweben
+Wasser -> Feuerstelle -> löscht -> entferne FeuerBubblesAnimationen
+
+
+FeuerBubblesAnimationen:
+verwaltet alle FeuerBubble Animationen
+
+
+ParallelAnimation startOver _animations;
+counter intensität 0-3 (ComponentTransNode scale)
