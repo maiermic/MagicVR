@@ -142,7 +142,7 @@ void Scene::animateWindBubbles() {
     _windBubbles = AnimationChildNodePtr(
                 new magicvr::animation::AnimationChildNode(
                         _windElementalStone.node(),
-                        createWindBubbles()
+                        createBubblesAnimationNode(Path_Model_WindBubble)
                 )
         );
     _animations.add(_windBubbles);
@@ -368,10 +368,10 @@ magicvr::animation::BubbleAnimationsNode Scene::createWaterBubbles() {
 }
 
 std::shared_ptr<magicvr::animation::BubbleAnimationsNode>
-Scene::createWindBubbles() {
+Scene::createBubblesAnimationNode(Path modelPath) {
     return std::shared_ptr<magicvr::animation::BubbleAnimationsNode>(
             new magicvr::animation::BubbleAnimationsNode(
-                    Path_Model_WindBubble,
+                    modelPath,
                     getBubblesRange()
             )
     );

@@ -21,6 +21,7 @@ OSG_USING_NAMESPACE
 
 class Scene {
     using AnimationChildNodePtr = std::shared_ptr<magicvr::animation::AnimationChildNode>;
+    using Path = const Char8 *;
     const NodeRecPtr _root;
 
     magicvr::node::TrajectoryContainerNode _inputTrajectoryNode;
@@ -143,7 +144,7 @@ public:
     static magicvr::animation::BubbleAnimationsNode createWaterBubbles();
 
     static std::shared_ptr<magicvr::animation::BubbleAnimationsNode>
-    createWindBubbles();
+    createBubblesAnimationNode(Path modelPath);
 
     static magicvr::animation::BubbleAnimationsNode createThunderBubbles();
 
