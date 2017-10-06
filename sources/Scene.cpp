@@ -77,6 +77,7 @@ const NodeTransitPtr Scene::buildStonehenge() const {
 //            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(0)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_NewStonehenge))
+            .addChild(_fire.node().node())
             .node();
 }
 
@@ -100,6 +101,12 @@ const NodeTransitPtr Scene::buildKapelle() const {
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_Kapelle))
             .node();
+}
+
+void Scene::animateFire() {
+    _animations.add(std::shared_ptr<Animation>(
+            new AnimationContainer(_fire.animation())
+    ));
 }
 
 void Scene::animateFireBubbles() {
@@ -232,7 +239,7 @@ const NodeTransitPtr Scene::buildFireElementalStone() const {
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(-30)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_FireStone))
-            .addChild(_fireBubbles.node())
+            .addChild(_fireBubbles.node().node())
             .node();
 }
 
@@ -243,7 +250,7 @@ const NodeTransitPtr Scene::buildWaterElementalStone() const {
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_WaterStone))
-            .addChild(_waterBubbles.node())
+            .addChild(_waterBubbles.node().node())
             .node();
 }
 
@@ -254,7 +261,7 @@ const NodeTransitPtr Scene::buildThunderElementalStone() const {
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(-30)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_ThunderStone))
-            .addChild(_thunderBubbles.node())
+            .addChild(_thunderBubbles.node().node())
             .node();
 }
 
@@ -265,7 +272,7 @@ const NodeTransitPtr Scene::buildWindElementalStone() const {
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_WindStone))
-            .addChild(_windBubbles.node())
+            .addChild(_windBubbles.node().node())
             .node();
 }
 

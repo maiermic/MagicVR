@@ -12,6 +12,7 @@
 #include <input/Tracker.hpp>
 #include <magicvr/node/MovableNode.hpp>
 #include <magicvr/animation/BubbleAnimationsNode.hpp>
+#include <magicvr/animation/FireAnimationNode.hpp>
 
 OSG_USING_NAMESPACE
 
@@ -26,6 +27,8 @@ class Scene {
 //    const ComponentTransformRecPtr fireUnlockedCT;
 //    const ComponentTransformRecPtr waterUnlockedCT;
 //    const ComponentTransformRecPtr thunderUnlockedCT;
+
+    magicvr::animation::FireAnimationNode _fire;
 
     magicvr::animation::BubbleAnimationsNode _fireBubbles;
     magicvr::animation::BubbleAnimationsNode _waterBubbles;
@@ -96,6 +99,8 @@ public:
 
 
 //    const NodeTransitPtr buildBubble() const;
+
+    void animateFire();
 
     void animateFireBubbles();
 

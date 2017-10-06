@@ -18,6 +18,9 @@ void AppController::keyboardDown(unsigned char key, int x, int y) {
         case '4':
             _scene.animateWindBubbles();
             break;
+        case '5':
+            _scene.animateFire();
+            break;
 
     }
 }

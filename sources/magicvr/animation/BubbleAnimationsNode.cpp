@@ -73,8 +73,12 @@ namespace magicvr { namespace animation {
                ::ranges::to_vector;
     }
 
-    const OSG::NodeRecPtr BubbleAnimationsNode::node() const {
-        return _root.node();
+    ComponentTransformNode BubbleAnimationsNode::node() {
+        return _root;
+    }
+
+    const ComponentTransformNode BubbleAnimationsNode::node() const {
+        return _root;
     }
 
     Animation &BubbleAnimationsNode::animation() {

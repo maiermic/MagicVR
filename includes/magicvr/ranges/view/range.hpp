@@ -26,6 +26,11 @@ namespace magicvr { namespace ranges { namespace view {
                });
     }
 
+    template <class Value>
+    std::vector<Value> rangeV(Value from, Value to, Value stepSize) {
+        return range(from, to, stepSize) | ::ranges::to_vector;
+    }
+
 }}}
 
 #endif //MAGICVR_IRANGE_HPP
