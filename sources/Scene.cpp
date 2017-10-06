@@ -370,3 +370,7 @@ void Scene::showPatternTrajectory(std::vector<OSG::Vec3f> &&trajectory) {
     _patternTrajectoryNode.trajectory() = trajectory;
     _patternTrajectoryNode.update();
 }
+
+magicvr::animation::FireAnimationNode& Scene::fire() {
+    return _fire;
+}

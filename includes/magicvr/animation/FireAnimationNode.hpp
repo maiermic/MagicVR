@@ -11,6 +11,7 @@ namespace magicvr { namespace animation {
     class FireAnimationNode {
         ParallelAnimation _animations;
         ComponentTransformNode _root;
+        float _intensity;
 
         std::vector<BubbleAnimationsNode> _bubbleAnimationNodes;
 
@@ -26,6 +27,10 @@ namespace magicvr { namespace animation {
         const ComponentTransformNode node() const;
 
         Animation &animation();
+
+        float intensity() const;
+
+        void intensity(float intensity);
     };
 
 }}

@@ -21,6 +21,9 @@ void AppController::keyboardDown(unsigned char key, int x, int y) {
         case '5':
             _scene.animateFire();
             break;
+        case '6':
+            _scene.fire().intensity(_scene.fire().intensity() + 0.1f);
+            break;
 
     }
 }

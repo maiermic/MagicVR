@@ -87,6 +87,8 @@ public:
 
     const NodeRecPtr &root() const;
 
+    magicvr::animation::FireAnimationNode& fire();
+
 //    void unlockEarth();
 //
 //    void unlockFire();

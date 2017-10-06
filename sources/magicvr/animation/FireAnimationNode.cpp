@@ -1,4 +1,6 @@
 #include "magicvr/animation/FireAnimationNode.hpp"
+
+#include <algorithm>
 #include <range/v3/utility/functional.hpp>
 #include <range/v3/view/transform.hpp>
 #include <range/v3/view/for_each.hpp>
@@ -13,10 +15,13 @@
 #include <magicvr/ranges/view/range.hpp>
 #include <magicvr/ranges/view/Circle.hpp>
 #include "magicvr/animation/BubbleAnimationsNode.hpp"
+#include "magicvr/util/clamp.hpp"
 
 namespace magicvr { namespace animation {
 
-    FireAnimationNode::FireAnimationNode() : _animations(false) {
+    FireAnimationNode::FireAnimationNode()
+            : _animations(false) {
+        intensity(0);
         using magicvr::ranges::view::rangeV;
         magicvr::ranges::view::Circle c(0.1);
         float y = 0.1f;
@@ -71,6 +76,15 @@ namespace magicvr { namespace animation {
                     new AnimationContainer(bubbleAnimation.animation())
             ));
         }
+    }
+
+    float FireAnimationNode::intensity() const {
+        return _intensity;
+    }
+
+    void FireAnimationNode::intensity(float intensity) {
+        _intensity = magicvr::util::clamp(intensity, 0.0f, 1.0f);
+        node().scale(_intensity);
     }
 
 }}
