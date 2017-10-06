@@ -90,6 +90,10 @@ namespace magicvr {
                     return [=](Trajectory &&trajectory) {
                         const auto first = trajectory.front();
                         const OSG::Vec3f xzVec(first.x(), 0, first.z());
+                        if (drawingDirection != LEFT && drawingDirection != RIGHT) {
+                                std::cout << "WARNING: invalid drawing direction: "
+                                          << drawingDirection << '\n';
+                        }
                         return trajectory |
                                magicvr::ranges::view::rotate(
                                        OSG::Quaternion(
@@ -101,7 +105,7 @@ namespace magicvr {
                     };
                 };
         const auto transform_with_direction = [&](DrawingDirection drawingDirection) {
-                return [&](Trajectory &trajectory) {
+                return [=](Trajectory &trajectory) {
                     const auto mbs = min_bounding_sphere(trajectory);
                     return trajectory |
                            ::ranges::make_pipeable(translate_mbs(mbs)) |
