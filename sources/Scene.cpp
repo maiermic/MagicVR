@@ -212,7 +212,7 @@ void Scene::shootBubble(const ComponentTransformRecPtr bubbleCT,
     };
 
     _animations.add(std::shared_ptr<Animation>(
-        new BezierTranslationAnimation(bubbleCT, curve, 3)
+        new magicvr::animation::BezierTranslationAnimation(bubbleCT, curve, 3)
     ));
 }
 

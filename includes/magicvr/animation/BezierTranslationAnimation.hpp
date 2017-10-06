@@ -12,19 +12,22 @@
 #include <magicvr/animation/FracTimeAnimation.hpp>
 #include <magicvr/animation/BezierCurve.hpp>
 
-class BezierTranslationAnimation : public FracTimeAnimation{
+namespace magicvr { namespace animation {
 
-    const OSG::ComponentTransformRecPtr _trans;
-    const BezierCurve<> _bezier;
+    class BezierTranslationAnimation : public FracTimeAnimation {
 
-public:
+        const OSG::ComponentTransformRecPtr _trans;
+        const BezierCurve<> _bezier;
 
-    BezierTranslationAnimation(const OSG::ComponentTransformRecPtr trans,
-                         BezierCurve<> bezier,
-                         OSG::Time duration);
+    public:
 
-    void animateFracTime(OSG::Time fracTime) override;
-};
+        BezierTranslationAnimation(const OSG::ComponentTransformRecPtr trans,
+                                   BezierCurve<> bezier,
+                                   OSG::Time duration);
 
+        void animateFracTime(OSG::Time fracTime) override;
+    };
+
+}}
 
 #endif //MAGICVR_BEZIERTRANSLATIONANIMATION_HPP
