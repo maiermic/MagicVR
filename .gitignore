@@ -83,5 +83,4 @@ fabric.properties
 doc/**/*.gz
 doc/**/*.out
 doc/**/*.aux
-doc/**/*.pdf
 doc/**/*.log
