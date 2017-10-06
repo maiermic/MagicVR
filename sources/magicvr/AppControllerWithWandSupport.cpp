@@ -43,8 +43,11 @@ namespace magicvr {
                                                     int y) {
         AppController::keyboardDown(key, x, y);
         switch (key){
-            case '5':
+            case 'l':
                 scene().shootLight(_wand.wand,Vec3f(0,0,0));
+                break;
+            case '~':
+                scene().shootWater(_wand.wand,Vec3f(0,0,0));
                 break;
         }
     }

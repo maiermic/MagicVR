@@ -84,6 +84,7 @@ const NodeTransitPtr Scene::buildStonehenge() const {
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_NewStonehenge))
             .addChild(_fire.node().node())
+            .addChild(buildWaterBubble())
             .node();
 }
 
@@ -188,6 +189,15 @@ void Scene::animateWindBubbles() {
 }
 
 void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {
+    shootBubble(lightBubbleCT, wand, destination);
+}
+
+void Scene::shootWater(input::Tracker wand, OSG::Vec3f destination) {
+    shootBubble(waterBubbleCT, wand, destination);
+}
+
+void Scene::shootBubble(const ComponentTransformRecPtr bubbleCT,
+                        input::Tracker wand, OSG::Vec3f destination) {
 
     OSG::Vec3f wandDirection;
     wand.orientation.multVec(OSG::Vec3f(0, 0, -1), wandDirection);
@@ -201,13 +211,8 @@ void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {
             destination
     };
 
-    std::cout << "worldWandPosition = " << worldWandPosition << '\n'
-              << "(worldWandPosition + wandDirection) = " << (worldWandPosition + wandDirection) << '\n'
-              << "destination = " << destination << '\n'
-              << '\n';
-
-            _animations.add(std::shared_ptr<Animation>(
-            new BezierTranslationAnimation(lightBubbleCT, curve, 3)
+    _animations.add(std::shared_ptr<Animation>(
+        new BezierTranslationAnimation(bubbleCT, curve, 3)
     ));
 }
 
@@ -316,7 +321,8 @@ Scene::Scene()
           _waterBubbles(nullptr),
           _thunderBubbles(nullptr),
           _windBubbles(nullptr),
-          lightBubbleCT(ComponentTransformBase::create()) {
+          lightBubbleCT(ComponentTransformBase::create()),
+          waterBubbleCT(ComponentTransformBase::create()) {
     build();
     update(0);
 }
@@ -345,6 +351,14 @@ const NodeTransitPtr Scene::buildLightBubble() const {
             .scale(0.8)
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_ThunderBubble))
+            .node();
+}
+
+const NodeTransitPtr Scene::buildWaterBubble() const {
+    return ComponentTransformNode(waterBubbleCT)
+            .scale(0.8)
+            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
+                    Path_Model_WaterBubble))
             .node();
 }
 

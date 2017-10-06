@@ -42,16 +42,20 @@ namespace magicvr {
     void AppControllerWithLeapSupport::keyboardDown(unsigned char key, int x,
                                                     int y) {
         AppController::keyboardDown(key, x, y);
+        input::Tracker wand {
+                {150, 150, 0},
+                OSG::Quaternion({0, 0, -1}, OSG::osgDegree2Rad(90))
+        };
+        Vec3f destination(0, 0, 0);
         switch (key) {
             case ' ':
                 _isRecordingTrajectory = true;
                 break;
             case 'l':
-                input::Tracker wand {
-                        {150, 150, 0},
-                        OSG::Quaternion({0, 0, -1}, OSG::osgDegree2Rad(90))
-                };
-                scene().shootLight(wand,Vec3f(0,0,0));
+                scene().shootLight(wand, destination);
+                break;
+            case '~':
+                scene().shootWater(wand, destination);
                 break;
         }
     }

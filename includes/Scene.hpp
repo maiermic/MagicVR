@@ -47,6 +47,7 @@ class Scene {
     AnimationPtr _windBubbles;
 
     const ComponentTransformRecPtr lightBubbleCT;
+    const ComponentTransformRecPtr waterBubbleCT;
 
 
 
@@ -85,6 +86,8 @@ class Scene {
 
     const NodeTransitPtr buildPedestal() const;
 
+    void shootBubble(const ComponentTransformRecPtr bubbleCT,
+                            input::Tracker wand, OSG::Vec3f destination);
 public:
 
     Scene();
@@ -138,6 +141,8 @@ public:
 
     void shootLight(input::Tracker wand, Vec3f destination);
 
+    void shootWater(input::Tracker wand, Vec3f destination);
+
     const NodeTransitPtr buildScenesModels();
 
     void showInputTrajectory(std::vector<OSG::Vec3f> &&trajectory);
@@ -155,6 +160,8 @@ public:
                         NodeTransitPtr elementalStone);
 
     bool areBubblesRunning(const AnimationPtr bubbles) const;
+
+    const NodeTransitPtr buildWaterBubble() const;
 };
 
 
