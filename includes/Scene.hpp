@@ -29,6 +29,9 @@ class Scene {
     magicvr::node::TrajectoryContainerNode _preprocessedInputTrajectoryNode;
     magicvr::node::TrajectoryContainerNode _patternTrajectoryNode;
 
+    OSG::NodeRecPtr _stonehenge;
+    OSG::NodeRecPtr _realWorldScale;
+
     ComponentTransformNode _fireElementalStone;
     ComponentTransformNode _waterElementalStone;
     ComponentTransformNode _thunderElementalStone;
@@ -45,9 +48,6 @@ class Scene {
     AnimationPtr _waterBubbles;
     AnimationPtr _thunderBubbles;
     AnimationPtr _windBubbles;
-
-    const ComponentTransformRecPtr lightBubbleCT;
-    const ComponentTransformRecPtr waterBubbleCT;
 
 
 
@@ -82,12 +82,14 @@ class Scene {
 
     const NodeRecPtr buildRealWorldScale();
 
-    const NodeTransitPtr buildLightBubble() const;
+    ComponentTransformNode buildLightBubble() const;
 
     const NodeTransitPtr buildPedestal() const;
 
-    void shootBubble(const ComponentTransformRecPtr bubbleCT,
+    void shootBubble(ComponentTransformNode bubbleCT,
+                            OSG::NodeRecPtr parent,
                             input::Tracker wand, OSG::Vec3f destination);
+
 public:
 
     Scene();
@@ -161,7 +163,7 @@ public:
 
     bool areBubblesRunning(const AnimationPtr bubbles) const;
 
-    const NodeTransitPtr buildWaterBubble() const;
+    ComponentTransformNode buildWaterBubble() const;
 };
 
 

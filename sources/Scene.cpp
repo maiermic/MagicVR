@@ -24,9 +24,10 @@
 #include <magicvr/animation/OnStopAnimation.hpp>
 #include <magicvr/animation/AnimationChildNode.hpp>
 #include <magicvr/animation/MaxTimeAnimation.hpp>
+#include <magicvr/animation/BezierTranslationAnimationNode.hpp>
 
 void Scene::build() {
-    root()->addChild(buildRealWorldScale());
+    root()->addChild(_realWorldScale);
 //    root()->addChild(buildBezierCurve());
 //    root()->addChild(buildSpiral());
 
@@ -84,7 +85,6 @@ const NodeTransitPtr Scene::buildStonehenge() const {
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_NewStonehenge))
             .addChild(_fire.node().node())
-            .addChild(buildWaterBubble())
             .node();
 }
 
@@ -189,15 +189,17 @@ void Scene::animateWindBubbles() {
 }
 
 void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {
-    shootBubble(lightBubbleCT, wand, destination);
+    shootBubble(buildLightBubble(), _realWorldScale, wand, destination);
 }
 
 void Scene::shootWater(input::Tracker wand, OSG::Vec3f destination) {
-    shootBubble(waterBubbleCT, wand, destination);
+    shootBubble(buildWaterBubble(), _stonehenge, wand, destination);
 }
 
-void Scene::shootBubble(const ComponentTransformRecPtr bubbleCT,
+void Scene::shootBubble(ComponentTransformNode bubbleCT,
+                        OSG::NodeRecPtr parent,
                         input::Tracker wand, OSG::Vec3f destination) {
+    using namespace magicvr::animation;
 
     OSG::Vec3f wandDirection;
     wand.orientation.multVec(OSG::Vec3f(0, 0, -1), wandDirection);
@@ -212,7 +214,12 @@ void Scene::shootBubble(const ComponentTransformRecPtr bubbleCT,
     };
 
     _animations.add(std::shared_ptr<Animation>(
-        new magicvr::animation::BezierTranslationAnimation(bubbleCT, curve, 3)
+            new AnimationChildNode(
+                    parent,
+                    std::shared_ptr<AnimationNode>(
+                            new BezierTranslationAnimationNode(bubbleCT, curve, 3)
+                    )
+            )
     ));
 }
 
@@ -235,14 +242,13 @@ const NodeRecPtr Scene::buildRealWorldScale() {
 //            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .scale(100)
             .addChild(buildScenesModels())
-            .addChild(buildLightBubble())
             .node();
 }
 
 const NodeTransitPtr Scene::buildScenesModels() {
     return ComponentTransformNode()
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
-            .addChild(buildStonehenge())
+            .addChild(_stonehenge)
 //            .addChild(buildLantern())
 //            .addChild(buildKapelle())
             .addChild(buildFrontLeftPedestal())
@@ -320,9 +326,9 @@ Scene::Scene()
           _fireBubbles(nullptr),
           _waterBubbles(nullptr),
           _thunderBubbles(nullptr),
-          _windBubbles(nullptr),
-          lightBubbleCT(ComponentTransformBase::create()),
-          waterBubbleCT(ComponentTransformBase::create()) {
+          _windBubbles(nullptr) {
+    _stonehenge = buildStonehenge();
+    _realWorldScale = buildRealWorldScale();
     build();
     update(0);
 }
@@ -346,20 +352,18 @@ NodeTransitPtr Scene::buildSpiral() const {
 }
 
 
-const NodeTransitPtr Scene::buildLightBubble() const {
-    return ComponentTransformNode(lightBubbleCT)
-            .scale(0.8)
+ComponentTransformNode Scene::buildLightBubble() const {
+    return ComponentTransformNode()
+            .scale(0.8f)
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_ThunderBubble))
-            .node();
+                    Path_Model_ThunderBubble));
 }
 
-const NodeTransitPtr Scene::buildWaterBubble() const {
-    return ComponentTransformNode(waterBubbleCT)
+ComponentTransformNode Scene::buildWaterBubble() const {
+    return ComponentTransformNode()
             .scale(0.8)
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WaterBubble))
-            .node();
+                    Path_Model_WaterBubble));
 }
 
 void Scene::showInputTrajectory(std::vector<OSG::Vec3f> &&trajectory) {
