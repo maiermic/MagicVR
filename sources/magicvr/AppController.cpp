@@ -116,7 +116,7 @@ void AppController::shootWater(input::Tracker wand, OSG::Vec3f destination) {
     scene().shootWater(
             getShootingCurve(wand, destination, 1.0f),
             [&](Scene::AnimationPtr animation) {
-                scene().fire().intensity(scene().fire().intensity() - 0.1f);
+                scene().fire().intensity(scene().fire().intensity() - 0.3f);
             }
     );
 }
