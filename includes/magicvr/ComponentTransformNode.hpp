@@ -26,6 +26,8 @@ public:
 
     ComponentTransformNode &addChild(OSG::NodeTransitPtr child);
 
+    ComponentTransformNode &addChild(OSG::NodeRecPtr child);
+
     const OSG::NodeTransitPtr node() const;
 
     const OSG::ComponentTransformTransitPtr trans() const;

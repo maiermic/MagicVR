@@ -38,3 +38,8 @@ ComponentTransformNode &ComponentTransformNode::addChild(OSG::NodeTransitPtr chi
     node()->addChild(child);
     return *this;
 }
+
+ComponentTransformNode &ComponentTransformNode::addChild(OSG::NodeRecPtr child) {
+    node()->addChild(child);
+    return *this;
+}
