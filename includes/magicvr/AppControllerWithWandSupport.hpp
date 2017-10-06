@@ -25,6 +25,8 @@ namespace magicvr {
         void shootLight();
 
         void shootWater();
+
+        void shootFire();
     };
 }
 

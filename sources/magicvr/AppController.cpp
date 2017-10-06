@@ -53,6 +53,7 @@ Scene &AppController::scene() {
 
 AppController::AppController() {
     using Trajectory = std::vector<OSG::Vec3f>;
+    _scene.animateFire();
     _tricks.input_matches_pattern_lightning_stream.subscribe([&](double distance) {
         this->scene().animateThunderBubbles();
     });
@@ -116,6 +117,15 @@ void AppController::shootWater(input::Tracker wand, OSG::Vec3f destination) {
             getShootingCurve(wand, destination, 1.0f),
             [&](Scene::AnimationPtr animation) {
                 scene().fire().intensity(scene().fire().intensity() - 0.1f);
+            }
+    );
+}
+
+void AppController::shootFire(input::Tracker wand, OSG::Vec3f destination) {
+    scene().shootFire(
+            getShootingCurve(wand, destination, 1.0f),
+            [&](Scene::AnimationPtr animation) {
+                scene().fire().intensity(scene().fire().intensity() + 0.3f);
             }
     );
 }

@@ -20,6 +20,11 @@ namespace magicvr {
                     shootWater();
                     _wandNode.showBulb(node::WATER_BULB);
                 });
+        _tricks.input_matches_pattern_fire_stream.subscribe(
+                [&](double distance) {
+                    shootFire();
+                    _wandNode.showBulb(node::FIRE_BULB);
+                });
     }
 
     void AppControllerWithWandSupport::display(OSG::Time dTime) {
@@ -59,6 +64,10 @@ namespace magicvr {
 
     void AppControllerWithWandSupport::shootWater() {
         AppController::shootWater(_wand.wand, OSG::Vec3f(-1.6f, 0, 0.2));
+    }
+
+    void AppControllerWithWandSupport::shootFire() {
+        AppController::shootFire(_wand.wand, OSG::Vec3f(-1.6f, 0, 0.2));
     }
 
 }

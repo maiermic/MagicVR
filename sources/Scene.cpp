@@ -231,6 +231,25 @@ void Scene::shootWater(const BezierCurve<> &curve, AnimationStopCallback callbac
     ));
 }
 
+void Scene::shootFire(const BezierCurve<> &curve, AnimationStopCallback callback) {
+    using namespace magicvr::animation;
+    _animations.add(std::shared_ptr<Animation>(
+            new OnStopRefAnimation(
+                    std::shared_ptr<Animation>(
+                            new AnimationChildNode(
+                                    _realWorldScale,
+                                    std::shared_ptr<AnimationNode>(
+                                            new BezierTranslationAnimationNode(
+                                                    buildFireBubble(),
+                                                    curve,
+                                                    3
+                                            )
+                                    )
+                            )
+                    ), callback)
+    ));
+}
+
 
 const NodeRecPtr Scene::buildRealWorldScale() {
     /** realWorldScale
@@ -372,6 +391,13 @@ ComponentTransformNode Scene::buildWaterBubble() const {
             .scale(0.8)
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_WaterBubble));
+}
+
+ComponentTransformNode Scene::buildFireBubble() const {
+    return ComponentTransformNode()
+            .scale(0.8)
+            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
+                    Path_Model_FireBubble));
 }
 
 void Scene::showInputTrajectory(std::vector<OSG::Vec3f> &&trajectory) {

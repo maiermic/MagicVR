@@ -146,6 +146,8 @@ public:
 
     void shootWater(const BezierCurve<> &curve, AnimationStopCallback callback);
 
+    void shootFire(const BezierCurve<> &curve, AnimationStopCallback callback);
+
     const NodeTransitPtr buildScenesModels();
 
     void showInputTrajectory(std::vector<OSG::Vec3f> &&trajectory);
@@ -165,6 +167,8 @@ public:
     bool areBubblesRunning(const AnimationPtr bubbles) const;
 
     ComponentTransformNode buildWaterBubble() const;
+
+    ComponentTransformNode buildFireBubble() const;
 
     Vec3f getLanternPosition() const;
 };

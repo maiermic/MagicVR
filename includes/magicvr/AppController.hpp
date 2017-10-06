@@ -44,6 +44,8 @@ public:
     void shootLight(input::Tracker tracker);
 
     void shootWater(input::Tracker tracker, OSG::Vec3f destination);
+
+    void shootFire(input::Tracker tracker, OSG::Vec3f destination);
 };
 
 
