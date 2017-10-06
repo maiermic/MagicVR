@@ -146,6 +146,9 @@ void Scene::stopAnimateWindBubbles() {
 void Scene::animateBubbles(AnimationChildNodePtr &bubbles,
                            Path modelPath,
                            OSG::NodeTransitPtr elementalStoneNode) {
+    if (bubbles && !bubbles->isStopped()) {
+        return;
+    }
     bubbles = AnimationChildNodePtr(
             new magicvr::animation::AnimationChildNode(
                     elementalStoneNode,
