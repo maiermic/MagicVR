@@ -38,7 +38,8 @@ public:
 
     Scene &scene();
 
-    BezierCurve<> getShootingCurve(input::Tracker wand, OSG::Vec3f destination) const;
+    BezierCurve<> getShootingCurve(input::Tracker wand, OSG::Vec3f destination,
+                                       float directionFactor) const;
 
     void shootLight(input::Tracker tracker);
 

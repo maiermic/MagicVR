@@ -79,7 +79,8 @@ AppController::AppController() {
     });
 }
 
-BezierCurve<> AppController::getShootingCurve(input::Tracker wand, OSG::Vec3f destination) const {
+BezierCurve<> AppController::getShootingCurve(input::Tracker wand, OSG::Vec3f destination,
+                                              float directionFactor) const {
     using namespace magicvr::animation;
 
     OSG::Vec3f wandDirection;
@@ -89,7 +90,7 @@ BezierCurve<> AppController::getShootingCurve(input::Tracker wand, OSG::Vec3f de
     auto worldWandPosition = wand.position / 100;
     return BezierCurve<> {
             worldWandPosition,
-            worldWandPosition + wandDirection,
+            worldWandPosition + wandDirection * directionFactor,
             destination,
             destination
     };
@@ -97,7 +98,7 @@ BezierCurve<> AppController::getShootingCurve(input::Tracker wand, OSG::Vec3f de
 
 void AppController::shootLight(input::Tracker wand) {
     scene().shootLight(
-            getShootingCurve(wand, scene().getLanternPosition()),
+            getShootingCurve(wand, scene().getLanternPosition(), 10.0f),
             [](Scene::AnimationPtr animation) {
                 std::cout << "shooted light reached destination\n";
             }
@@ -106,7 +107,7 @@ void AppController::shootLight(input::Tracker wand) {
 
 void AppController::shootWater(input::Tracker wand, OSG::Vec3f destination) {
     scene().shootWater(
-            getShootingCurve(wand, destination),
+            getShootingCurve(wand, destination, 1.0f),
             [&](Scene::AnimationPtr animation) {
                 scene().fire().intensity(scene().fire().intensity() - 0.1f);
             }
