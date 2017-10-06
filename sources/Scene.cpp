@@ -25,6 +25,7 @@
 #include <magicvr/animation/AnimationChildNode.hpp>
 #include <magicvr/animation/MaxTimeAnimation.hpp>
 #include <magicvr/animation/BezierTranslationAnimationNode.hpp>
+#include <magicvr/animation/OnStopRefAnimation.hpp>
 
 void Scene::build() {
     root()->addChild(_realWorldScale);
@@ -191,32 +192,44 @@ void Scene::animateWindBubbles() {
 void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {
     using namespace magicvr::animation;
     _animations.add(std::shared_ptr<Animation>(
-            new AnimationChildNode(
-                    _realWorldScale,
-                    std::shared_ptr<AnimationNode>(
-                            new BezierTranslationAnimationNode(
-                                    buildLightBubble(),
-                                    getShootingCurve(wand, destination),
-                                    3
+            new OnStopRefAnimation(
+                    std::shared_ptr<Animation>(
+                            new AnimationChildNode(
+                                    _realWorldScale,
+                                    std::shared_ptr<AnimationNode>(
+                                            new BezierTranslationAnimationNode(
+                                                    buildLightBubble(),
+                                                    getShootingCurve(wand,
+                                                                     destination),
+                                                    3
+                                            )
+                                    )
                             )
-                    )
-            )
+                    ), []() {
+                        std::cout << "shooted light reached destination\n";
+                    })
     ));
 }
 
 void Scene::shootWater(input::Tracker wand, OSG::Vec3f destination) {
     using namespace magicvr::animation;
     _animations.add(std::shared_ptr<Animation>(
-            new AnimationChildNode(
-                    _realWorldScale,
-                    std::shared_ptr<AnimationNode>(
-                            new BezierTranslationAnimationNode(
-                                    buildWaterBubble(),
-                                    getShootingCurve(wand, destination),
-                                    3
+            new OnStopRefAnimation(
+                    std::shared_ptr<Animation>(
+                            new AnimationChildNode(
+                                    _realWorldScale,
+                                    std::shared_ptr<AnimationNode>(
+                                            new BezierTranslationAnimationNode(
+                                                    buildWaterBubble(),
+                                                    getShootingCurve(wand,
+                                                                     destination),
+                                                    3
+                                            )
+                                    )
                             )
-                    )
-            )
+                    ), []() {
+                        std::cout << "shooted water reached destination\n";
+                    })
     ));
 }
 

@@ -10,6 +10,18 @@ namespace magicvr {
             : _wand(wand) {
         root()->addChild(createMovableNode());
         root()->addChild(_trajectoryNode.node());
+        _tricks.input_matches_pattern_lightning_stream.subscribe(
+                [&](double distance) {
+                    shootLight();
+                });
+        _tricks.input_matches_pattern_water_stream.subscribe(
+                [&](double distance) {
+                    shootWater();
+                });
+    }
+
+    void AppControllerWithWandSupport::shootLight() {
+        scene().shootLight(_wand.wand, Vec3f(0, 0, 0));
     }
 
     void AppControllerWithWandSupport::display(OSG::Time dTime) {
@@ -42,14 +54,18 @@ namespace magicvr {
     void AppControllerWithWandSupport::keyboardDown(unsigned char key, int x,
                                                     int y) {
         AppController::keyboardDown(key, x, y);
-        switch (key){
+        switch (key) {
             case 'l':
-                scene().shootLight(_wand.wand,Vec3f(0,0,0));
+                shootLight();
                 break;
             case '~':
-                scene().shootWater(_wand.wand,Vec3f(-1.6f, 0, 0.2));
+                shootWater();
                 break;
         }
+    }
+
+    void AppControllerWithWandSupport::shootWater() {
+        scene().shootWater(_wand.wand, Vec3f(-1.6f, 0, 0.2));
     }
 
 }
