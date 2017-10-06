@@ -25,6 +25,15 @@ void AppController::keyboardDown(unsigned char key, int x, int y) {
             _scene.fire().intensity(_scene.fire().intensity() + 0.1f);
             break;
         case '7':
+            _scene.stopAnimateFireBubbles();
+            break;
+        case '8':
+            _scene.stopAnimateWaterBubbles();
+            break;
+        case '9':
+            _scene.stopAnimateThunderBubbles();
+            break;
+        case '0':
             _scene.stopAnimateWindBubbles();
             break;
 

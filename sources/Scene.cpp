@@ -116,21 +116,21 @@ void Scene::animateFire() {
 }
 
 void Scene::animateFireBubbles() {
-    _animations.add(std::shared_ptr<Animation>(
-            new AnimationContainer(_fireBubbles.animation())
-    ));
+    animateBubbles(_fireBubbles,
+                   Path_Model_FireBubble,
+                   _fireElementalStone.node());
 }
 
 void Scene::animateWaterBubbles() {
-    _animations.add(std::shared_ptr<Animation>(
-            new AnimationContainer(_waterBubbles.animation())
-    ));
+    animateBubbles(_waterBubbles,
+                   Path_Model_WaterBubble,
+                   _waterElementalStone.node());
 }
 
 void Scene::animateThunderBubbles() {
-    _animations.add(std::shared_ptr<Animation>(
-            new AnimationContainer(_thunderBubbles.animation())
-    ));
+    animateBubbles(_thunderBubbles,
+                   Path_Model_ThunderBubble,
+                   _thunderElementalStone.node());
 }
 
 void Scene::stopAnimateBubbles(Scene::AnimationPtr &bubbles) {
@@ -138,6 +138,18 @@ void Scene::stopAnimateBubbles(Scene::AnimationPtr &bubbles) {
         bubbles->stop();
         bubbles = nullptr;
     }
+}
+
+void Scene::stopAnimateFireBubbles() {
+    stopAnimateBubbles(_fireBubbles);
+}
+
+void Scene::stopAnimateWaterBubbles() {
+    stopAnimateBubbles(_waterBubbles);
+}
+
+void Scene::stopAnimateThunderBubbles() {
+    stopAnimateBubbles(_thunderBubbles);
 }
 
 void Scene::stopAnimateWindBubbles() {
@@ -245,7 +257,7 @@ const NodeTransitPtr Scene::buildFrontLeftPedestal() const {
     return ComponentTransformNode()
             .translate(-0.4f, 0, -1.05f)
             .addChild(buildPedestal())
-            .addChild(buildWaterElementalStone())
+            .addChild(_waterElementalStone.node())
             .node();
 }
 
@@ -253,7 +265,7 @@ const NodeTransitPtr Scene::buildFrontRightPedestal() const {
     return ComponentTransformNode()
             .translate(1.25f, 0, -0.8f)
             .addChild(buildPedestal())
-            .addChild(buildFireElementalStone())
+            .addChild(_fireElementalStone.node())
             .node();
 }
 
@@ -269,51 +281,18 @@ const NodeTransitPtr Scene::buildBackRightPedestal() const {
     return ComponentTransformNode()
             .translate(0.4f, 0, -0.75f)
             .addChild(buildPedestal())
-            .addChild(buildThunderElementalStone())
+            .addChild(_thunderElementalStone.node())
             .node();
 }
 
-
-const NodeTransitPtr Scene::buildFireElementalStone() const {
+ComponentTransformNode
+Scene::createElementalStone(Path modelPath, float rotationAngle) {
     return ComponentTransformNode()
             .translate(0, 1, 0)
             .scale(1)
-            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(-30)))
+            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(rotationAngle)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_FireStone))
-            .addChild(_fireBubbles.node())
-            .node();
-}
-
-const NodeTransitPtr Scene::buildWaterElementalStone() const {
-    return ComponentTransformNode()
-            .translate(0, 1, 0)
-            .scale(1)
-            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WaterStone))
-            .addChild(_waterBubbles.node())
-            .node();
-}
-
-const NodeTransitPtr Scene::buildThunderElementalStone() const {
-    return ComponentTransformNode()
-            .translate(0, 1, 0)
-            .scale(1)
-            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(-30)))
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_ThunderStone))
-            .addChild(_thunderBubbles.node())
-            .node();
-}
-
-ComponentTransformNode Scene::createWindElementalStone() {
-    return ComponentTransformNode()
-            .translate(0, 1, 0)
-            .scale(1)
-            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
-            .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WindStone));
+                    modelPath));
 }
 
 
@@ -321,14 +300,18 @@ void Scene::update(OSG::Time dTime) {
     _animations.animate(dTime);
 }
 
-Scene::Scene() : _animations(ParallelAnimation::DO_NOT_STOP_IF_NO_ANIMATIONS),
-                 _root(makeNodeFor(Group::create())),
-                 _windElementalStone(createWindElementalStone()),
-                 _fireBubbles(createFireBubbles()),
-                 _waterBubbles(createWaterBubbles()),
-                 _thunderBubbles(createThunderBubbles()),
-                 _windBubbles(nullptr),
-                 lightBubbleCT(ComponentTransformBase::create()) {
+Scene::Scene()
+        : _animations(ParallelAnimation::DO_NOT_STOP_IF_NO_ANIMATIONS),
+          _root(makeNodeFor(Group::create())),
+          _windElementalStone(createElementalStone(Path_Model_WindStone, 30)),
+          _fireElementalStone(createElementalStone(Path_Model_FireStone, -30)),
+          _waterElementalStone(createElementalStone(Path_Model_WaterStone, 30)),
+          _thunderElementalStone(createElementalStone(Path_Model_ThunderStone, -30)),
+          _fireBubbles(nullptr),
+          _waterBubbles(nullptr),
+          _thunderBubbles(nullptr),
+          _windBubbles(nullptr),
+          lightBubbleCT(ComponentTransformBase::create()) {
     build();
     update(0);
 }
@@ -380,20 +363,6 @@ magicvr::animation::FireAnimationNode &Scene::fire() {
     return _fire;
 }
 
-magicvr::animation::BubbleAnimationsNode Scene::createFireBubbles() {
-    return magicvr::animation::BubbleAnimationsNode(
-            Path_Model_FireBubble,
-            getBubblesRange()
-    );
-}
-
-magicvr::animation::BubbleAnimationsNode Scene::createWaterBubbles() {
-    return magicvr::animation::BubbleAnimationsNode(
-            Path_Model_WaterBubble,
-            getBubblesRange()
-    );
-}
-
 std::shared_ptr<magicvr::animation::BubbleAnimationsNode>
 Scene::createBubblesAnimationNode(Path modelPath) {
     return std::shared_ptr<magicvr::animation::BubbleAnimationsNode>(
@@ -401,13 +370,6 @@ Scene::createBubblesAnimationNode(Path modelPath) {
                     modelPath,
                     getBubblesRange()
             )
-    );
-}
-
-magicvr::animation::BubbleAnimationsNode Scene::createThunderBubbles() {
-    return magicvr::animation::BubbleAnimationsNode(
-            Path_Model_ThunderBubble,
-            getBubblesRange()
     );
 }
 

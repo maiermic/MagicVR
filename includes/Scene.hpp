@@ -29,6 +29,9 @@ class Scene {
     magicvr::node::TrajectoryContainerNode _preprocessedInputTrajectoryNode;
     magicvr::node::TrajectoryContainerNode _patternTrajectoryNode;
 
+    ComponentTransformNode _fireElementalStone;
+    ComponentTransformNode _waterElementalStone;
+    ComponentTransformNode _thunderElementalStone;
     ComponentTransformNode _windElementalStone;
 
 //    const ComponentTransformRecPtr earthUnlockedCT;
@@ -38,9 +41,9 @@ class Scene {
 
     magicvr::animation::FireAnimationNode _fire;
 
-    magicvr::animation::BubbleAnimationsNode _fireBubbles;
-    magicvr::animation::BubbleAnimationsNode _waterBubbles;
-    magicvr::animation::BubbleAnimationsNode _thunderBubbles;
+    AnimationPtr _fireBubbles;
+    AnimationPtr _waterBubbles;
+    AnimationPtr _thunderBubbles;
     AnimationPtr _windBubbles;
 
     const ComponentTransformRecPtr lightBubbleCT;
@@ -59,19 +62,14 @@ class Scene {
 
 //    const NodeTransitPtr buildEarthElement() const;
 
-    static ComponentTransformNode createWindElementalStone();
+    static ComponentTransformNode
+    createElementalStone(Path modelPath, float rotationAngle);
 
 //    const NodeTransitPtr buildFireElement() const;
 
-    const NodeTransitPtr buildFireElementalStone() const;
-
 //    const NodeTransitPtr buildWaterElement() const;
 
-    const NodeTransitPtr buildWaterElementalStone() const;
-
 //    const NodeTransitPtr buildThunderElement() const;
-
-    const NodeTransitPtr buildThunderElementalStone() const;
 
     const NodeTransitPtr buildBackLeftPedestal() const;
 
@@ -123,6 +121,12 @@ public:
 
     void stopAnimateBubbles(Scene::AnimationPtr &bubbles);
 
+    void stopAnimateFireBubbles();
+
+    void stopAnimateWaterBubbles();
+
+    void stopAnimateThunderBubbles();
+
     void stopAnimateWindBubbles();
 
     const NodeTransitPtr buildKapelle() const;
@@ -142,14 +146,8 @@ public:
 
     void showPatternTrajectory(std::vector<OSG::Vec3f> &&trajectory);
 
-    static magicvr::animation::BubbleAnimationsNode createFireBubbles();
-
-    static magicvr::animation::BubbleAnimationsNode createWaterBubbles();
-
     static std::shared_ptr<magicvr::animation::BubbleAnimationsNode>
     createBubblesAnimationNode(Path modelPath);
-
-    static magicvr::animation::BubbleAnimationsNode createThunderBubbles();
 
     static std::vector<float> getBubblesRange();
 
