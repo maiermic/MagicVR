@@ -58,7 +58,7 @@ void Scene::build() {
     trajectoryNodes.addChild(_preprocessedInputTrajectoryNode.node());
 //    root()->addChild(_inputTrajectoryNode.node());
 //    root()->addChild(_patternTrajectoryNode.node());
-    root()->addChild(trajectoryNodes.node());
+//    root()->addChild(trajectoryNodes.node());
 
     auto c =
             magicvr::ranges::view::Circle(100).sample(0, 360, 10) |
