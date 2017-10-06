@@ -9,6 +9,7 @@
 #include <magicvr/Spiral.hpp>
 #include <magicvr/ranges/view/rotate.hpp>
 #include <magicvr/DrawingDirection.hpp>
+#include <magicvr/ranges/view/Circle.hpp>
 
 //#include "trajecmp/functional/functional.hpp"
 #include "trajecmp/distance/modified_hausdorff.hpp"
@@ -75,6 +76,14 @@ namespace magicvr {
         auto pattern_quaterCircleFromAbove_trajectory_stream =
                 rxcpp::observable<>::just(quaterCircleFromAbove.sample(10));
 
+        auto pattern_circle_trajectory_stream =
+                rxcpp::observable<>::just(
+                        magicvr::ranges::view::Circle(1).sample(0, 360, 10) |
+                                ::ranges::view::transform([](OSG::Vec2f v) {
+                                    return OSG::Vec3f(v.x(), v.y(), 0);
+                                }) |
+                                ::ranges::to_vector
+                );
         static const auto normalized_size = 100;
         const auto scale_mbs = [=](auto &mbs) {
             return trajecmp::transform::scale_to_const<normalized_size>(
@@ -163,6 +172,11 @@ namespace magicvr {
                 compare(right_preprocessed_input_trajectory_stream,
                         preprocess_right(
                                 pattern_quaterCircleFromAbove_trajectory_stream));
+        preprocessed_pattern_circle_trajectory_stream =
+                preprocess_right(pattern_circle_trajectory_stream);
+        input_matches_pattern_circle_stream =
+                compare(right_preprocessed_input_trajectory_stream,
+                        preprocessed_pattern_circle_trajectory_stream);
         preprocessed_pattern_lightning_trajectory_stream =
                 preprocess_left(pattern_lightning_trajectory_stream);
         preprocessedWithoutRotation_input_trajectory_stream =

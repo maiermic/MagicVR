@@ -68,9 +68,15 @@ AppController::AppController() {
     _tricks.input_matches_pattern_quaterCircleFromAbove_stream.subscribe([&](double distance) {
         this->scene().animateWindBubbles();
     });
-    _tricks.preprocessed_pattern_lightning_trajectory_stream.subscribe([&](Trajectory trajectory) {
+    _tricks.input_matches_pattern_circle_stream.subscribe([&](double distance) {
+        this->scene().animateWaterBubbles();
+    });
+    _tricks.preprocessed_pattern_circle_trajectory_stream.subscribe([&](Trajectory trajectory) {
         this->scene().showPatternTrajectory(std::move(trajectory));
     });
+//    _tricks.preprocessed_pattern_lightning_trajectory_stream.subscribe([&](Trajectory trajectory) {
+//        this->scene().showPatternTrajectory(std::move(trajectory));
+//    });
 //    _tricks.preprocessed_input_trajectory_stream.subscribe([&](Trajectory trajectory) {
 //        this->scene().showInputTrajectory(std::move(trajectory));
 //    });
