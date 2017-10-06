@@ -1,0 +1,29 @@
+\section{Concept}
+
+MagicVR was developed in a cooperation between Jerome Pönisch and Michael Maier. This paper will be focused on the 3D Art and FractTime-Animation effects done by Jerome Pönisch while Michaels\rq{}s paper will be focused on the 3D-Gesture-Recognition.
+This section shall introduce in the general concept of MagicVR and the effects and animation part.
+
+\subsection{The idea behind MagicVR}
+
+The main idea of MagicVR is introducing the 3D-Gesture-Recognition module in a playful environment using important features of a virtual environment. A user/player should be animated to use 3D-Gestures as interesting interaction technique rather than pushing buttons. The virtual environment should help to gain the user/player\rq{}s interest and make him feel comfortable while experiencing the mixed reality world. As User-Feedback it was decided to focus on animations and movements within the scene.
+
+\subsection{FractTime-Animations}
+
+In order to make movements easier to implement and control a framework was implemented based on the idea of Vector Lerp, FractTime and Coroutines from Unity and C\#.
+\begin{description}
+ \item{\textbf{Lerp}} is a commonly used short term standing for \lq\lq{}linear interpolation\rq\rq{}. The concept of a Vector.Lerp in Unity and C\# takes an original vector and a target vector and makes a linear interpolation between those two vectors using an interpolation factor from 0 to 1.
+ 
+ \item{\textbf{FracTime}} is used as the interpolation factor in our framework. It devides the already animated time by the target duration of the animation providing a factor between 0 and 1.
+ 
+ \item{\textbf{Coroutines}} are used in Unity to run multible routines at the same time which makes it easier to control them individually. The difference to c++ is, that multithreading is more trivial in C\#.
+ \end{description}
+ 
+ Those two concepts were used in combination to write our own FractTime-Animations framework.\\
+ 
+ \subsection{Advantages of FracTime Animations}
+ The advantages of using our animation framework are among others:
+ \begin{description}
+ \item{\textbf{Trustability}} Destination and Target values of vectors, colors etc. are clear defined and thereby no \lq\lq{}surprises will happen during animations\rq\rq{}
+ \item{\textbf{Controlability}} Since all animations are placed and controlled in one main container and subcontainers, each animation can be started and stopped individually.
+ \item{\textbf{FPS-Stability}} Since the animations are based on the FracTime, which is based on the delta time between frames, and not e.g. the translation distance animations will allways take the same time independent of the FPS given by the render system.
+ \end{description}

@@ -79,4 +79,8 @@ fabric.properties
 # Sonarlint plugin
 .idea/sonarlint
 
-# End of https://www.gitignore.io/api/clion
+# Latex Builds
+doc/**/*.gz
+doc/**/*.out
+doc/**/*.aux
+doc/**/*.log
