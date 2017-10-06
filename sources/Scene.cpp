@@ -23,6 +23,7 @@
 #include <magicvr/animation/AnimationContainer.hpp>
 #include <magicvr/animation/OnStopAnimation.hpp>
 #include <magicvr/animation/AnimationChildNode.hpp>
+#include <magicvr/animation/MaxTimeAnimation.hpp>
 
 void Scene::build() {
     root()->addChild(buildRealWorldScale());
@@ -132,7 +133,7 @@ void Scene::animateThunderBubbles() {
     ));
 }
 
-void Scene::stopAnimateBubbles(Scene::AnimationChildNodePtr &bubbles) {
+void Scene::stopAnimateBubbles(Scene::AnimationPtr &bubbles) {
     if (bubbles) {
         bubbles->stop();
         bubbles = nullptr;
@@ -143,22 +144,28 @@ void Scene::stopAnimateWindBubbles() {
     stopAnimateBubbles(_windBubbles);
 }
 
-void Scene::animateBubbles(AnimationChildNodePtr &bubbles,
+void Scene::animateBubbles(AnimationPtr &bubbles,
                            Path modelPath,
                            OSG::NodeTransitPtr elementalStoneNode) {
+    using namespace magicvr::animation;
     if (areBubblesRunning(bubbles)) {
         return;
     }
-    bubbles = AnimationChildNodePtr(
-            new magicvr::animation::AnimationChildNode(
-                    elementalStoneNode,
-                    createBubblesAnimationNode(modelPath)
+    bubbles = AnimationPtr(
+            new MaxTimeAnimation(
+                    10,
+                    AnimationPtr(
+                            new AnimationChildNode(
+                                    elementalStoneNode,
+                                    createBubblesAnimationNode(modelPath)
+                            )
+                    )
             )
     );
     _animations.add(bubbles);
 }
 
-bool Scene::areBubblesRunning(const Scene::AnimationChildNodePtr bubbles) const {
+bool Scene::areBubblesRunning(const Scene::AnimationPtr bubbles) const {
     return bubbles && !bubbles->isStopped();
 }
 

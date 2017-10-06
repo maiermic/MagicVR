@@ -11,6 +11,8 @@ public:
     AnimationContainer(Animation &_animation);
 
     void animate(OSG::Time dTime) override;
+
+    void stop() override;
 };
 
 

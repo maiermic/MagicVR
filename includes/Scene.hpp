@@ -11,6 +11,7 @@
 #include <magicvr/node/TrajectoryContainerNode.hpp>
 #include <input/Tracker.hpp>
 #include <magicvr/node/MovableNode.hpp>
+#include <magicvr/animation/Animation.hpp>
 #include <magicvr/animation/BubbleAnimationsNode.hpp>
 #include <magicvr/animation/FireAnimationNode.hpp>
 #include <magicvr/ranges/view/range.hpp>
@@ -20,7 +21,7 @@
 OSG_USING_NAMESPACE
 
 class Scene {
-    using AnimationChildNodePtr = std::shared_ptr<magicvr::animation::AnimationChildNode>;
+    using AnimationPtr = std::shared_ptr<Animation>;
     using Path = const Char8 *;
     const NodeRecPtr _root;
 
@@ -40,7 +41,7 @@ class Scene {
     magicvr::animation::BubbleAnimationsNode _fireBubbles;
     magicvr::animation::BubbleAnimationsNode _waterBubbles;
     magicvr::animation::BubbleAnimationsNode _thunderBubbles;
-    AnimationChildNodePtr _windBubbles;
+    AnimationPtr _windBubbles;
 
     const ComponentTransformRecPtr lightBubbleCT;
 
@@ -120,7 +121,7 @@ public:
 
     void animateWindBubbles();
 
-    void stopAnimateBubbles(Scene::AnimationChildNodePtr &bubbles);
+    void stopAnimateBubbles(Scene::AnimationPtr &bubbles);
 
     void stopAnimateWindBubbles();
 
@@ -152,10 +153,10 @@ public:
 
     static std::vector<float> getBubblesRange();
 
-    void animateBubbles(AnimationChildNodePtr &bubbles, Path modelPath,
+    void animateBubbles(AnimationPtr &bubbles, Path modelPath,
                         NodeTransitPtr elementalStone);
 
-    bool areBubblesRunning(const AnimationChildNodePtr bubbles) const;
+    bool areBubblesRunning(const AnimationPtr bubbles) const;
 };
 
 

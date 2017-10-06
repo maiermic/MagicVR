@@ -9,3 +9,8 @@ void AnimationContainer::animate(OSG::Time dTime) {
         stop();
     }
 }
+
+void AnimationContainer::stop() {
+    Animation::stop();
+    _animation.stop();
+}
