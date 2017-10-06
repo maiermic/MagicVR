@@ -14,6 +14,7 @@
 #include <magicvr/animation/BubbleAnimationsNode.hpp>
 #include <magicvr/animation/FireAnimationNode.hpp>
 #include <magicvr/ranges/view/range.hpp>
+#include <magicvr/animation/AnimationChildNode.hpp>
 #include "PathSettings.hpp"
 
 OSG_USING_NAMESPACE
@@ -37,7 +38,7 @@ class Scene {
     magicvr::animation::BubbleAnimationsNode _fireBubbles;
     magicvr::animation::BubbleAnimationsNode _waterBubbles;
     magicvr::animation::BubbleAnimationsNode _thunderBubbles;
-    magicvr::animation::BubbleAnimationsNode _windBubbles;
+    std::shared_ptr<magicvr::animation::AnimationChildNode> _windBubbles;
 
     const ComponentTransformRecPtr lightBubbleCT;
 
@@ -87,18 +88,19 @@ public:
 
     Scene();
 
-    void update(OSG::Time dTime);
-
-    const NodeRecPtr &root() const;
-
-    magicvr::animation::FireAnimationNode& fire();
-
 //    void unlockEarth();
 //
 //    void unlockFire();
 //
 //    void unlockWater();
 //
+
+    void update(OSG::Time dTime);
+
+    const NodeRecPtr &root() const;
+
+    magicvr::animation::FireAnimationNode& fire();
+
 //    void unlockThunder();
 
     NodeTransitPtr buildBezierCurve() const;
@@ -139,14 +141,12 @@ public:
 
     static magicvr::animation::BubbleAnimationsNode createWaterBubbles();
 
-    static magicvr::animation::BubbleAnimationsNode createWindBubbles();
+    static std::shared_ptr<magicvr::animation::BubbleAnimationsNode>
+    createWindBubbles();
 
     static magicvr::animation::BubbleAnimationsNode createThunderBubbles();
 
     static std::vector<float> getBubblesRange();
-
-    std::shared_ptr<Animation> createWindBubblesAnimation();
-
 };
 
 
