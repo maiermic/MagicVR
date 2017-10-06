@@ -35,9 +35,9 @@ namespace magicvr { namespace animation {
         BubbleAnimationsNode(Path modelPath,
                              const std::vector<BubbleData> &bubbleDatas);
 
-        ComponentTransformNode node();
+        ComponentTransformNode transNode();
 
-        const ComponentTransformNode node() const;
+        const ComponentTransformNode transNode() const;
 
         Animation &animation();
 
