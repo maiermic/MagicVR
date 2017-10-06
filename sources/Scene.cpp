@@ -382,10 +382,10 @@ magicvr::animation::FireAnimationNode &Scene::fire() {
     return _fire;
 }
 
-std::shared_ptr<magicvr::animation::BubbleAnimationsNode>
+std::shared_ptr<magicvr::animation::BubblesAnimationNode>
 Scene::createBubblesAnimationNode(Path modelPath) {
-    return std::shared_ptr<magicvr::animation::BubbleAnimationsNode>(
-            new magicvr::animation::BubbleAnimationsNode(
+    return std::shared_ptr<magicvr::animation::BubblesAnimationNode>(
+            new magicvr::animation::BubblesAnimationNode(
                     modelPath,
                     getBubblesRange()
             )

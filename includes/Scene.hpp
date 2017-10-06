@@ -12,7 +12,7 @@
 #include <input/Tracker.hpp>
 #include <magicvr/node/MovableNode.hpp>
 #include <magicvr/animation/Animation.hpp>
-#include <magicvr/animation/BubbleAnimationsNode.hpp>
+#include <magicvr/animation/BubblesAnimationNode.hpp>
 #include <magicvr/animation/FireAnimationNode.hpp>
 #include <magicvr/ranges/view/range.hpp>
 #include <magicvr/animation/AnimationChildNode.hpp>
@@ -151,7 +151,7 @@ public:
 
     void showPatternTrajectory(std::vector<OSG::Vec3f> &&trajectory);
 
-    static std::shared_ptr<magicvr::animation::BubbleAnimationsNode>
+    static std::shared_ptr<magicvr::animation::BubblesAnimationNode>
     createBubblesAnimationNode(Path modelPath);
 
     static std::vector<float> getBubblesRange();

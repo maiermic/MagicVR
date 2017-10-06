@@ -1,7 +1,7 @@
 #include <range/v3/utility/functional.hpp>
 #include <range/v3/view/transform.hpp>
 #include <range/v3/to_container.hpp>
-#include "magicvr/animation/BubbleAnimationsNode.hpp"
+#include "magicvr/animation/BubblesAnimationNode.hpp"
 #include <OpenSG/OSGSceneFileHandler.h>
 #include <magicvr/animation/Animation.hpp>
 #include <magicvr/animation/TranslationAnimation.hpp>
@@ -9,7 +9,7 @@
 
 namespace magicvr { namespace animation {
 
-    BubbleAnimationsNode::BubbleAnimationsNode(
+    BubblesAnimationNode::BubblesAnimationNode(
             Path modelPath,
             const std::vector<BubbleData> &bubbleDatas
     ) : _bubbleDatas(details::buildBubbleDatas(modelPath, bubbleDatas)),
@@ -18,13 +18,13 @@ namespace magicvr { namespace animation {
         addAnimations();
     }
 
-    void BubbleAnimationsNode::addBubblesToRoot() {
+    void BubblesAnimationNode::addBubblesToRoot() {
         for (const auto &data : _bubbleDatas) {
             _root.addChild(data.node);
         }
     }
 
-    void BubbleAnimationsNode::addAnimations() {
+    void BubblesAnimationNode::addAnimations() {
         for (const auto &data : _bubbleDatas) {
             _animations.add(std::shared_ptr<Animation>(
                     new ParallelAnimation{
@@ -73,23 +73,23 @@ namespace magicvr { namespace animation {
                ::ranges::to_vector;
     }
 
-    ComponentTransformNode BubbleAnimationsNode::transNode() {
+    ComponentTransformNode BubblesAnimationNode::transNode() {
         return _root;
     }
 
-    const ComponentTransformNode BubbleAnimationsNode::transNode() const {
+    const ComponentTransformNode BubblesAnimationNode::transNode() const {
         return _root;
     }
 
-    Animation &BubbleAnimationsNode::animation() {
+    Animation &BubblesAnimationNode::animation() {
         return _animations;
     }
 
-    OSG::NodeRecPtr BubbleAnimationsNode::node() {
+    OSG::NodeRecPtr BubblesAnimationNode::node() {
         return transNode().node();
     }
 
-    const OSG::NodeRecPtr BubbleAnimationsNode::node() const {
+    const OSG::NodeRecPtr BubblesAnimationNode::node() const {
         return transNode().node();
     }
 

@@ -14,7 +14,7 @@
 #include <magicvr/animation/AnimationContainer.hpp>
 #include <magicvr/ranges/view/range.hpp>
 #include <magicvr/ranges/view/Circle.hpp>
-#include "magicvr/animation/BubbleAnimationsNode.hpp"
+#include "magicvr/animation/BubblesAnimationNode.hpp"
 #include "magicvr/util/clamp.hpp"
 
 namespace magicvr { namespace animation {
@@ -26,7 +26,7 @@ namespace magicvr { namespace animation {
         magicvr::ranges::view::Circle c(0.1);
         float y = 0.1f;
         for (Vec2f v : c.sample(0, 360, 60) | ::ranges::to_vector) {
-            BubbleAnimationsNode ban(
+            BubblesAnimationNode ban(
                     Path_Model_FireBubble,
                     rangeV(0.3f, 1.0f, 0.1f)
             );
@@ -35,10 +35,10 @@ namespace magicvr { namespace animation {
             y = -y;
         }
 
-        BubbleAnimationsNode middleLower(Path_Model_FireBubble, rangeV(0.3f, 1.0f, 0.1f));
-        BubbleAnimationsNode middleUpper(Path_Model_FireBubble, rangeV(0.3f, 1.0f, 0.1f));
-        BubbleAnimationsNode left(Path_Model_ThunderBubble, rangeV(0.3f, 1.0f, 0.1f));
-        BubbleAnimationsNode right(Path_Model_ThunderBubble, rangeV(0.3f, 1.0f, 0.1f));
+        BubblesAnimationNode middleLower(Path_Model_FireBubble, rangeV(0.3f, 1.0f, 0.1f));
+        BubblesAnimationNode middleUpper(Path_Model_FireBubble, rangeV(0.3f, 1.0f, 0.1f));
+        BubblesAnimationNode left(Path_Model_ThunderBubble, rangeV(0.3f, 1.0f, 0.1f));
+        BubblesAnimationNode right(Path_Model_ThunderBubble, rangeV(0.3f, 1.0f, 0.1f));
         middleLower.transNode().translate(0, 0.1, 0).scale(3, 1, 3);
         left.transNode().translate(0.05f, 0, 0).scale(3, 1, 3);
         right.transNode().translate(-0.05f, 0, 0).scale(3, 1, 3);

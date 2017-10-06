@@ -4,7 +4,7 @@
 #include <magicvr/ComponentTransformNode.hpp>
 #include <magicvr/animation/Animation.hpp>
 #include <magicvr/animation/ParallelAnimation.hpp>
-#include "BubbleAnimationsNode.hpp"
+#include "BubblesAnimationNode.hpp"
 
 namespace magicvr { namespace animation {
 
@@ -13,7 +13,7 @@ namespace magicvr { namespace animation {
         ComponentTransformNode _root;
         float _intensity;
 
-        std::vector<BubbleAnimationsNode> _bubbleAnimationNodes;
+        std::vector<BubblesAnimationNode> _bubbleAnimationNodes;
 
         void addBubblesToRoot();
 

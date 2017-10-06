@@ -31,9 +31,9 @@ namespace magicvr { namespace animation {
                     OSG::NodeRecPtr model, float size);
     }
 
-    class BubbleAnimationsNode : public AnimationNode {
+    class BubblesAnimationNode : public AnimationNode {
     public:
-        BubbleAnimationsNode(Path modelPath,
+        BubblesAnimationNode(Path modelPath,
                              const std::vector<BubbleData> &bubbleDatas);
 
         ComponentTransformNode transNode();
