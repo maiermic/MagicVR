@@ -5,6 +5,7 @@
 #include "Animation.hpp"
 
 class AnimationContainer : public Animation {
+protected:
     Animation & _animation;
 public:
     AnimationContainer(Animation &_animation);
