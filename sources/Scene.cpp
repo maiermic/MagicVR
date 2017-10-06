@@ -21,6 +21,7 @@
 #include <input/Tracker.hpp>
 #include <OpenSG/OSGSimpleGeometry.h>
 #include <magicvr/animation/AnimationContainer.hpp>
+#include <magicvr/animation/OnStopAnimation.hpp>
 
 void Scene::build() {
     root()->addChild(buildRealWorldScale());
@@ -127,9 +128,18 @@ void Scene::animateThunderBubbles() {
     ));
 }
 
+void Scene::stopAnimateWindBubbles() {
+    _windBubbles.animation().stop();
+}
+
 void Scene::animateWindBubbles() {
     _animations.add(std::shared_ptr<Animation>(
-            new AnimationContainer(_windBubbles.animation())
+            new magicvr::animation::OnStopAnimation(
+                    _windBubbles.animation(),
+                    [](){
+                        std::cout << "animation stopped\n";
+                    }
+            )
     ));
 }
 

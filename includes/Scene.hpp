@@ -112,6 +112,8 @@ public:
 
     void animateWindBubbles();
 
+    void stopAnimateWindBubbles();
+
     const NodeTransitPtr buildKapelle() const;
 
 
