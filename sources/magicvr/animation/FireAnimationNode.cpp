@@ -66,7 +66,7 @@ namespace magicvr { namespace animation {
 
     void FireAnimationNode::addBubblesToRoot() {
         for (auto &bubbleAnimation : _bubbleAnimationNodes) {
-            _root.addChild(bubbleAnimation.transNode().node());
+            _root.addChild(bubbleAnimation.node());
         }
     }
 

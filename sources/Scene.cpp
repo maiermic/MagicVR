@@ -132,12 +132,12 @@ void Scene::animateThunderBubbles() {
 }
 
 void Scene::stopAnimateWindBubbles() {
-    _windElementalStone.removeChild(_windBubbles.transNode().node());
+    _windElementalStone.removeChild(_windBubbles.node());
 }
 
 void Scene::animateWindBubbles() {
     _windBubbles = createWindBubbles();
-    _windElementalStone.addChild(_windBubbles.transNode().node());
+    _windElementalStone.addChild(_windBubbles.node());
     _animations.add(createWindBubblesAnimation());
 }
 
@@ -247,7 +247,7 @@ const NodeTransitPtr Scene::buildFireElementalStone() const {
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(-30)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_FireStone))
-            .addChild(_fireBubbles.transNode().node())
+            .addChild(_fireBubbles.node())
             .node();
 }
 
@@ -258,7 +258,7 @@ const NodeTransitPtr Scene::buildWaterElementalStone() const {
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_WaterStone))
-            .addChild(_waterBubbles.transNode().node())
+            .addChild(_waterBubbles.node())
             .node();
 }
 
@@ -269,7 +269,7 @@ const NodeTransitPtr Scene::buildThunderElementalStone() const {
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(-30)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_ThunderStone))
-            .addChild(_thunderBubbles.transNode().node())
+            .addChild(_thunderBubbles.node())
             .node();
 }
 
