@@ -132,9 +132,10 @@ void Scene::animateThunderBubbles() {
     ));
 }
 
-void Scene::stopAnimateBubbles(Scene::AnimationChildNodePtr bubbles) {
+void Scene::stopAnimateBubbles(Scene::AnimationChildNodePtr &bubbles) {
     if (bubbles) {
         bubbles->stop();
+        bubbles = nullptr;
     }
 }
 

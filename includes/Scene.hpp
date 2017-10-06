@@ -120,7 +120,7 @@ public:
 
     void animateWindBubbles();
 
-    void stopAnimateBubbles(Scene::AnimationChildNodePtr bubbles);
+    void stopAnimateBubbles(Scene::AnimationChildNodePtr &bubbles);
 
     void stopAnimateWindBubbles();
 
