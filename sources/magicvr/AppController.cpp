@@ -78,3 +78,19 @@ AppController::AppController() {
         this->scene().showPreprocessedInputTrajectory(std::move(trajectory));
     });
 }
+
+BezierCurve<> AppController::getShootingCurve(input::Tracker wand, OSG::Vec3f destination) const {
+    using namespace magicvr::animation;
+
+    OSG::Vec3f wandDirection;
+    wand.orientation.multVec(OSG::Vec3f(0, 0, -1), wandDirection);
+    wandDirection.normalize();
+
+    auto worldWandPosition = wand.position / 100;
+    return BezierCurve<> {
+            worldWandPosition,
+            worldWandPosition + wandDirection,
+            destination,
+            destination
+    };
+}

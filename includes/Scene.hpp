@@ -140,9 +140,9 @@ public:
 
     NodeTransitPtr buildSpiral() const;
 
-    void shootLight(input::Tracker wand, Vec3f destination);
+    void shootLight(const BezierCurve<> &curve);
 
-    void shootWater(input::Tracker wand, Vec3f destination);
+    void shootWater(const BezierCurve<> &curve);
 
     const NodeTransitPtr buildScenesModels();
 

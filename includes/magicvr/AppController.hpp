@@ -37,6 +37,8 @@ public:
     const NodeRecPtr &root() const;
 
     Scene &scene();
+
+    BezierCurve<> getShootingCurve(input::Tracker wand, OSG::Vec3f destination) const;
 };
 
 

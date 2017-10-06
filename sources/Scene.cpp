@@ -189,7 +189,7 @@ void Scene::animateWindBubbles() {
                    _windElementalStone.node());
 }
 
-void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {
+void Scene::shootLight(const BezierCurve<> &curve) {
     using namespace magicvr::animation;
     _animations.add(std::shared_ptr<Animation>(
             new OnStopRefAnimation(
@@ -199,8 +199,7 @@ void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {
                                     std::shared_ptr<AnimationNode>(
                                             new BezierTranslationAnimationNode(
                                                     buildLightBubble(),
-                                                    getShootingCurve(wand,
-                                                                     destination),
+                                                    curve,
                                                     3
                                             )
                                     )
@@ -211,7 +210,7 @@ void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {
     ));
 }
 
-void Scene::shootWater(input::Tracker wand, OSG::Vec3f destination) {
+void Scene::shootWater(const BezierCurve<> &curve) {
     using namespace magicvr::animation;
     _animations.add(std::shared_ptr<Animation>(
             new OnStopRefAnimation(
@@ -221,8 +220,7 @@ void Scene::shootWater(input::Tracker wand, OSG::Vec3f destination) {
                                     std::shared_ptr<AnimationNode>(
                                             new BezierTranslationAnimationNode(
                                                     buildWaterBubble(),
-                                                    getShootingCurve(wand,
-                                                                     destination),
+                                                    curve,
                                                     3
                                             )
                                     )
@@ -231,22 +229,6 @@ void Scene::shootWater(input::Tracker wand, OSG::Vec3f destination) {
                         std::cout << "shooted water reached destination\n";
                     })
     ));
-}
-
-BezierCurve<> Scene::getShootingCurve(input::Tracker wand, OSG::Vec3f destination) {
-    using namespace magicvr::animation;
-
-    OSG::Vec3f wandDirection;
-    wand.orientation.multVec(OSG::Vec3f(0, 0, -1), wandDirection);
-    wandDirection.normalize();
-
-    auto worldWandPosition = wand.position / 100;
-    return BezierCurve<> {
-            worldWandPosition,
-            worldWandPosition + wandDirection,
-            destination,
-            destination
-    };
 }
 
 

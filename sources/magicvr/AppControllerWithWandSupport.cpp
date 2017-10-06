@@ -21,7 +21,7 @@ namespace magicvr {
     }
 
     void AppControllerWithWandSupport::shootLight() {
-        scene().shootLight(_wand.wand, Vec3f(0, 0, 0));
+        scene().shootLight(getShootingCurve(_wand.wand, Vec3f(0, 0, 0)));
     }
 
     void AppControllerWithWandSupport::display(OSG::Time dTime) {
@@ -65,7 +65,7 @@ namespace magicvr {
     }
 
     void AppControllerWithWandSupport::shootWater() {
-        scene().shootWater(_wand.wand, Vec3f(-1.6f, 0, 0.2));
+        scene().shootWater(getShootingCurve(_wand.wand, Vec3f(-1.6f, 0, 0.2)));
     }
 
 }
