@@ -9,7 +9,7 @@ class Animation {
 public:
     virtual void animate(OSG::Time dTime)= 0;
 
-    void stop();
+    virtual void stop();
 
     bool isStopped() const;
 };

@@ -8,7 +8,7 @@
 
 class ParallelAnimation : public Animation {
     std::vector<std::shared_ptr<Animation>> _animations;
-    const bool _stopIfNoAnimations;
+    bool _stopIfNoAnimations;
 
     void removeStoppedAnimations();
 
