@@ -39,6 +39,10 @@ public:
     Scene &scene();
 
     BezierCurve<> getShootingCurve(input::Tracker wand, OSG::Vec3f destination) const;
+
+    void shootLight(input::Tracker tracker, OSG::Vec3f destination);
+
+    void shootWater(input::Tracker tracker, OSG::Vec3f destination);
 };
 
 

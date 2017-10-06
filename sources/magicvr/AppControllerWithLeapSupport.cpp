@@ -52,10 +52,10 @@ namespace magicvr {
                 _isRecordingTrajectory = true;
                 break;
             case 'l':
-                scene().shootLight(getShootingCurve(wand, destination));
+                AppController::shootLight(wand, destination);
                 break;
             case '~':
-                scene().shootWater(getShootingCurve(wand, destination));
+                AppController::shootWater(wand, destination);
                 break;
         }
     }

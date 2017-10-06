@@ -189,7 +189,7 @@ void Scene::animateWindBubbles() {
                    _windElementalStone.node());
 }
 
-void Scene::shootLight(const BezierCurve<> &curve) {
+void Scene::shootLight(const BezierCurve<> &curve, AnimationStopCallback callback) {
     using namespace magicvr::animation;
     _animations.add(std::shared_ptr<Animation>(
             new OnStopRefAnimation(
@@ -204,13 +204,11 @@ void Scene::shootLight(const BezierCurve<> &curve) {
                                             )
                                     )
                             )
-                    ), []() {
-                        std::cout << "shooted light reached destination\n";
-                    })
+                    ), callback)
     ));
 }
 
-void Scene::shootWater(const BezierCurve<> &curve) {
+void Scene::shootWater(const BezierCurve<> &curve, AnimationStopCallback callback) {
     using namespace magicvr::animation;
     _animations.add(std::shared_ptr<Animation>(
             new OnStopRefAnimation(
@@ -225,9 +223,7 @@ void Scene::shootWater(const BezierCurve<> &curve) {
                                             )
                                     )
                             )
-                    ), []() {
-                        std::cout << "shooted water reached destination\n";
-                    })
+                    ), callback)
     ));
 }
 

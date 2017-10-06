@@ -22,8 +22,12 @@
 OSG_USING_NAMESPACE
 
 class Scene {
+public:
     using AnimationPtr = std::shared_ptr<Animation>;
+    using AnimationStopCallback = std::function<void(std::shared_ptr<Animation>)>;
     using Path = const Char8 *;
+
+private:
     const NodeRecPtr _root;
 
     magicvr::node::TrajectoryContainerNode _inputTrajectoryNode;
@@ -87,8 +91,6 @@ class Scene {
 
     const NodeTransitPtr buildPedestal() const;
 
-    BezierCurve<> getShootingCurve(input::Tracker wand, OSG::Vec3f destination);
-
 public:
 
     Scene();
@@ -140,9 +142,9 @@ public:
 
     NodeTransitPtr buildSpiral() const;
 
-    void shootLight(const BezierCurve<> &curve);
+    void shootLight(const BezierCurve<> &curve, AnimationStopCallback callback);
 
-    void shootWater(const BezierCurve<> &curve);
+    void shootWater(const BezierCurve<> &curve, AnimationStopCallback callback);
 
     const NodeTransitPtr buildScenesModels();
 

@@ -20,10 +20,6 @@ namespace magicvr {
                 });
     }
 
-    void AppControllerWithWandSupport::shootLight() {
-        scene().shootLight(getShootingCurve(_wand.wand, Vec3f(0, 0, 0)));
-    }
-
     void AppControllerWithWandSupport::display(OSG::Time dTime) {
         static auto lastWandPosition = _wand.wand.position;
         static bool _hasBeenRecordingTrajectory = false;
@@ -64,8 +60,12 @@ namespace magicvr {
         }
     }
 
+    void AppControllerWithWandSupport::shootLight() {
+        AppController::shootLight(_wand.wand, OSG::Vec3f(0, 0, 0));
+    }
+
     void AppControllerWithWandSupport::shootWater() {
-        scene().shootWater(getShootingCurve(_wand.wand, Vec3f(-1.6f, 0, 0.2)));
+        AppController::shootWater(_wand.wand, OSG::Vec3f(-1.6f, 0, 0.2));
     }
 
 }

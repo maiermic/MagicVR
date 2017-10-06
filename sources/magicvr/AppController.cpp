@@ -94,3 +94,21 @@ BezierCurve<> AppController::getShootingCurve(input::Tracker wand, OSG::Vec3f de
             destination
     };
 }
+
+void AppController::shootLight(input::Tracker wand, OSG::Vec3f destination) {
+    scene().shootLight(
+            getShootingCurve(wand, destination),
+            [](Scene::AnimationPtr animation) {
+                std::cout << "shooted light reached destination\n";
+            }
+    );
+}
+
+void AppController::shootWater(input::Tracker wand, OSG::Vec3f destination) {
+    scene().shootWater(
+            getShootingCurve(wand, destination),
+            [](Scene::AnimationPtr animation) {
+                std::cout << "shooted water reached destination\n";
+            }
+    );
+}
