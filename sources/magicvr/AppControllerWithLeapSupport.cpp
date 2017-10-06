@@ -46,6 +46,13 @@ namespace magicvr {
             case ' ':
                 _isRecordingTrajectory = true;
                 break;
+            case 'l':
+                input::Tracker wand {
+                        {150, 150, 0},
+                        OSG::Quaternion({0, 0, -1}, OSG::osgDegree2Rad(90))
+                };
+                scene().shootLight(wand,Vec3f(0,0,0));
+                break;
         }
     }
 

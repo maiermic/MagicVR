@@ -201,7 +201,12 @@ void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {
             destination
     };
 
-    _animations.add(std::shared_ptr<Animation>(
+    std::cout << "worldWandPosition = " << worldWandPosition << '\n'
+              << "(worldWandPosition + wandDirection) = " << (worldWandPosition + wandDirection) << '\n'
+              << "destination = " << destination << '\n'
+              << '\n';
+
+            _animations.add(std::shared_ptr<Animation>(
             new BezierTranslationAnimation(lightBubbleCT, curve, 3)
     ));
 }
