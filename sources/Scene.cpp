@@ -32,20 +32,23 @@ void Scene::build() {
     trajectoryNodes.translate(0, 200, -100);
 
     const SimpleMaterialRecPtr red_material = OSG::SimpleMaterialBase::create();
-    red_material->setDiffuse(Color3f(1,0.4f,0));
+    red_material->setDiffuse(Color3f(1, 0.4f, 0));
     red_material->setAmbient(Color3f(0.8f, 0.2f, 0.2f));
     const MaterialGroupRecPtr red_material_group = MaterialGroupBase::create();
     red_material_group->setMaterial(red_material);
-    const NodeTransitPtr pattern_trajectory_node_with_material = makeNodeFor(red_material_group);
-    pattern_trajectory_node_with_material->addChild(_patternTrajectoryNode.node());
+    const NodeTransitPtr pattern_trajectory_node_with_material = makeNodeFor(
+            red_material_group);
+    pattern_trajectory_node_with_material->addChild(
+            _patternTrajectoryNode.node());
     trajectoryNodes.addChild(pattern_trajectory_node_with_material);
 
     const SimpleMaterialRecPtr green_material = OSG::SimpleMaterialBase::create();
-    green_material->setDiffuse(Color3f(0,1, 0.8f));
+    green_material->setDiffuse(Color3f(0, 1, 0.8f));
     green_material->setAmbient(Color3f(0.2f, 0.8f, 0.2f));
     const MaterialGroupRecPtr green_material_group = MaterialGroupBase::create();
     green_material_group->setMaterial(green_material);
-    const NodeTransitPtr input_trajectory_node_with_material = makeNodeFor(green_material_group);
+    const NodeTransitPtr input_trajectory_node_with_material = makeNodeFor(
+            green_material_group);
     input_trajectory_node_with_material->addChild(_inputTrajectoryNode.node());
     trajectoryNodes.addChild(input_trajectory_node_with_material);
 
@@ -73,7 +76,7 @@ void Scene::build() {
 
 const NodeTransitPtr Scene::buildStonehenge() const {
     return ComponentTransformNode()
-            .translate(-1.5f,0,-0.5f)
+            .translate(-1.5f, 0, -0.5f)
             .scale(1)
 //            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(0)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
@@ -136,7 +139,7 @@ void Scene::animateWindBubbles() {
     _animations.add(std::shared_ptr<Animation>(
             new magicvr::animation::OnStopAnimation(
                     _windBubbles.animation(),
-                    [](){
+                    []() {
                         std::cout << "animation stopped\n";
                     }
             )
@@ -293,46 +296,10 @@ void Scene::update(OSG::Time dTime) {
 
 Scene::Scene() : _animations(ParallelAnimation::DO_NOT_STOP_IF_NO_ANIMATIONS),
                  _root(makeNodeFor(Group::create())),
-                 _fireBubbles(Path_Model_FireBubble, {
-                    1,
-                    0.9,
-                    0.8,
-                    0.7,
-                    0.6,
-                    0.5,
-                    0.4,
-                    0.3
-                 }),
-                 _waterBubbles(Path_Model_WaterBubble, {
-                    1,
-                    0.9,
-                    0.8,
-                    0.7,
-                    0.6,
-                    0.5,
-                    0.4,
-                    0.3
-                 }),
-                 _thunderBubbles(Path_Model_ThunderBubble, {
-                    1,
-                    0.9,
-                    0.8,
-                    0.7,
-                    0.6,
-                    0.5,
-                    0.4,
-                    0.3
-                 }),
-                 _windBubbles(Path_Model_WindBubble, {
-                    1,
-                    0.9,
-                    0.8,
-                    0.7,
-                    0.6,
-                    0.5,
-                    0.4,
-                    0.3
-                 }),
+                 _fireBubbles(createFireBubbles()),
+                 _waterBubbles(createWaterBubbles()),
+                 _thunderBubbles(createThunderBubbles()),
+                 _windBubbles(createWindBubbles()),
                  lightBubbleCT(ComponentTransformBase::create()) {
     build();
     update(0);
@@ -381,6 +348,38 @@ void Scene::showPatternTrajectory(std::vector<OSG::Vec3f> &&trajectory) {
     _patternTrajectoryNode.update();
 }
 
-magicvr::animation::FireAnimationNode& Scene::fire() {
+magicvr::animation::FireAnimationNode &Scene::fire() {
     return _fire;
+}
+
+magicvr::animation::BubbleAnimationsNode Scene::createFireBubbles() {
+    return magicvr::animation::BubbleAnimationsNode(
+            Path_Model_FireBubble,
+            getBubblesRange()
+    );
+}
+
+magicvr::animation::BubbleAnimationsNode Scene::createWaterBubbles() {
+    return magicvr::animation::BubbleAnimationsNode(
+            Path_Model_WaterBubble,
+            getBubblesRange()
+    );
+}
+
+magicvr::animation::BubbleAnimationsNode Scene::createWindBubbles() {
+    return magicvr::animation::BubbleAnimationsNode(
+            Path_Model_WindBubble,
+            getBubblesRange()
+    );
+}
+
+magicvr::animation::BubbleAnimationsNode Scene::createThunderBubbles() {
+    return magicvr::animation::BubbleAnimationsNode(
+            Path_Model_ThunderBubble,
+            getBubblesRange()
+    );
+}
+
+std::vector<float> Scene::getBubblesRange() {
+    return magicvr::ranges::view::rangeV(0.3f, 1.0f, 0.1f);
 }

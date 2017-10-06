@@ -13,6 +13,8 @@
 #include <magicvr/node/MovableNode.hpp>
 #include <magicvr/animation/BubbleAnimationsNode.hpp>
 #include <magicvr/animation/FireAnimationNode.hpp>
+#include <magicvr/ranges/view/range.hpp>
+#include "PathSettings.hpp"
 
 OSG_USING_NAMESPACE
 
@@ -130,6 +132,16 @@ public:
     void showPreprocessedInputTrajectory(std::vector<OSG::Vec3f> &&trajectory);
 
     void showPatternTrajectory(std::vector<OSG::Vec3f> &&trajectory);
+
+    static magicvr::animation::BubbleAnimationsNode createFireBubbles();
+
+    static magicvr::animation::BubbleAnimationsNode createWaterBubbles();
+
+    static magicvr::animation::BubbleAnimationsNode createWindBubbles();
+
+    static magicvr::animation::BubbleAnimationsNode createThunderBubbles();
+
+    static std::vector<float> getBubblesRange();
 
 };
 
