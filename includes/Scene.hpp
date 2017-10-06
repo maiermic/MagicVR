@@ -20,6 +20,7 @@
 OSG_USING_NAMESPACE
 
 class Scene {
+    using AnimationChildNodePtr = std::shared_ptr<magicvr::animation::AnimationChildNode>;
     const NodeRecPtr _root;
 
     magicvr::node::TrajectoryContainerNode _inputTrajectoryNode;
@@ -38,7 +39,7 @@ class Scene {
     magicvr::animation::BubbleAnimationsNode _fireBubbles;
     magicvr::animation::BubbleAnimationsNode _waterBubbles;
     magicvr::animation::BubbleAnimationsNode _thunderBubbles;
-    std::shared_ptr<magicvr::animation::AnimationChildNode> _windBubbles;
+    AnimationChildNodePtr _windBubbles;
 
     const ComponentTransformRecPtr lightBubbleCT;
 

@@ -139,7 +139,7 @@ void Scene::stopAnimateWindBubbles() {
 }
 
 void Scene::animateWindBubbles() {
-    _windBubbles = std::shared_ptr<magicvr::animation::AnimationChildNode>(
+    _windBubbles = AnimationChildNodePtr(
                 new magicvr::animation::AnimationChildNode(
                         _windElementalStone.node(),
                         createWindBubbles()
