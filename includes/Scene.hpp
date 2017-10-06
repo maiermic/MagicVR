@@ -154,6 +154,8 @@ public:
 
     void animateBubbles(AnimationChildNodePtr &bubbles, Path modelPath,
                         NodeTransitPtr elementalStone);
+
+    bool areBubblesRunning(const AnimationChildNodePtr bubbles) const;
 };
 
 

@@ -146,7 +146,7 @@ void Scene::stopAnimateWindBubbles() {
 void Scene::animateBubbles(AnimationChildNodePtr &bubbles,
                            Path modelPath,
                            OSG::NodeTransitPtr elementalStoneNode) {
-    if (bubbles && !bubbles->isStopped()) {
+    if (areBubblesRunning(bubbles)) {
         return;
     }
     bubbles = AnimationChildNodePtr(
@@ -156,6 +156,10 @@ void Scene::animateBubbles(AnimationChildNodePtr &bubbles,
             )
     );
     _animations.add(bubbles);
+}
+
+bool Scene::areBubblesRunning(const Scene::AnimationChildNodePtr bubbles) const {
+    return bubbles && !bubbles->isStopped();
 }
 
 void Scene::animateWindBubbles() {
