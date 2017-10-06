@@ -165,6 +165,8 @@ public:
     bool areBubblesRunning(const AnimationPtr bubbles) const;
 
     ComponentTransformNode buildWaterBubble() const;
+
+    Vec3f getLanternPosition() const;
 };
 
 

@@ -61,7 +61,7 @@ namespace magicvr {
     }
 
     void AppControllerWithWandSupport::shootLight() {
-        AppController::shootLight(_wand.wand, OSG::Vec3f(0, 0, 0));
+        AppController::shootLight(_wand.wand);
     }
 
     void AppControllerWithWandSupport::shootWater() {

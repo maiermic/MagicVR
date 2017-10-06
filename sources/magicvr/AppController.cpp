@@ -95,9 +95,9 @@ BezierCurve<> AppController::getShootingCurve(input::Tracker wand, OSG::Vec3f de
     };
 }
 
-void AppController::shootLight(input::Tracker wand, OSG::Vec3f destination) {
+void AppController::shootLight(input::Tracker wand) {
     scene().shootLight(
-            getShootingCurve(wand, destination),
+            getShootingCurve(wand, scene().getLanternPosition()),
             [](Scene::AnimationPtr animation) {
                 std::cout << "shooted light reached destination\n";
             }

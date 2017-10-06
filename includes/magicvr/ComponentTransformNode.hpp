@@ -35,6 +35,8 @@ public:
     const OSG::NodeTransitPtr node() const;
 
     const OSG::ComponentTransformTransitPtr trans() const;
+
+    ComponentTransformNode &translate(OSG::Vec3f vector);
 };
 
 

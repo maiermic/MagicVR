@@ -29,9 +29,13 @@ ComponentTransformNode &ComponentTransformNode::rotate(const OSG::QuaternionBase
     return *this;
 }
 
-ComponentTransformNode &ComponentTransformNode::translate(OSG::Real32 x, OSG::Real32 y, OSG::Real32 z) {
-    trans()->setTranslation(OSG::Vec3f(x, y, z));
+ComponentTransformNode &ComponentTransformNode::translate(OSG::Vec3f vector) {
+    trans()->setTranslation(vector);
     return *this;
+}
+
+ComponentTransformNode &ComponentTransformNode::translate(OSG::Real32 x, OSG::Real32 y, OSG::Real32 z) {
+    return translate(OSG::Vec3f(x, y, z));
 }
 
 ComponentTransformNode &ComponentTransformNode::addChild(OSG::NodeTransitPtr child) {

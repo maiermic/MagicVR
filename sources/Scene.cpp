@@ -89,9 +89,13 @@ const NodeTransitPtr Scene::buildStonehenge() const {
             .node();
 }
 
+OSG::Vec3f Scene::getLanternPosition() const {
+    return {1, 1, -5.7f};
+}
+
 const NodeTransitPtr Scene::buildLantern() const {
     return ComponentTransformNode()
-            .translate(0, 0, 0)
+            .translate(getLanternPosition())
             .scale(0.1f)
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
                     Path_Model_Lantern))
@@ -246,6 +250,7 @@ const NodeRecPtr Scene::buildRealWorldScale() {
 //            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .scale(100)
             .addChild(buildScenesModels())
+            .addChild(buildLantern())
             .node();
 }
 
@@ -253,7 +258,6 @@ const NodeTransitPtr Scene::buildScenesModels() {
     return ComponentTransformNode()
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .addChild(_stonehenge)
-//            .addChild(buildLantern())
 //            .addChild(buildKapelle())
             .addChild(buildFrontLeftPedestal())
             .addChild(buildFrontRightPedestal())
