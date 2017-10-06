@@ -120,6 +120,8 @@ public:
 
     void animateWindBubbles();
 
+    void stopAnimateBubbles(Scene::AnimationChildNodePtr bubbles);
+
     void stopAnimateWindBubbles();
 
     const NodeTransitPtr buildKapelle() const;
