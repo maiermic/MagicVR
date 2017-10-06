@@ -193,7 +193,7 @@ void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {
 }
 
 void Scene::shootWater(input::Tracker wand, OSG::Vec3f destination) {
-    shootBubble(buildWaterBubble(), _stonehenge, wand, destination);
+    shootBubble(buildWaterBubble(), _realWorldScale, wand, destination);
 }
 
 void Scene::shootBubble(ComponentTransformNode bubbleCT,

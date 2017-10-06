@@ -47,7 +47,7 @@ namespace magicvr {
                 scene().shootLight(_wand.wand,Vec3f(0,0,0));
                 break;
             case '~':
-                scene().shootWater(_wand.wand,Vec3f(0,0,0));
+                scene().shootWater(_wand.wand,Vec3f(-1.6f, 0, 0.2));
                 break;
         }
     }
