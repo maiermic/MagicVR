@@ -189,16 +189,38 @@ void Scene::animateWindBubbles() {
 }
 
 void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {
-    shootBubble(buildLightBubble(), _realWorldScale, wand, destination);
+    using namespace magicvr::animation;
+    _animations.add(std::shared_ptr<Animation>(
+            new AnimationChildNode(
+                    _realWorldScale,
+                    std::shared_ptr<AnimationNode>(
+                            new BezierTranslationAnimationNode(
+                                    buildLightBubble(),
+                                    getShootingCurve(wand, destination),
+                                    3
+                            )
+                    )
+            )
+    ));
 }
 
 void Scene::shootWater(input::Tracker wand, OSG::Vec3f destination) {
-    shootBubble(buildWaterBubble(), _realWorldScale, wand, destination);
+    using namespace magicvr::animation;
+    _animations.add(std::shared_ptr<Animation>(
+            new AnimationChildNode(
+                    _realWorldScale,
+                    std::shared_ptr<AnimationNode>(
+                            new BezierTranslationAnimationNode(
+                                    buildWaterBubble(),
+                                    getShootingCurve(wand, destination),
+                                    3
+                            )
+                    )
+            )
+    ));
 }
 
-void Scene::shootBubble(ComponentTransformNode bubbleCT,
-                        OSG::NodeRecPtr parent,
-                        input::Tracker wand, OSG::Vec3f destination) {
+BezierCurve<> Scene::getShootingCurve(input::Tracker wand, OSG::Vec3f destination) {
     using namespace magicvr::animation;
 
     OSG::Vec3f wandDirection;
@@ -206,21 +228,12 @@ void Scene::shootBubble(ComponentTransformNode bubbleCT,
     wandDirection.normalize();
 
     auto worldWandPosition = wand.position / 100;
-    BezierCurve<> curve{
+    return BezierCurve<> {
             worldWandPosition,
             worldWandPosition + wandDirection,
             destination,
             destination
     };
-
-    _animations.add(std::shared_ptr<Animation>(
-            new AnimationChildNode(
-                    parent,
-                    std::shared_ptr<AnimationNode>(
-                            new BezierTranslationAnimationNode(bubbleCT, curve, 3)
-                    )
-            )
-    ));
 }
 
 

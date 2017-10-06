@@ -16,6 +16,7 @@
 #include <magicvr/animation/FireAnimationNode.hpp>
 #include <magicvr/ranges/view/range.hpp>
 #include <magicvr/animation/AnimationChildNode.hpp>
+#include <magicvr/animation/BezierCurve.hpp>
 #include "PathSettings.hpp"
 
 OSG_USING_NAMESPACE
@@ -86,9 +87,7 @@ class Scene {
 
     const NodeTransitPtr buildPedestal() const;
 
-    void shootBubble(ComponentTransformNode bubbleCT,
-                            OSG::NodeRecPtr parent,
-                            input::Tracker wand, OSG::Vec3f destination);
+    BezierCurve<> getShootingCurve(input::Tracker wand, OSG::Vec3f destination);
 
 public:
 
