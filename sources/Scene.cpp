@@ -138,14 +138,22 @@ void Scene::stopAnimateWindBubbles() {
     }
 }
 
+void Scene::animateBubbles(AnimationChildNodePtr &bubbles,
+                           Path modelPath,
+                           OSG::NodeTransitPtr elementalStoneNode) {
+    bubbles = AnimationChildNodePtr(
+            new magicvr::animation::AnimationChildNode(
+                    elementalStoneNode,
+                    createBubblesAnimationNode(modelPath)
+            )
+    );
+    _animations.add(bubbles);
+}
+
 void Scene::animateWindBubbles() {
-    _windBubbles = AnimationChildNodePtr(
-                new magicvr::animation::AnimationChildNode(
-                        _windElementalStone.node(),
-                        createBubblesAnimationNode(Path_Model_WindBubble)
-                )
-        );
-    _animations.add(_windBubbles);
+    animateBubbles(_windBubbles,
+                   Path_Model_WindBubble,
+                   _windElementalStone.node());
 }
 
 void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {

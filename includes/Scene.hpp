@@ -149,6 +149,9 @@ public:
     static magicvr::animation::BubbleAnimationsNode createThunderBubbles();
 
     static std::vector<float> getBubblesRange();
+
+    void animateBubbles(AnimationChildNodePtr &bubbles, Path modelPath,
+                        NodeTransitPtr elementalStone);
 };
 
 
