@@ -4,6 +4,7 @@
 #include <magicvr/ComponentTransformNode.hpp>
 #include <magicvr/animation/Animation.hpp>
 #include <magicvr/animation/ParallelAnimation.hpp>
+#include "AnimationNode.hpp"
 
 namespace magicvr { namespace animation {
     using BubbleData = float;
@@ -30,7 +31,7 @@ namespace magicvr { namespace animation {
                     OSG::NodeRecPtr model, float size);
     }
 
-    class BubbleAnimationsNode {
+    class BubbleAnimationsNode : public AnimationNode {
     public:
         BubbleAnimationsNode(Path modelPath,
                              const std::vector<BubbleData> &bubbleDatas);
@@ -39,7 +40,11 @@ namespace magicvr { namespace animation {
 
         const ComponentTransformNode transNode() const;
 
-        Animation &animation();
+        OSG::NodeRecPtr node() override;
+
+        const OSG::NodeRecPtr node() const override;
+
+        Animation &animation() override;
 
     private:
         ParallelAnimation _animations;

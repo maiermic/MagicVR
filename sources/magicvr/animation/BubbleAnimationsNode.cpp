@@ -85,6 +85,14 @@ namespace magicvr { namespace animation {
         return _animations;
     }
 
+    OSG::NodeRecPtr BubbleAnimationsNode::node() {
+        return transNode().node();
+    }
+
+    const OSG::NodeRecPtr BubbleAnimationsNode::node() const {
+        return transNode().node();
+    }
+
     details::InternalBubbleData::InternalBubbleData(BubbleData data,
                                                     OSG::ComponentTransformRecPtr transformation,
                                                     OSG::NodeRecPtr node)
