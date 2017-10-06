@@ -5,4 +5,7 @@ AnimationContainer::AnimationContainer(Animation &_animation)
 
 void AnimationContainer::animate(OSG::Time dTime) {
     _animation.animate(dTime);
+    if (_animation.isStopped()) {
+        stop();
+    }
 }
