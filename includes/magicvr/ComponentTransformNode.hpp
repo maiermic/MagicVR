@@ -9,12 +9,12 @@
 #include <OpenSG/OSGComponentTransformFields.h>
 
 class ComponentTransformNode {
-    const OSG::ComponentTransformRecPtr _trans;
-    const OSG::NodeRecPtr _node;
+    OSG::ComponentTransformRecPtr _trans;
+    OSG::NodeRecPtr _node;
 public:
     ComponentTransformNode();
 
-    ComponentTransformNode(const OSG::ComponentTransformRecPtr _trans);
+    ComponentTransformNode(OSG::ComponentTransformRecPtr _trans);
 
     ComponentTransformNode &translate(OSG::Real32 x, OSG::Real32 y, OSG::Real32 z);
 
@@ -27,6 +27,10 @@ public:
     ComponentTransformNode &addChild(OSG::NodeTransitPtr child);
 
     ComponentTransformNode &addChild(OSG::NodeRecPtr child);
+
+    ComponentTransformNode &removeChild(OSG::NodeTransitPtr child);
+
+    ComponentTransformNode &removeChild(OSG::NodeRecPtr child);
 
     const OSG::NodeTransitPtr node() const;
 

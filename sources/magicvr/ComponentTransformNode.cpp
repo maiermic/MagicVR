@@ -3,7 +3,7 @@
 ComponentTransformNode::ComponentTransformNode() : ComponentTransformNode(OSG::ComponentTransformBase::create()) {}
 
 ComponentTransformNode::ComponentTransformNode(
-        const OSG::ComponentTransformRecPtr _trans) : _trans(_trans),
+        OSG::ComponentTransformRecPtr _trans) : _trans(_trans),
                                                       _node(OSG::makeNodeFor(
                                                               _trans)) {}
 
@@ -41,5 +41,14 @@ ComponentTransformNode &ComponentTransformNode::addChild(OSG::NodeTransitPtr chi
 
 ComponentTransformNode &ComponentTransformNode::addChild(OSG::NodeRecPtr child) {
     node()->addChild(child);
+    return *this;
+}
+
+ComponentTransformNode &ComponentTransformNode::removeChild(OSG::NodeTransitPtr child) {
+    return removeChild(OSG::NodeRecPtr(child));
+}
+
+ComponentTransformNode &ComponentTransformNode::removeChild(OSG::NodeRecPtr child) {
+    node()->subChild(child);
     return *this;
 }

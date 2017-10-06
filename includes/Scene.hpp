@@ -25,6 +25,8 @@ class Scene {
     magicvr::node::TrajectoryContainerNode _preprocessedInputTrajectoryNode;
     magicvr::node::TrajectoryContainerNode _patternTrajectoryNode;
 
+    ComponentTransformNode _windElementalStone;
+
 //    const ComponentTransformRecPtr earthUnlockedCT;
 //    const ComponentTransformRecPtr fireUnlockedCT;
 //    const ComponentTransformRecPtr waterUnlockedCT;
@@ -53,7 +55,7 @@ class Scene {
 
 //    const NodeTransitPtr buildEarthElement() const;
 
-    const NodeTransitPtr buildWindElementalStone() const;
+    static ComponentTransformNode createWindElementalStone();
 
 //    const NodeTransitPtr buildFireElement() const;
 
@@ -142,6 +144,8 @@ public:
     static magicvr::animation::BubbleAnimationsNode createThunderBubbles();
 
     static std::vector<float> getBubblesRange();
+
+    std::shared_ptr<Animation> createWindBubblesAnimation();
 
 };
 

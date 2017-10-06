@@ -132,18 +132,13 @@ void Scene::animateThunderBubbles() {
 }
 
 void Scene::stopAnimateWindBubbles() {
-    _windBubbles.animation().stop();
+    _windElementalStone.removeChild(_windBubbles.node().node());
 }
 
 void Scene::animateWindBubbles() {
-    _animations.add(std::shared_ptr<Animation>(
-            new magicvr::animation::OnStopAnimation(
-                    _windBubbles.animation(),
-                    []() {
-                        std::cout << "animation stopped\n";
-                    }
-            )
-    ));
+    _windBubbles = createWindBubbles();
+    _windElementalStone.addChild(_windBubbles.node().node());
+    _animations.add(createWindBubblesAnimation());
 }
 
 void Scene::shootLight(input::Tracker wand, OSG::Vec3f destination) {
@@ -232,7 +227,7 @@ const NodeTransitPtr Scene::buildBackLeftPedestal() const {
     return ComponentTransformNode()
             .translate(-1.25f, -0.15f, -1.8f)
             .addChild(buildPedestal())
-            .addChild(buildWindElementalStone())
+            .addChild(_windElementalStone.node())
             .node();
 }
 
@@ -278,15 +273,13 @@ const NodeTransitPtr Scene::buildThunderElementalStone() const {
             .node();
 }
 
-const NodeTransitPtr Scene::buildWindElementalStone() const {
+ComponentTransformNode Scene::createWindElementalStone() {
     return ComponentTransformNode()
             .translate(0, 1, 0)
             .scale(1)
             .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .addChild(SingletonHolder<SceneFileHandlerBase>::the()->read(
-                    Path_Model_WindStone))
-            .addChild(_windBubbles.node().node())
-            .node();
+                    Path_Model_WindStone));
 }
 
 
@@ -296,6 +289,7 @@ void Scene::update(OSG::Time dTime) {
 
 Scene::Scene() : _animations(ParallelAnimation::DO_NOT_STOP_IF_NO_ANIMATIONS),
                  _root(makeNodeFor(Group::create())),
+                 _windElementalStone(createWindElementalStone()),
                  _fireBubbles(createFireBubbles()),
                  _waterBubbles(createWaterBubbles()),
                  _thunderBubbles(createThunderBubbles()),
@@ -382,4 +376,15 @@ magicvr::animation::BubbleAnimationsNode Scene::createThunderBubbles() {
 
 std::vector<float> Scene::getBubblesRange() {
     return magicvr::ranges::view::rangeV(0.3f, 1.0f, 0.1f);
+}
+
+std::shared_ptr<Animation> Scene::createWindBubblesAnimation() {
+    return std::shared_ptr<Animation>(
+            new magicvr::animation::OnStopAnimation(
+                    _windBubbles.animation(),
+                    [&]() {
+                        stopAnimateWindBubbles();
+                    }
+            )
+    );
 }
