@@ -150,11 +150,17 @@ namespace magicvr {
         right_preprocessed_input_trajectory_stream =
                 preprocess_right(input_trajectory_stream);
 
-        const trajecmp::distance::neighbours_percentage_range neighbours(0.1);
+        const trajecmp::distance::neighbours_percentage_range neighbours(0.05);
         const auto modified_hausdorff =
                 trajecmp::distance::modified_hausdorff(neighbours);
         const auto compare = match_by(modified_hausdorff,
                                       less_than(normalized_size * 0.3));
+        const auto compare_less_than = [=](float epsilon) {
+            return match_by(
+                    modified_hausdorff,
+                    less_than(normalized_size * epsilon)
+            );
+        };
 
         input_matches_pattern_water_stream =
                 compare(right_preprocessed_input_trajectory_stream,
@@ -163,15 +169,19 @@ namespace magicvr {
                 compare(left_preprocessed_input_trajectory_stream,
                         preprocess_left(pattern_wind_trajectory_stream));
         input_matches_pattern_lightning_stream =
-                compare(left_preprocessed_input_trajectory_stream,
-                        preprocess_left(pattern_lightning_trajectory_stream));
+                compare_less_than(0.2)(
+                        left_preprocessed_input_trajectory_stream,
+                        preprocess_left(pattern_lightning_trajectory_stream)
+                );
         input_matches_pattern_fire_stream =
                 compare(right_preprocessed_input_trajectory_stream,
                         preprocess_right(pattern_fire_trajectory_stream));
         input_matches_pattern_quaterCircleFromAbove_stream =
-                compare(right_preprocessed_input_trajectory_stream,
+                compare_less_than(0.1)(
+                        right_preprocessed_input_trajectory_stream,
                         preprocess_right(
-                                pattern_quaterCircleFromAbove_trajectory_stream));
+                                pattern_quaterCircleFromAbove_trajectory_stream)
+                );
         preprocessed_pattern_circle_trajectory_stream =
                 preprocess_right(pattern_circle_trajectory_stream);
         input_matches_pattern_circle_stream =
