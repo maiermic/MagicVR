@@ -30,9 +30,18 @@ namespace magicvr {
         _tricks.input_matches_pattern_circle_stream.subscribe(
                 [&](double distance) {
                     std::cout << "circle distance " << distance << '\n';
-                    bulbCount(bulbCount() + 1);
+                    if (bulbCount() < 1) {
+                        bulbCount(1);
+                    }
                     if (_selectedWandBulb == node::NO_BULB) {
                         showBulb(node::DEFAULT_BULB);
+                    }
+                });
+        _tricks.input_matches_pattern_circle2_stream.subscribe(
+                [&](double distance) {
+                    std::cout << "circle2 distance " << distance << '\n';
+                    if (bulbCount() >= 1) {
+                        bulbCount(bulbCount() * 2);
                     }
                 });
         _tricks.input_matches_pattern_quaterCircleFromAbove_stream.subscribe(
