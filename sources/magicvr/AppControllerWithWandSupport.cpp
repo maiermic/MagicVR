@@ -7,8 +7,8 @@
 namespace magicvr {
     AppControllerWithWandSupport::AppControllerWithWandSupport(
             input::RemoteManager &wand)
-            : _wand(wand),
-              _bulbCount(0) {
+            : _wand(wand) {
+        bulbCount(0);
         showBulb(node::NO_BULB);
         root()->addChild(_wandNode.node().node());
         root()->addChild(_trajectoryNode.node());
@@ -30,8 +30,10 @@ namespace magicvr {
         _tricks.input_matches_pattern_circle_stream.subscribe(
                 [&](double distance) {
                     std::cout << "circle distance " << distance << '\n';
-                    _bulbCount++;
-                    showBulb(node::DEFAULT_BULB);
+                    bulbCount(bulbCount() + 1);
+                    if (_selectedWandBulb == node::NO_BULB) {
+                        showBulb(node::DEFAULT_BULB);
+                    }
                 });
         _tricks.input_matches_pattern_quaterCircleFromAbove_stream.subscribe(
                 [&](double distance) {
@@ -48,7 +50,7 @@ namespace magicvr {
         if (_bulbCount == 0) {
             return;
         }
-        std::cout << "bulb count: " << _bulbCount
+        std::cout << "bulb count: " << bulbCount()
                   << ", selected: " << _selectedWandBulb
                   << '\n';
         switch (_selectedWandBulb) {
@@ -64,16 +66,16 @@ namespace magicvr {
             default:
                 return;
         }
-        _bulbCount = std::max(0, _bulbCount - 1);
-        std::cout << "bulb count after shoot: " << _bulbCount << '\n';
-        if (_bulbCount == 0) {
+        bulbCount(bulbCount() - 1);
+        std::cout << "bulb count after shoot: " << bulbCount() << '\n';
+        if (bulbCount() == 0) {
             showBulb(node::NO_BULB);
         }
     }
 
     void AppControllerWithWandSupport::showBulb(magicvr::node::WandBulb bulb) {
         std::cout << "show bulb " << bulb << '\n';
-        if (bulb == node::NO_BULB || _bulbCount >= 1) {
+        if (bulb == node::NO_BULB || bulbCount() >= 1) {
             _selectedWandBulb = bulb;
             _wandNode.showBulb(bulb);
         }
@@ -120,6 +122,15 @@ namespace magicvr {
 
     void AppControllerWithWandSupport::shootFire() {
         AppController::shootFire(_wand.wand, OSG::Vec3f(-1.6f, 0, 0.2));
+    }
+
+    int AppControllerWithWandSupport::bulbCount() const {
+        return _bulbCount;
+    }
+
+    void AppControllerWithWandSupport::bulbCount(int count) {
+        _bulbCount = std::max(0, count);
+        _wandNode.node().scale(bulbCount());
     }
 
 }

@@ -18,6 +18,10 @@ namespace magicvr {
         magicvr::node::WandBulb _selectedWandBulb;
         int _bulbCount;
 
+        int bulbCount() const;
+
+        void bulbCount(int count);
+
         void shootBulb();
 
         void showBulb(magicvr::node::WandBulb bulb);
