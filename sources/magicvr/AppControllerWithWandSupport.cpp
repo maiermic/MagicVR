@@ -147,7 +147,7 @@ namespace magicvr {
 
     void AppControllerWithWandSupport::bulbCount(int count) {
         _bulbCount = std::max(0, count);
-        _wandNode.node().scale(bulbCount());
+        _wandNode.node().scale(std::log2f(bulbCount() + 1));
         if (bulbCount() == 0) {
             _isShooting = false;
         }
