@@ -14,24 +14,33 @@ namespace magicvr {
         root()->addChild(_trajectoryNode.node());
         _tricks.input_matches_pattern_lightning_stream.subscribe(
                 [&](double distance) {
+                    std::cout << "lightning distance " << distance << '\n';
                     showBulb(node::THUNDER_BULB);
                 });
         _tricks.input_matches_pattern_water_stream.subscribe(
                 [&](double distance) {
+                    std::cout << "water distance " << distance << '\n';
                     showBulb(node::WATER_BULB);
                 });
         _tricks.input_matches_pattern_fire_stream.subscribe(
                 [&](double distance) {
+                    std::cout << "fire distance " << distance << '\n';
                     showBulb(node::FIRE_BULB);
                 });
         _tricks.input_matches_pattern_circle_stream.subscribe(
                 [&](double distance) {
+                    std::cout << "circle distance " << distance << '\n';
                     _bulbCount++;
                     showBulb(node::DEFAULT_BULB);
                 });
         _tricks.input_matches_pattern_quaterCircleFromAbove_stream.subscribe(
                 [&](double distance) {
+                    std::cout << "quaterCircleFromAbove distance " << distance << '\n';
                     shootBulb();
+                });
+        _tricks.input_matches_pattern_wind_stream.subscribe(
+                [&](double distance) {
+                    std::cout << "wind distance " << distance << '\n';
                 });
     }
 
