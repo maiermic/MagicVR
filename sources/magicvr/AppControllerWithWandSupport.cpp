@@ -7,24 +7,67 @@
 namespace magicvr {
     AppControllerWithWandSupport::AppControllerWithWandSupport(
             input::RemoteManager &wand)
-            : _wand(wand) {
+            : _wand(wand),
+              _bulbCount(0) {
+        showBulb(node::NO_BULB);
         root()->addChild(_wandNode.node().node());
         root()->addChild(_trajectoryNode.node());
         _tricks.input_matches_pattern_lightning_stream.subscribe(
                 [&](double distance) {
-                    shootLight();
-                    _wandNode.showBulb(node::THUNDER_BULB);
+                    showBulb(node::THUNDER_BULB);
                 });
         _tricks.input_matches_pattern_water_stream.subscribe(
                 [&](double distance) {
-                    shootWater();
-                    _wandNode.showBulb(node::WATER_BULB);
+                    showBulb(node::WATER_BULB);
                 });
         _tricks.input_matches_pattern_fire_stream.subscribe(
                 [&](double distance) {
-                    shootFire();
-                    _wandNode.showBulb(node::FIRE_BULB);
+                    showBulb(node::FIRE_BULB);
                 });
+        _tricks.input_matches_pattern_circle_stream.subscribe(
+                [&](double distance) {
+                    _bulbCount++;
+                    showBulb(node::DEFAULT_BULB);
+                });
+        _tricks.input_matches_pattern_quaterCircleFromAbove_stream.subscribe(
+                [&](double distance) {
+                    shootBulb();
+                });
+    }
+
+    void AppControllerWithWandSupport::shootBulb() {
+        if (_bulbCount == 0) {
+            return;
+        }
+        std::cout << "bulb count: " << _bulbCount
+                  << ", selected: " << _selectedWandBulb
+                  << '\n';
+        switch (_selectedWandBulb) {
+            case node::THUNDER_BULB:
+                shootLight();
+                break;
+            case node::WATER_BULB:
+                shootWater();
+                break;
+            case node::FIRE_BULB:
+                shootFire();
+                break;
+            default:
+                return;
+        }
+        _bulbCount = std::max(0, _bulbCount - 1);
+        std::cout << "bulb count after shoot: " << _bulbCount << '\n';
+        if (_bulbCount == 0) {
+            showBulb(node::NO_BULB);
+        }
+    }
+
+    void AppControllerWithWandSupport::showBulb(magicvr::node::WandBulb bulb) {
+        std::cout << "show bulb " << bulb << '\n';
+        if (bulb == node::NO_BULB || _bulbCount >= 1) {
+            _selectedWandBulb = bulb;
+            _wandNode.showBulb(bulb);
+        }
     }
 
     void AppControllerWithWandSupport::display(OSG::Time dTime) {

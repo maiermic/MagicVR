@@ -15,8 +15,15 @@ namespace magicvr {
         node::TrajectoryContainerNode _trajectoryNode;
         input::RemoteManager &_wand;
 
+        magicvr::node::WandBulb _selectedWandBulb;
+        int _bulbCount;
+
+        void shootBulb();
+
+        void showBulb(magicvr::node::WandBulb bulb);
+
     public:
-        AppControllerWithWandSupport(input::RemoteManager &wand);
+        explicit AppControllerWithWandSupport(input::RemoteManager &wand);
 
         void display(OSG::Time dTime) override;
 

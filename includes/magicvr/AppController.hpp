@@ -3,6 +3,7 @@
 
 
 #include <Scene.hpp>
+#include <magicvr/node/WandNode.hpp>
 #include "AppModel.hpp"
 #include "MagicTricks.hpp"
 

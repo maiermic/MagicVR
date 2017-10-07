@@ -11,6 +11,7 @@
 namespace magicvr { namespace node {
 
     enum WandBulb : int {
+        NO_BULB = OSG::Switch::NONE,
         DEFAULT_BULB = 0,
         FIRE_BULB,
         WATER_BULB,
