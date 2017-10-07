@@ -62,7 +62,7 @@ namespace magicvr {
             return;
         }
         _isShooting = true;
-        _nextShotTime = _timeSinceStart + SHOOTING_TIME;
+        _nextShotTime = _timeSinceStart + getShootingTime();
         std::cout << "bulb count: " << bulbCount()
                   << ", selected: " << _selectedWandBulb
                   << '\n';

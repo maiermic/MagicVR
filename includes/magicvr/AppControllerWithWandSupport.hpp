@@ -22,6 +22,19 @@ namespace magicvr {
         bool _isShooting = false;
         static constexpr OSG::Time SHOOTING_TIME = 1.0f;
 
+        OSG::Time getShootingTime() const {
+            switch (_selectedWandBulb) {
+                case node::THUNDER_BULB:
+                    return 1.0f;
+                case node::WATER_BULB:
+                    return 0.3f;
+                case node::FIRE_BULB:
+                    return 0.5f;
+                default:
+                    return 1.0f;
+            }
+        }
+
         int bulbCount() const;
 
         void bulbCount(int count);
