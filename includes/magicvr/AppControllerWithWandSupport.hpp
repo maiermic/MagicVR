@@ -17,6 +17,10 @@ namespace magicvr {
 
         magicvr::node::WandBulb _selectedWandBulb;
         int _bulbCount;
+        OSG::Time _timeSinceStart = 0;
+        OSG::Time _nextShotTime = 0;
+        bool _isShooting = false;
+        static constexpr OSG::Time SHOOTING_TIME = 1.0f;
 
         int bulbCount() const;
 

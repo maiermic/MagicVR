@@ -47,7 +47,9 @@ namespace magicvr {
         _tricks.input_matches_pattern_quaterCircleFromAbove_stream.subscribe(
                 [&](double distance) {
                     std::cout << "quaterCircleFromAbove distance " << distance << '\n';
-                    shootBulb();
+                    if (!_isShooting) {
+                        shootBulb();
+                    }
                 });
         _tricks.input_matches_pattern_wind_stream.subscribe(
                 [&](double distance) {
@@ -59,6 +61,8 @@ namespace magicvr {
         if (_bulbCount == 0) {
             return;
         }
+        _isShooting = true;
+        _nextShotTime = _timeSinceStart + SHOOTING_TIME;
         std::cout << "bulb count: " << bulbCount()
                   << ", selected: " << _selectedWandBulb
                   << '\n';
@@ -91,6 +95,10 @@ namespace magicvr {
     }
 
     void AppControllerWithWandSupport::display(OSG::Time dTime) {
+        _timeSinceStart += dTime;
+        if (_isShooting && _nextShotTime < _timeSinceStart) {
+            shootBulb();
+        }
         static auto lastWandPosition = _wand.wand.position;
         static bool _hasBeenRecordingTrajectory = false;
         const bool _isRecordingTrajectory = _wand.buttons[input::RemoteManager::BACK];
@@ -140,6 +148,9 @@ namespace magicvr {
     void AppControllerWithWandSupport::bulbCount(int count) {
         _bulbCount = std::max(0, count);
         _wandNode.node().scale(bulbCount());
+        if (bulbCount() == 0) {
+            _isShooting = false;
+        }
     }
 
 }
