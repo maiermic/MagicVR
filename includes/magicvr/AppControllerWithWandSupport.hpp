@@ -25,7 +25,7 @@ namespace magicvr {
         OSG::Time getShootingTime() const {
             switch (_selectedWandBulb) {
                 case node::THUNDER_BULB:
-                    return 1.0f;
+                    return 0.7f;
                 case node::WATER_BULB:
                     return 0.3f;
                 case node::FIRE_BULB:
