@@ -66,12 +66,6 @@ AppController::AppController() {
     _tricks.input_matches_pattern_wind_stream.subscribe([&](double distance) {
         this->scene().animateWindBubbles();
     });
-    _tricks.input_matches_pattern_quaterCircleFromAbove_stream.subscribe([&](double distance) {
-        this->scene().animateWindBubbles();
-    });
-    _tricks.input_matches_pattern_circle_stream.subscribe([&](double distance) {
-        this->scene().animateWaterBubbles();
-    });
     _tricks.preprocessed_pattern_circle_trajectory_stream.subscribe([&](Trajectory trajectory) {
         this->scene().showPatternTrajectory(std::move(trajectory));
     });
@@ -116,7 +110,7 @@ void AppController::shootWater(input::Tracker wand, OSG::Vec3f destination) {
     scene().shootWater(
             getShootingCurve(wand, destination, 1.0f),
             [&](Scene::AnimationPtr animation) {
-                scene().fire().intensity(scene().fire().intensity() - 0.3f);
+                scene().fire().intensity(scene().fire().intensity() - 0.1f);
             }
     );
 }
@@ -125,7 +119,7 @@ void AppController::shootFire(input::Tracker wand, OSG::Vec3f destination) {
     scene().shootFire(
             getShootingCurve(wand, destination, 1.0f),
             [&](Scene::AnimationPtr animation) {
-                scene().fire().intensity(scene().fire().intensity() + 0.3f);
+                scene().fire().intensity(scene().fire().intensity() + 0.1f);
             }
     );
 }
