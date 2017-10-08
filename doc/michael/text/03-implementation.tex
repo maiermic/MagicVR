@@ -1,0 +1,51 @@
+\section{Implementation}
+
+The project is implemented in C++ using the libraries \BoostGeometry, \RxCpp, \rangeLib and \trajecmp.
+The library \trajecmp is written by the author Michael Maier to detect gestures.
+The process shown in~\autoref{fig:system-diagram} is implemented like this:
+
+\begin{lstlisting}
+const auto result_stream =
+    compare(preprocess(input_stream),
+            preprocess(pattern_stream));
+
+result_stream.subscribe([](auto result) {
+    // process result
+});
+\end{lstlisting}
+
+\noindent
+\inlineCpp{input\_stream} and \inlineCpp{pattern\_stream} are streams of trajectories.
+Every time a input trajectory is emitted on \inlineCpp{input\_stream} it is preprocessed and compared with the (latest) preprocessed pattern trajectory of \inlineCpp{pattern\_stream}.
+Usually, \inlineCpp{pattern\_stream} contains only one (static pattern) trajectory.
+However, a pattern trajectory might be dynamically created.
+For example, you could use another input trajectory as a pattern.\\
+
+\noindent
+You can compare the input trajectory with multiple patterns like this:
+
+\begin{lstlisting}
+const auto preprocessed_input_stream =
+    preprocess(input_stream);
+
+const auto result_1_stream =
+    compare(preprocessed_input_stream,
+            preprocess(pattern_1_stream));
+
+const auto result_2_stream =
+    compare(preprocessed_input_stream,
+            preprocess(pattern_2_stream));
+
+result_1_stream.subscribe([](auto result) {
+    // process result
+});
+
+result_2_stream.subscribe([](auto result) {
+    // process result
+});
+\end{lstlisting}
+
+\noindent
+All gestures of the project are implemented in the class \path{sources/magicvr/MagicTricks.cpp}.
+Apart from the preprocessing steps shown in~\autoref{fig:preprocessing-steps} it contains a rotation transformation around the axis pointing upwards in the cave.
+The event subscription is done in \path{sources/magicvr/AppController.cpp} and \path{sources/magicvr/AppControllerWithWandSupport.cpp}.
