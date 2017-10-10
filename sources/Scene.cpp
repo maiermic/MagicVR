@@ -266,6 +266,7 @@ const NodeRecPtr Scene::buildRealWorldScale() {
      * Since we have a not working Beamer on the right side
      * of the cave, meanwhile turn the complete scene about 30° to the left */
     return ComponentTransformNode()
+            .translate(-0.5*100,0,-1*100)
 //            .rotate(Quaternion(Vec3f(0, 1, 0), osgDegree2Rad(30)))
             .scale(100)
             .addChild(buildScenesModels())
