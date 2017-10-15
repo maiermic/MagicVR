@@ -33,7 +33,7 @@ public:
 
     std::vector<Vector> sample(std::size_t numberOfPoints) const {
         std::vector<Vector> sampled;
-        for (float i = 0; i < numberOfPoints; ++i) {
+        for (float i = 0; i <= numberOfPoints; ++i) {
             sampled.push_back(atPercentage(i / numberOfPoints));
         }
         return sampled;
