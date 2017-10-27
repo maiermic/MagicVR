@@ -72,12 +72,12 @@ int main(int argc, char **argv) {
 
         // head light fix (3/3)
         DirectionalLightRecPtr mainLight = DirectionalLightBase::create();
-        mainLight->setDiffuse(Color4f(1, 0.5, 0.3, 0.8));
-        mainLight->setAmbient(Color4f(0.3,0.3,0.4,0.8));
+        mainLight->setDiffuse(Color4f(1, 0.7, 0.5, 1));
+        mainLight->setAmbient(Color4f(0.4,0.4,0.6,1));
         mainLight->setSpecular(Color4f(0,0,0,0));
 
         Matrix4f mat;
-        mat.setRotate(Quaternion(Vec3f(1,0,0),osgDegree2Rad(20)) * Quaternion(Vec3f(0,1,0),osgDegree2Rad(-60)));
+        mat.setRotate(Quaternion(Vec3f(1,0,0),osgDegree2Rad(20)) * Quaternion(Vec3f(0,1,0),osgDegree2Rad(-70)));
         auto dir = mat * Vec3f(0.f, 0.f, 1.f);
         mainLight->setDirection(dir);
         
