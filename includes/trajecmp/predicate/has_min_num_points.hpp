@@ -1,8 +1,6 @@
 #ifndef TRAJECMP_PREDICATE_HAS_MIN_NUM_POINTS_HPP
 #define TRAJECMP_PREDICATE_HAS_MIN_NUM_POINTS_HPP
 
-#include <cstddef>
-#include <boost/geometry/algorithms/num_points.hpp>
 
 namespace trajecmp { namespace predicate {
 
