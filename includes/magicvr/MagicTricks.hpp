@@ -13,7 +13,7 @@
 #include <boost/geometry/geometries/register/linestring.hpp>
 BOOST_GEOMETRY_REGISTER_LINESTRING(std::vector<OSG::Vec3f>);
 
-#include "boost/geometry/traits/point.hpp"
+#include "point.hpp"
 
 
 namespace magicvr {

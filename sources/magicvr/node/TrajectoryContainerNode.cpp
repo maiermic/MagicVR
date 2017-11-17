@@ -1,6 +1,6 @@
 #include "magicvr/node/TrajectoryContainerNode.hpp"
 #include <boost/geometry.hpp>
-#include <boost/geometry/traits/point.hpp>
+#include <magicvr/point.hpp>
 #include <boost/geometry/geometries/register/linestring.hpp>
 BOOST_GEOMETRY_REGISTER_LINESTRING(std::vector<OSG::Vec3f>);
 
