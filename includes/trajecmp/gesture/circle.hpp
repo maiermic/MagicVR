@@ -2,6 +2,7 @@
 #define TRAJECMP_GESTURE_CIRCLE_HPP
 
 #include <trajecmp/distance/distances_to_start.hpp>
+#include <trajecmp/distance/modified_hausdorff.hpp>
 #include <trajecmp/geometry/hyper_sphere.hpp>
 #include <trajecmp/util/angle.hpp>
 #include <trajecmp/util/approx.hpp>
@@ -11,89 +12,6 @@
 #include <boost/geometry.hpp>
 
 namespace trajecmp { namespace gesture {
-
-    template <typename Angle>
-    struct circle_segment_info {
-        Angle start_angle;
-        Angle end_angle;
-    };
-
-    /**
-     * Estimate the circle segment that a trajectory might represent.
-     * The trajectory might not be a circle segment.
-     * However, you can create a circle trajectory based on the result of this
-     * function to compare it with the trajectory to check if it is.
-     */
-    template <
-            typename Trajectory,
-            typename Point = typename boost::geometry::point_type<Trajectory>::type,
-            typename Angle = typename boost::geometry::coordinate_type<Trajectory>::type
-    >
-    circle_segment_info<Angle>
-    estimate_circle_segment(const Trajectory &trajectory,
-                            const trajecmp::geometry::hyper_sphere_of<Trajectory> &min_bounding_sphere) {
-        using Coordinate = typename boost::geometry::coordinate_type<Trajectory>::type;
-        using number_type_trait = trajecmp::trait::number_type_trait<Coordinate>;
-        using trajecmp::util::angle_clockwise;
-        using trajecmp::util::angle_counterclockwise;
-        using trajecmp::util::r2d;
-        using trajecmp::util::d2r;
-        using trajecmp::model::operator-;
-        const Point x_achsis(
-                number_type_trait::get_one_element(),
-                number_type_trait::get_zero_element()
-        );
-        const auto epsilon_distance = min_bounding_sphere.radius / 10;
-        const auto distances_to_start =
-                trajecmp::distance::distances_to_start(trajectory);
-        const auto extrema =
-                trajecmp::util::find_local_extrema(
-                        distances_to_start,
-                        epsilon_distance
-                );
-
-        const auto winding_direction_reference_point_index =
-                extrema.maxima.size() > 0
-                ? extrema.maxima.front() / 2
-                : trajectory.size() / 2;
-        const auto winding_direction_reference_point =
-                trajectory[winding_direction_reference_point_index];
-        const Angle winding_direction_reference_point_angle = angle_clockwise(
-                x_achsis,
-                winding_direction_reference_point - min_bounding_sphere.center
-        );
-
-        const bool is_clockwise_winding_direction =
-                winding_direction_reference_point_angle < d2r(Angle(180.0));
-        const int winding_direction = is_clockwise_winding_direction ? 1 : -1;
-        const auto angle =
-                is_clockwise_winding_direction
-                    ? angle_clockwise<Point>
-                    : angle_counterclockwise<Point>;
-
-        Angle start_angle = angle(
-                x_achsis,
-                trajectory.front() - min_bounding_sphere.center
-        );
-        if (start_angle == trajecmp::util::approx(d2r(Angle(360)))) {
-            start_angle = number_type_trait::get_zero_element();
-        }
-        const Angle end_angle = angle(
-                x_achsis,
-                trajectory.back() - min_bounding_sphere.center
-        );
-        int winding_number =
-                (extrema.maxima.size() + extrema.minima.size()) / 2;
-        static const Angle eps = number_type_trait::get_default_eps();
-        if (extrema.minima.size() < extrema.maxima.size() &&
-            end_angle <= d2r(Angle(45.0))) {
-            ++winding_number;
-        }
-        return {
-                start_angle,
-                end_angle * winding_direction + d2r(Angle(360 * winding_number * winding_direction)),
-        };
-    }
 
     template<typename Point>
     Point estimate_circle_center(const Point &a,
@@ -120,6 +38,205 @@ namespace trajecmp { namespace gesture {
                 (cd * (x(a) - x(b)) - bc * (x(b) - x(c))) * idet;
 
         return Point(center_x, center_y);
+    }
+
+    template<
+            typename Angle,
+            typename Point,
+            typename Radius = typename boost::geometry::coordinate_type<Point>::type
+    >
+    struct circle_segment_info {
+        Angle start_angle;
+        Angle end_angle;
+        Point center;
+        Radius radius;
+        int winding_number;
+    };
+
+    /**
+     * Estimate the circle segment that a trajectory might represent.
+     * The trajectory might not be a circle segment.
+     * However, you can create a circle trajectory based on the result of this
+     * function to compare it with the trajectory to check if it is.
+     */
+    template <
+            typename Trajectory,
+            typename Point = typename boost::geometry::point_type<Trajectory>::type,
+            typename Angle = typename boost::geometry::coordinate_type<Trajectory>::type,
+            typename Radius = typename boost::geometry::coordinate_type<Point>::type
+    >
+    circle_segment_info<Angle, Point>
+    estimate_circle_segment(const Trajectory &trajectory,
+                            const trajecmp::geometry::hyper_sphere_of<Trajectory> &min_bounding_sphere) {
+        using Coordinate = typename boost::geometry::coordinate_type<Trajectory>::type;
+        using number_type_trait = trajecmp::trait::number_type_trait<Coordinate>;
+        using trajecmp::util::angle_clockwise;
+        using trajecmp::util::angle_counterclockwise;
+        using trajecmp::util::approx;
+        using trajecmp::util::r2d;
+        using trajecmp::util::d2r;
+        using trajecmp::model::operator-;
+        const Angle r_45 = d2r(Angle(45.0));
+        const Angle r_180 = d2r(Angle(180.0));
+        const Angle r_360 = d2r(Angle(360.0));
+        const Point x_achsis(
+                number_type_trait::get_one_element(),
+                number_type_trait::get_zero_element()
+        );
+        const auto epsilon_distance = min_bounding_sphere.radius / 10;
+        const auto distances_to_start =
+                trajecmp::distance::distances_to_start(trajectory);
+        const auto extrema =
+                trajecmp::util::find_local_extrema(
+                        distances_to_start,
+                        epsilon_distance
+                );
+        const Point center =
+                extrema.maxima.size() == 0
+                ? estimate_circle_center(
+                        trajectory.front(),
+                        trajectory.at(trajectory.size() / 2),
+                        trajectory.back()
+                )
+                : min_bounding_sphere.center;
+        const Angle start_angle_clockwise = angle_clockwise(
+                x_achsis,
+                trajectory.front() - center
+        );
+        const Angle start_angle_counterclockwise = angle_counterclockwise(
+                x_achsis,
+                trajectory.front() - center
+        );
+        const Angle end_angle_clockwise = angle_clockwise(
+                x_achsis,
+                trajectory.back() - center
+        );
+        const Angle end_angle_counterclockwise = angle_counterclockwise(
+                x_achsis,
+                trajectory.back() - center
+        );
+        // estimate winding direction using two points w and w2
+        const auto w_index =
+                extrema.maxima.size() > 0
+                ? extrema.maxima.front() / 2
+                : trajectory.size() / 2;
+        // TODO prevent std::out_of_range exception
+        const auto w = trajectory.at(w_index);
+        const Angle w_angle_clockwise = angle_clockwise(x_achsis, w - center);
+        const auto w2_index =
+                extrema.maxima.size() > 0
+                ? extrema.maxima.front()
+                : trajectory.size() - 1;
+        // TODO prevent std::out_of_range exception
+        const auto w2 = trajectory.at(w2_index);
+        const Angle w2_angle_clockwise = angle_clockwise(x_achsis, w2 - center);
+        // TODO share conditions with if-else branches at the end of this function
+        const bool is_clockwise_winding_direction =
+                start_angle_clockwise < w2_angle_clockwise
+                ? start_angle_clockwise < w_angle_clockwise
+                  ? w2_angle_clockwise > w_angle_clockwise
+                  : false
+                : (start_angle_clockwise < w_angle_clockwise ||
+                   !(w2_angle_clockwise < w_angle_clockwise));
+        // estimate number of complete circles
+        const int winding_number_unfixed =
+                (extrema.maxima.size() + extrema.minima.size()) / 2;
+        const auto winding_number =
+                (extrema.minima.size() < extrema.maxima.size() &&
+                 (is_clockwise_winding_direction
+                  ? end_angle_clockwise <= std::fmod(start_angle_clockwise + r_45, r_360)
+                  : end_angle_counterclockwise <= std::fmod(start_angle_counterclockwise + r_45, r_360)))
+                ? winding_number_unfixed + 1
+                : winding_number_unfixed;
+        // TODO use multiple points to estimate radius (e.g. average distance to center)
+        const Radius radius = boost::geometry::distance(center, trajectory.front());
+        // angle of complete windings
+        const auto winding_angle = r_360 * winding_number;
+        // In each case-branch of the nested if statement is a comment
+        // that shows a representation of the relation of the angles
+        // using the abbreviations:
+        //   s = start_angle_clockwise
+        //   w = w_angle_clockwise
+        //   w2 = w2_angle_clockwise
+        // Further, it contains example of the trajectory flow of the case:
+        //   s -> w -> w2
+        if (start_angle_clockwise < w2_angle_clockwise) {
+            if (start_angle_clockwise < w_angle_clockwise) {
+                if (w2_angle_clockwise < w_angle_clockwise) {
+                    // s < w2 < w
+                    // 0 -> 270 -> 180
+                    // counterclockwise
+                    return {
+                            start_angle_clockwise,
+                            -end_angle_counterclockwise - winding_angle,
+                            center,
+                            radius,
+                            winding_number,
+                    };
+                } else {
+                    // s < w < w2
+                    // 0 -> 45 -> 90
+                    // clockwise
+                    return {
+                            start_angle_clockwise,
+                            end_angle_clockwise + winding_angle,
+                            center,
+                            radius,
+                            winding_number,
+                    };
+                }
+            } else {
+                // w < s < w2
+                // 90 -> 0 -> 270
+                // counterclockwise
+                return {
+                        start_angle_counterclockwise,
+                        -end_angle_counterclockwise - winding_angle,
+                        center,
+                        radius,
+                        winding_number,
+                };
+            }
+        } else {
+            if (start_angle_clockwise < w_angle_clockwise) {
+                // w2 < s < w
+                // 270 -> 315 -> 0
+                // clockwise
+                return {
+                        -start_angle_counterclockwise,
+                        end_angle_clockwise + winding_angle,
+                        center,
+                        radius,
+                        winding_number,
+                };
+            } else {
+                if (w2_angle_clockwise < w_angle_clockwise) {
+                    // w2 < w < s
+                    // 180 -> 90 -> 0
+                    // 330 -> 240 -> 150
+                    // counterclockwise
+                    return {
+                            -start_angle_counterclockwise,
+                            -end_angle_counterclockwise - winding_angle,
+                            center,
+                            radius,
+                            winding_number,
+                    };
+                } else {
+                    // w < w2 < s
+                    // 340 -> 0 -> 20
+                    // 350 -> 10 -> 30
+                    // clockwise
+                    return {
+                            -start_angle_counterclockwise,
+                            end_angle_clockwise + winding_angle,
+                            center,
+                            radius,
+                            winding_number,
+                    };
+                }
+            }
+        }
     }
 
 }} // namespace trajecmp::util
