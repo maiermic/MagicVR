@@ -22,6 +22,7 @@ include(AddProject)
 set(OPENSG_MODULES OSGBase OSGSystem OSGWindow OSGWindowGLUT OSGDrawable OSGUtil OSGGroup OSGFileIO OSGImageFileIO)
 
 set(EXECUTABLE_OUTPUT_PATH ../exe/)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ../exe/)
 add_project(${PROJECT_NAME}_cave
 	MAIN_FILE "apps/cave.cpp"
 	SOURCE_DIR "sources/"
