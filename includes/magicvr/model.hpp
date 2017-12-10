@@ -11,4 +11,8 @@ namespace magicvr { namespace model {
     using trajectory_2d = std::vector<point_2d>;
 }}
 
+#include <boost/geometry/geometries/register/linestring.hpp>
+BOOST_GEOMETRY_REGISTER_LINESTRING(magicvr::model::trajectory);
+BOOST_GEOMETRY_REGISTER_LINESTRING(magicvr::model::trajectory_2d);
+
 #endif //MAGICVR_MODEL_HPP
