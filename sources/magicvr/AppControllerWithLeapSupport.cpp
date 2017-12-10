@@ -11,7 +11,7 @@ namespace magicvr {
         if (_indexFingerTipPosition.hasChanged()) {
             const auto position =
                     _vectorConverter.toVec3f(
-                            _indexFingerTipPosition.position());
+                            _indexFingerTipPosition.position() + Leap::Vector(0, 100, 0));
             _indexFingerTipNode.moveTo(position);
             if (_isRecordingTrajectory) {
                 _trajectoryNode.add(position);
