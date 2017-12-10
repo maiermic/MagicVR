@@ -6,6 +6,7 @@
 namespace magicvr {
 
     void AppControllerWithLeapSupport::display(OSG::Time dTime) {
+        static bool _hasBeenRecordingTrajectory = false;
         _indexFingerTipPosition.update();
         if (_indexFingerTipPosition.hasChanged()) {
             const auto position =
@@ -14,12 +15,14 @@ namespace magicvr {
             _indexFingerTipNode.moveTo(position);
             if (_isRecordingTrajectory) {
                 _trajectoryNode.add(position);
-            } else {
+            } else if (_hasBeenRecordingTrajectory) {
+                _tricks.emit(std::move(_trajectoryNode.trajectory()));
                 _trajectoryNode.clear();
             }
         }
 
         AppController::display(dTime);
+        _hasBeenRecordingTrajectory = _isRecordingTrajectory;
     }
 
     AppControllerWithLeapSupport::AppControllerWithLeapSupport(
