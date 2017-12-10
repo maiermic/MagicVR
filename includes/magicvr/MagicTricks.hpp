@@ -10,8 +10,6 @@
 #include <boost/geometry/geometries/geometries.hpp>
 #include <rxcpp/rx.hpp>
 
-#include <boost/geometry/geometries/register/linestring.hpp>
-BOOST_GEOMETRY_REGISTER_LINESTRING(std::vector<OSG::Vec3f>);
 
 #include "point.hpp"
 
