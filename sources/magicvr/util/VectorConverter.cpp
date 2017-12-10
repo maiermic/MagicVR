@@ -7,7 +7,7 @@ namespace magicvr { namespace util {
     }
     
     VectorConverter::VectorConverter()
-            : _leapZeroPoint(0, -100, 0), _movementPercision(5) {}
+            : _leapZeroPoint(0, -100, 0), _movementPercision(2) {}
 
     OSG::Vec3f VectorConverter::toVec3f(const Leap::Vector &vector) {
         return (magicvr::util::toVec3f(vector) + _leapZeroPoint) /
