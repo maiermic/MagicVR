@@ -6,10 +6,15 @@
 #include <range/v3/utility/functional.hpp>
 
 #include <magicvr/animation/BezierCurve.hpp>
+#include <magicvr/model.hpp>
 #include <magicvr/Spiral.hpp>
 #include <magicvr/ranges/view/rotate.hpp>
 #include <magicvr/DrawingDirection.hpp>
 #include <magicvr/ranges/view/Circle.hpp>
+#include <trajecmp/util/angle.hpp>
+#include <trajecmp/gesture/circle.hpp>
+#include <trajecmp/trajectory/circle.hpp>
+#include <trajecmp/transform/douglas_peucker.hpp>
 
 //#include "trajecmp/functional/functional.hpp"
 #include "trajecmp/distance/modified_hausdorff.hpp"
@@ -22,8 +27,64 @@
 #include "trajecmp/compare/match_by.hpp"
 #include "trajecmp/util/subscribe_with_latest_from.hpp"
 #include "trajecmp/util/boost_geometry_to_string.hpp"
+#include <boost/geometry/geometries/concepts/linestring_concept.hpp>
 
 namespace magicvr {
+
+    const trajecmp::distance::neighbours_percentage_range neighbours(0.05);
+    const auto modified_hausdorff =
+            trajecmp::distance::modified_hausdorff(neighbours);
+    const auto modified_hausdorff_info =
+            trajecmp::distance::modified_hausdorff_info(neighbours);
+
+    const int normalized_size = 100;
+
+    struct circle_comparison_data {
+        model::trajectory_2d preprocessed_input_trajectory;
+        model::trajectory_2d preprocessed_pattern_trajectory;
+        boost::geometry::distance_info_result<model::point_2d> distance;
+        trajecmp::gesture::circle_segment_info<float, model::point_2d> circle_segment_info;
+    };
+
+    circle_comparison_data
+    get_circle_comparison_data(const model::trajectory &input_trajectory_3d) {
+        using trajecmp::util::r2d;
+        const model::trajectory_2d input_trajectory =
+                input_trajectory_3d |
+                    ::ranges::view::transform([](OSG::Vec3f v) {
+                        return OSG::Vec2f(v.x(), v.z());
+                    }) |
+                    ::ranges::to_vector;
+
+        const auto mbs = trajecmp::geometry::min_bounding_sphere(input_trajectory);
+        const auto DimensionCount = boost::geometry::dimension<model::point_2d>::value;
+        const auto c = trajecmp::gesture::estimate_circle_segment(input_trajectory, mbs);
+        const model::trajectory_2d pattern_trajectory =
+                trajecmp::trajectory::circle<model::trajectory_2d>(c.radius)
+                        .sample(r2d(c.start_angle), r2d(c.end_angle), 5.0f);
+        const auto preprocess_input = [&](model::trajectory_2d trajectory) {
+            return trajecmp::transform::scale_to_const<normalized_size>(mbs.radius * 2)(
+                    trajecmp::transform::translate_by(trajecmp::geometry::negative_vector_of(c.center))(
+                            trajectory)
+            );
+        };
+        const auto preprocess_pattern = [&](model::trajectory_2d trajectory) {
+            return trajecmp::transform::scale_to_const<normalized_size>(mbs.radius * 2)(trajectory);
+        };
+        const model::trajectory_2d preprocessed_input_trajectory =
+                preprocess_input(input_trajectory);
+        const model::trajectory_2d preprocessed_pattern_trajectory =
+                preprocess_pattern(pattern_trajectory);
+        return {
+                preprocessed_input_trajectory,
+                preprocessed_pattern_trajectory,
+                modified_hausdorff_info(
+                        preprocessed_input_trajectory,
+                        preprocessed_pattern_trajectory
+                ),
+                c,
+        };
+    }
 
     MagicTricks::MagicTricks() {
         using trajecmp::predicate::has_min_num_points;
@@ -92,7 +153,6 @@ namespace magicvr {
                                 }) |
                                 ::ranges::to_vector
                 );
-        static const auto normalized_size = 100;
         const auto scale_mbs = [=](auto &mbs) {
             return trajecmp::transform::scale_to_const<normalized_size>(
                     mbs.radius * 2
@@ -158,9 +218,6 @@ namespace magicvr {
         right_preprocessed_input_trajectory_stream =
                 preprocess_right(input_trajectory_stream);
 
-        const trajecmp::distance::neighbours_percentage_range neighbours(0.05);
-        const auto modified_hausdorff =
-                trajecmp::distance::modified_hausdorff(neighbours);
         const auto compare = match_by(modified_hausdorff,
                                       less_than(normalized_size * 0.3));
         const auto compare_less_than = [=](float epsilon) {
@@ -204,6 +261,17 @@ namespace magicvr {
                 preprocess_left(pattern_lightning_trajectory_stream);
         preprocessedWithoutRotation_input_trajectory_stream =
                 preprocessWithoutRotation(input_trajectory_stream);
+
+        left_preprocessed_input_trajectory_stream
+                .map(get_circle_comparison_data)
+                .subscribe([&](const circle_comparison_data &data) {
+                    std::cout << "left preprocessed circle estimation " << data.circle_segment_info.winding_number << '\n';
+                });
+        right_preprocessed_input_trajectory_stream
+                .map(get_circle_comparison_data)
+                .subscribe([&](const circle_comparison_data &data) {
+                    std::cout << "right preprocessed circle estimation " << data.circle_segment_info.winding_number << '\n';
+                });
     }
 
     void MagicTricks::emit(MagicTricks::Trajectory &&trajectory) const {
