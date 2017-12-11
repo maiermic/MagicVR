@@ -262,16 +262,16 @@ namespace magicvr {
         preprocessedWithoutRotation_input_trajectory_stream =
                 preprocessWithoutRotation(input_trajectory_stream);
 
-        left_preprocessed_input_trajectory_stream
-                .map(get_circle_comparison_data)
-                .subscribe([&](const circle_comparison_data &data) {
-                    std::cout << "left preprocessed circle estimation " << data.circle_segment_info.winding_number << '\n';
-                });
-        right_preprocessed_input_trajectory_stream
-                .map(get_circle_comparison_data)
-                .subscribe([&](const circle_comparison_data &data) {
-                    std::cout << "right preprocessed circle estimation " << data.circle_segment_info.winding_number << '\n';
-                });
+//        left_preprocessed_input_trajectory_stream
+//                .map(get_circle_comparison_data)
+//                .subscribe([&](const circle_comparison_data &data) {
+//                    std::cout << "left preprocessed circle estimation " << data.circle_segment_info.winding_number << '\n';
+//                });
+//        right_preprocessed_input_trajectory_stream
+//                .map(get_circle_comparison_data)
+//                .subscribe([&](const circle_comparison_data &data) {
+//                    std::cout << "right preprocessed circle estimation " << data.circle_segment_info.winding_number << '\n';
+//                });
     }
 
     void MagicTricks::emit(MagicTricks::Trajectory &&trajectory) const {

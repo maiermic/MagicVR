@@ -2,6 +2,7 @@
 #define MAGICVR_APPCONTROLLERWITHLEAPSUPPORT_HPP
 
 
+#include <input/Tracker.hpp>
 #include <magicvr/leap/FingerTipPosition.hpp>
 #include <magicvr/util/VectorConverter.hpp>
 #include <magicvr/node/MovableNode.hpp>
@@ -10,6 +11,7 @@
 
 namespace magicvr {
     class AppControllerWithLeapSupport : public AppController {
+        input::Tracker _wandDummy;
         leap::FingerTipPosition _indexFingerTipPosition;
         node::MovableNode _indexFingerTipNode;
         node::TrajectoryContainerNode _trajectoryNode;
@@ -17,6 +19,12 @@ namespace magicvr {
         bool _isRecordingTrajectory;
 
         NodeTransitPtr createIndexFingerTipNode();
+
+        void shootLight() override;
+
+        void shootWater() override;
+
+        void shootFire() override;
 
     public:
         AppControllerWithLeapSupport(

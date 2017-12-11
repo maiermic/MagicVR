@@ -7,31 +7,34 @@
 #include "SimpleSceneManagerNavigator.hpp"
 #include <OpenSG/OSGTime.h>
 
-class MagicVrDesktopGlutFramework : public glutFramework::GlutFramework {
-    OSG::SimpleSceneManagerRefPtr mgr; // gets created in createWindow
-    AppController &app;
-    magicvr::SimpleSceneManagerNavigator _navigator;
+namespace magicvr {
 
-public:
-    MagicVrDesktopGlutFramework(AppController &app);
+    class MagicVrDesktopGlutFramework : public glutFramework::GlutFramework {
+        OSG::SimpleSceneManagerRefPtr mgr; // gets created in createWindow
+        AppController &app;
+        magicvr::SimpleSceneManagerNavigator _navigator;
 
-    int createWindow() override;
+    public:
+        MagicVrDesktopGlutFramework(AppController &app);
 
-    void keyboardDown(unsigned char key, int x, int y) override;
+        int createWindow() override;
 
-    OSG::Node *root();
+        void keyboardDown(unsigned char key, int x, int y) override;
 
-    void mouseButtonPress(int button, int state, int x, int y) override;
+        OSG::Node *root();
 
-    void mouseMove(int x, int y) override;
+        void mouseButtonPress(int button, int state, int x, int y) override;
 
-    void display(OSG::Time dTime) override;
+        void mouseMove(int x, int y) override;
 
-    void reshape(int width, int height) override;
+        void display(OSG::Time dTime) override;
 
-    void keyboardUp(unsigned char key, int x, int y) override;
+        void reshape(int width, int height) override;
 
-};
+        void keyboardUp(unsigned char key, int x, int y) override;
 
+    };
+
+} // namespace magicvr
 
 #endif //MAGICVR_MAGICVRDESKTOPGLUTFRAMEWORK_HPP

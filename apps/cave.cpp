@@ -102,7 +102,7 @@ int main(int argc, char **argv) {
             mgr.setBackground(i, bg);
         }
 
-        MagicVrCaveGlutFramework framework(cfg, mgr, remoteManager, app, mainLight);
+        magicvr::MagicVrCaveGlutFramework framework(cfg, mgr, remoteManager, app, mainLight);
         framework.startFramework(argc, argv);
     }
     catch (std::string e) {

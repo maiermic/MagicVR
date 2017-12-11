@@ -2,71 +2,80 @@
 #include <OpenSG/OSGGLUTWindow.h>
 #include <magicvr/background.hpp>
 
-using namespace glutFramework;
+namespace magicvr {
 
-int MagicVrDesktopGlutFramework::createWindow() {
-    auto winid = GlutFramework::createWindow();
-    OSG::GLUTWindowRecPtr gwin = OSG::GLUTWindowBase::create();
-    gwin->setGlutId(winid);
-    gwin->init();
-    mgr = OSG::SimpleSceneManager::create();
-    mgr->setWindow(gwin);
-    mgr->setRoot(root());
-    mgr->showAll();
-    mgr->setHeadlight(true);
-    mgr->setBackground(loadBackground(SKYBOX_RES_1024)); // 256 | 512 | 1024 | 2048
-    _navigator.simpleSceneManager(mgr);
-    return winid;
-}
+    using namespace glutFramework;
 
-OSG::Node *MagicVrDesktopGlutFramework::root() {
-    return app.root();
-}
-
-void MagicVrDesktopGlutFramework::keyboardDown(unsigned char key, int x, int y) {
-    GlutFramework::keyboardDown(key, x, y);
-    mgr->key(key, x, y);
-    app.keyboardDown(key, x, y);
-    _navigator.keyboardDown(key);
-}
-
-void MagicVrDesktopGlutFramework::keyboardUp(unsigned char key, int x, int y) {
-    GlutFramework::keyboardUp(key, x, y);
-    app.keyboardUp(key, x, y);
-    _navigator.keyboardUp(key);
-}
-
-void MagicVrDesktopGlutFramework::mouseButtonPress(int button, int state, int x, int y) {
-    // react to mouse button presses
-    if (state) {
-        mgr->mouseButtonRelease(button, x, y);
-    } else {
-        mgr->mouseButtonPress(button, x, y);
+    int MagicVrDesktopGlutFramework::createWindow() {
+        auto winid = GlutFramework::createWindow();
+        OSG::GLUTWindowRecPtr gwin = OSG::GLUTWindowBase::create();
+        gwin->setGlutId(winid);
+        gwin->init();
+        mgr = OSG::SimpleSceneManager::create();
+        mgr->setWindow(gwin);
+        mgr->setRoot(root());
+        mgr->showAll();
+        mgr->setHeadlight(true);
+        mgr->setBackground(
+                loadBackground(SKYBOX_RES_1024)); // 256 | 512 | 1024 | 2048
+        _navigator.simpleSceneManager(mgr);
+        return winid;
     }
-    glutPostRedisplay();
-}
 
-void MagicVrDesktopGlutFramework::mouseMove(int x, int y) {
-    mgr->mouseMove(x, y);
-    glutPostRedisplay();
-}
+    OSG::Node *MagicVrDesktopGlutFramework::root() {
+        return app.root();
+    }
 
-void MagicVrDesktopGlutFramework::display(OSG::Time dTime) {
-    app.display(dTime);
-    _navigator.update();
-    commitChanges();
-    mgr->idle();
-    mgr->redraw();
-    // the changelist should be cleared - else things could be copied multiple times
-    OSG::Thread::getCurrentChangeList()->clear();
-}
+    void
+    MagicVrDesktopGlutFramework::keyboardDown(unsigned char key, int x, int y) {
+        GlutFramework::keyboardDown(key, x, y);
+        mgr->key(key, x, y);
+        app.keyboardDown(key, x, y);
+        _navigator.keyboardDown(key);
+    }
 
-MagicVrDesktopGlutFramework::MagicVrDesktopGlutFramework(AppController &app)
-        : app(app),
-          _navigator() {
-    title("MagicVR");
-}
+    void
+    MagicVrDesktopGlutFramework::keyboardUp(unsigned char key, int x, int y) {
+        GlutFramework::keyboardUp(key, x, y);
+        app.keyboardUp(key, x, y);
+        _navigator.keyboardUp(key);
+    }
 
-void MagicVrDesktopGlutFramework::reshape(int width, int height) {
-    mgr->resize(width, height);
-}
+    void
+    MagicVrDesktopGlutFramework::mouseButtonPress(int button, int state, int x,
+                                                  int y) {
+        // react to mouse button presses
+        if (state) {
+            mgr->mouseButtonRelease(button, x, y);
+        } else {
+            mgr->mouseButtonPress(button, x, y);
+        }
+        glutPostRedisplay();
+    }
+
+    void MagicVrDesktopGlutFramework::mouseMove(int x, int y) {
+        mgr->mouseMove(x, y);
+        glutPostRedisplay();
+    }
+
+    void MagicVrDesktopGlutFramework::display(OSG::Time dTime) {
+        app.display(dTime);
+        _navigator.update();
+        commitChanges();
+        mgr->idle();
+        mgr->redraw();
+        // the changelist should be cleared - else things could be copied multiple times
+        OSG::Thread::getCurrentChangeList()->clear();
+    }
+
+    MagicVrDesktopGlutFramework::MagicVrDesktopGlutFramework(AppController &app)
+            : app(app),
+              _navigator() {
+        title("MagicVR");
+    }
+
+    void MagicVrDesktopGlutFramework::reshape(int width, int height) {
+        mgr->resize(width, height);
+    }
+
+} // namespace magicvr

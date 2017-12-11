@@ -2,6 +2,8 @@
 #include <OpenSG/OSGSimpleGeometry.h>
 #include <OpenSG/OSGSimpleTexturedMaterial.h>
 #include <OpenSG/OSGSimpleTexturedMaterialBase.h>
+#include <OpenSG/OSGVector.h>
+#include <OpenSG/OSGQuaternion.h>
 
 namespace magicvr {
 
@@ -11,6 +13,8 @@ namespace magicvr {
             const auto position =
                     _vectorConverter.toVec3f(
                             _indexFingerTipPosition.position() + Leap::Vector(0, 100, 0));
+            _wandDummy.position = position;
+            _wandNode.node().translate(position);
             _indexFingerTipNode.moveTo(position);
             if (_isRecordingTrajectory) {
                 _trajectoryNode.add(position);
@@ -26,12 +30,16 @@ namespace magicvr {
             const leap::FingerTipPosition &_indexFingerTipPosition)
             : _indexFingerTipPosition(_indexFingerTipPosition),
               _isRecordingTrajectory(false) {
+        _wandDummy = {
+                OSG::Vec3f(0, 0, 0),
+                OSG::Quaternion(),
+        };
         root()->addChild(createIndexFingerTipNode());
         root()->addChild(_trajectoryNode.node());
     }
 
     NodeTransitPtr AppControllerWithLeapSupport::createIndexFingerTipNode() {
-        GeometryRecPtr geo = makeSphereGeo(2, 1);
+        GeometryRecPtr geo = makeSphereGeo(2, 0.5);
         SimpleMaterialRecPtr material = SimpleMaterialBase::create();
         material->setDiffuse(Color3f(1, 0.8f, 0));
         material->setAmbient(Color3f(0.8f, 0.2f, 0.2f));
@@ -64,10 +72,29 @@ namespace magicvr {
     AppControllerWithLeapSupport::keyboardUp(unsigned char key, int x, int y) {
         AppController::keyboardUp(key, x, y);
         switch (key) {
+            case '1':
+                bulbCount(16);
+                showBulb(node::FIRE_BULB);
+                break;
+            case '2':
+                shootBulb();
+                break;
             case ' ':
                 _isRecordingTrajectory = false;
                 _tricks.emit(std::move(_trajectoryNode.trajectory()));
                 break;
         }
+    }
+
+    void AppControllerWithLeapSupport::shootLight() {
+        AppController::shootLight(_wandDummy);
+    }
+
+    void AppControllerWithLeapSupport::shootWater() {
+        AppController::shootWater(_wandDummy, OSG::Vec3f(-1.6f, 0, 0.2));
+    }
+
+    void AppControllerWithLeapSupport::shootFire() {
+        AppController::shootFire(_wandDummy, OSG::Vec3f(-1.6f, 0, 0.2));
     }
 }
