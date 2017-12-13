@@ -41,8 +41,8 @@ namespace magicvr {
     NodeTransitPtr AppControllerWithLeapSupport::createIndexFingerTipNode() {
         GeometryRecPtr geo = makeSphereGeo(2, 0.5);
         SimpleMaterialRecPtr material = SimpleMaterialBase::create();
-        material->setDiffuse(Color3f(1, 0.8f, 0));
-        material->setAmbient(Color3f(0.8f, 0.2f, 0.2f));
+        material->setDiffuse(Color3f(0, 0.8f, 1));
+        material->setAmbient(Color3f(0.2f, 0.2f, 0.8f));
         geo->setMaterial(material);
         return _indexFingerTipNode.node(makeNodeFor(geo));;
     }
