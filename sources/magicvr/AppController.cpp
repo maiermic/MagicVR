@@ -59,6 +59,7 @@ Scene &AppController::scene() {
 
 AppController::AppController() {
     using Trajectory = std::vector<OSG::Vec3f>;
+    _scene.animateFire();
     bulbCount(0);
     showBulb(node::NO_BULB);
     root()->addChild(_wandNode.node().node());
