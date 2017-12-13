@@ -97,19 +97,14 @@ AppController::AppController() {
     _tricks.input_matches_pattern_circle_stream.subscribe(
             [&](double distance) {
                 std::cout << "circle distance " << distance << '\n';
-                if (bulbCount() < 1) {
-                    bulbCount(1);
-                }
-                if (_selectedWandBulb == node::NO_BULB) {
-                    showBulb(node::DEFAULT_BULB);
-                }
+//                showDefaultBulb();
             });
     _tricks.input_matches_pattern_circle2_stream.subscribe(
             [&](double distance) {
                 std::cout << "circle2 distance " << distance << '\n';
-                if (bulbCount() >= 1) {
-                    bulbCount(bulbCount() * 2);
-                }
+//                if (bulbCount() >= 1) {
+//                    bulbCount(bulbCount() * 2);
+//                }
             });
     _tricks.input_matches_pattern_quaterCircleFromAbove_stream.subscribe(
             [&](double distance) {
@@ -118,13 +113,8 @@ AppController::AppController() {
                     shootBulb();
                 }
             });
-    _tricks.left_circle_comparison_data_stream
+    _tricks.circle_comparison_data_stream
             .subscribe([&](const circle_comparison_data &data) {
-                std::cout << "left preprocessed circle estimation:\n"
-                          << "  winding_number: " << data.circle_segment_info.winding_number
-                          << "  radius: " << data.circle_segment_info.radius
-                          << "  distance: " << data.distance.real_distance
-                          << '\n';
                 const auto to_trajectory_3d = [](const model::trajectory_2d &trajectory) {
                     return trajectory |
                            ::ranges::view::transform([](OSG::Vec2f v) {
@@ -138,6 +128,23 @@ AppController::AppController() {
                 this->scene().showPatternTrajectory(
                         to_trajectory_3d(data.preprocessed_pattern_trajectory)
                 );
+                if (data.distance.real_distance < 15.0) {
+                    if (data.circle_segment_info.winding_number == 1) {
+                        showDefaultBulb();
+                    } else if (data.circle_segment_info.winding_number > 1){
+                        if (bulbCount() >= 1) {
+                            bulbCount(bulbCount() * data.circle_segment_info.winding_number);
+                        }
+                    }
+                }
+            });
+    _tricks.left_circle_comparison_data_stream
+            .subscribe([&](const circle_comparison_data &data) {
+                std::cout << "left preprocessed circle estimation:\n"
+                          << "  winding_number: " << data.circle_segment_info.winding_number
+                          << "  radius: " << data.circle_segment_info.radius
+                          << "  distance: " << data.distance.real_distance
+                          << '\n';
             });
     _tricks.right_circle_comparison_data_stream
             .subscribe([&](const circle_comparison_data &data) {
@@ -148,6 +155,15 @@ AppController::AppController() {
                           << '\n';
             });
 }
+
+    void AppController::showDefaultBulb() {
+        if (bulbCount() < 1) {
+            bulbCount(1);
+        }
+        if (_selectedWandBulb == node::NO_BULB) {
+            showBulb(node::DEFAULT_BULB);
+        }
+    }
 
     void AppController::shootBulb() {
         if (_bulbCount == 0) {

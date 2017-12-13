@@ -52,6 +52,8 @@ protected:
 
     void bulbCount(int count);
 
+    void showDefaultBulb();
+
     void shootBulb();
 
     void showBulb(magicvr::node::WandBulb bulb);

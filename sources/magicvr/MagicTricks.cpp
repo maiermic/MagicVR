@@ -259,6 +259,18 @@ namespace magicvr {
         right_circle_comparison_data_stream =
                 right_preprocessed_input_trajectory_stream
                         .map(get_circle_comparison_data);
+        circle_comparison_data_stream =
+                left_circle_comparison_data_stream
+                        .zip(right_circle_comparison_data_stream)
+                        .map([](std::tuple<circle_comparison_data, circle_comparison_data> data) {
+                            const circle_comparison_data left = std::get<0>(
+                                    data);
+                            const circle_comparison_data right = std::get<1>(
+                                    data);
+                            return left.distance.real_distance <
+                                   right.distance.real_distance
+                                   ? left : right;
+                        });
     }
 
     void MagicTricks::emit(MagicTricks::Trajectory &&trajectory) const {

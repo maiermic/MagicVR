@@ -44,6 +44,7 @@ namespace magicvr {
 
         rxcpp::observable<circle_comparison_data> left_circle_comparison_data_stream;
         rxcpp::observable<circle_comparison_data> right_circle_comparison_data_stream;
+        rxcpp::observable<circle_comparison_data> circle_comparison_data_stream;
 
         MagicTricks();
 
