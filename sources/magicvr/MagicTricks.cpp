@@ -6,7 +6,6 @@
 #include <range/v3/utility/functional.hpp>
 
 #include <magicvr/animation/BezierCurve.hpp>
-#include <magicvr/model.hpp>
 #include <magicvr/Spiral.hpp>
 #include <magicvr/ranges/view/rotate.hpp>
 #include <magicvr/DrawingDirection.hpp>
@@ -39,20 +38,13 @@ namespace magicvr {
 
     const int normalized_size = 100;
 
-    struct circle_comparison_data {
-        model::trajectory_2d preprocessed_input_trajectory;
-        model::trajectory_2d preprocessed_pattern_trajectory;
-        boost::geometry::distance_info_result<model::point_2d> distance;
-        trajecmp::gesture::circle_segment_info<float, model::point_2d> circle_segment_info;
-    };
-
     circle_comparison_data
     get_circle_comparison_data(const model::trajectory &input_trajectory_3d) {
         using trajecmp::util::r2d;
         const model::trajectory_2d input_trajectory =
                 input_trajectory_3d |
                     ::ranges::view::transform([](OSG::Vec3f v) {
-                        return OSG::Vec2f(v.x(), v.z());
+                        return OSG::Vec2f(v.x(), v.y());
                     }) |
                     ::ranges::to_vector;
 
@@ -261,17 +253,12 @@ namespace magicvr {
                 preprocess_left(pattern_lightning_trajectory_stream);
         preprocessedWithoutRotation_input_trajectory_stream =
                 preprocessWithoutRotation(input_trajectory_stream);
-
-//        left_preprocessed_input_trajectory_stream
-//                .map(get_circle_comparison_data)
-//                .subscribe([&](const circle_comparison_data &data) {
-//                    std::cout << "left preprocessed circle estimation " << data.circle_segment_info.winding_number << '\n';
-//                });
-//        right_preprocessed_input_trajectory_stream
-//                .map(get_circle_comparison_data)
-//                .subscribe([&](const circle_comparison_data &data) {
-//                    std::cout << "right preprocessed circle estimation " << data.circle_segment_info.winding_number << '\n';
-//                });
+        left_circle_comparison_data_stream =
+                left_preprocessed_input_trajectory_stream
+                        .map(get_circle_comparison_data);
+        right_circle_comparison_data_stream =
+                right_preprocessed_input_trajectory_stream
+                        .map(get_circle_comparison_data);
     }
 
     void MagicTricks::emit(MagicTricks::Trajectory &&trajectory) const {
