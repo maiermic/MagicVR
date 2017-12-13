@@ -7,6 +7,8 @@
 #include "AppModel.hpp"
 #include "MagicTricks.hpp"
 
+namespace magicvr {
+
 /**
  * Controller of the app logic, model and view (-model).
  * The model is used in the app logic.
@@ -24,7 +26,45 @@ class AppController {
     Scene _scene;
 
 protected:
+    node::WandNode _wandNode;
+    node::TrajectoryContainerNode _trajectoryNode;
+    magicvr::node::WandBulb _selectedWandBulb;
+    int _bulbCount;
+    OSG::Time _timeSinceStart = 0;
+    OSG::Time _nextShotTime = 0;
+    bool _isShooting = false;
+    static constexpr OSG::Time SHOOTING_TIME = 1.0f;
+
+    OSG::Time getShootingTime() const {
+        switch (_selectedWandBulb) {
+            case node::THUNDER_BULB:
+                return 0.7f;
+            case node::WATER_BULB:
+                return 0.3f;
+            case node::FIRE_BULB:
+                return 0.5f;
+            default:
+                return 1.0f;
+        }
+    }
+
+    int bulbCount() const;
+
+    void bulbCount(int count);
+
+    void showDefaultBulb();
+
+    void shootBulb();
+
+    void showBulb(magicvr::node::WandBulb bulb);
+
     magicvr::MagicTricks _tricks;
+
+    virtual void shootLight() = 0;
+
+    virtual void shootWater() = 0;
+
+    virtual void shootFire() = 0;
 
 public:
     AppController();
@@ -49,5 +89,6 @@ public:
     void shootFire(input::Tracker tracker, OSG::Vec3f destination);
 };
 
+} // namespace magicvr
 
 #endif //MAGICVR_APPCONTROLLER_HPP

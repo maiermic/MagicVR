@@ -9,14 +9,21 @@
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/geometries.hpp>
 #include <rxcpp/rx.hpp>
-
-#include <boost/geometry/geometries/register/linestring.hpp>
-BOOST_GEOMETRY_REGISTER_LINESTRING(std::vector<OSG::Vec3f>);
+#include <magicvr/model.hpp>
+#include <boost/geometry/extensions/strategies/cartesian/distance_info.hpp>
+#include <trajecmp/gesture/circle.hpp>
 
 #include "point.hpp"
 
 
 namespace magicvr {
+    struct circle_comparison_data {
+        model::trajectory_2d preprocessed_input_trajectory;
+        model::trajectory_2d preprocessed_pattern_trajectory;
+        boost::geometry::distance_info_result<model::point_2d> distance;
+        trajecmp::gesture::circle_segment_info<float, model::point_2d> circle_segment_info;
+    };
+
     class MagicTricks {
     public:
         using Trajectory = std::vector<OSG::Vec3f>;
@@ -34,6 +41,10 @@ namespace magicvr {
         rxcpp::observable<Trajectory> preprocessedWithoutRotation_input_trajectory_stream;
         rxcpp::observable<Trajectory> left_preprocessed_input_trajectory_stream;
         rxcpp::observable<Trajectory> right_preprocessed_input_trajectory_stream;
+
+        rxcpp::observable<circle_comparison_data> left_circle_comparison_data_stream;
+        rxcpp::observable<circle_comparison_data> right_circle_comparison_data_stream;
+        rxcpp::observable<circle_comparison_data> circle_comparison_data_stream;
 
         MagicTricks();
 

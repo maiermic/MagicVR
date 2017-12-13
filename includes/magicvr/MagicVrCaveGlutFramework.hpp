@@ -7,35 +7,40 @@
 #include "GlutFramework.hpp"
 #include "input/RemoteManager.hpp"
 
-class MagicVrCaveGlutFramework : public glutFramework::GlutFramework {
-    OSGCSM::CAVEConfig &cfg;
+namespace magicvr {
 
-    OSGCSM::CAVESceneManager &mgr;
+    class MagicVrCaveGlutFramework : public glutFramework::GlutFramework {
+        OSGCSM::CAVEConfig &cfg;
 
-    input::RemoteManager &remoteManager;
+        OSGCSM::CAVESceneManager &mgr;
 
-    AppController &app;
+        input::RemoteManager &remoteManager;
 
-    // head light fix (1/3)
-    DirectionalLightRecPtr mainLight;
+        AppController &app;
 
-    int createWindow() override;
+        // head light fix (1/3)
+        DirectionalLightRecPtr mainLight;
 
-    void clearControlWindow() const;
+        int createWindow() override;
 
-public:
-    MagicVrCaveGlutFramework(OSGCSM::CAVEConfig &cfg, OSGCSM::CAVESceneManager &mgr,
-                         input::RemoteManager &remoteManager, AppController &app,
-                         DirectionalLightRecPtr mainLight);
+        void clearControlWindow() const;
 
-    void keyboardDown(unsigned char key, int x, int y) override;
+    public:
+        MagicVrCaveGlutFramework(OSGCSM::CAVEConfig &cfg,
+                                 OSGCSM::CAVESceneManager &mgr,
+                                 input::RemoteManager &remoteManager,
+                                 AppController &app,
+                                 DirectionalLightRecPtr mainLight);
 
-    void idle() override;
+        void keyboardDown(unsigned char key, int x, int y) override;
 
-    void reshape(int width, int height) override;
+        void idle() override;
 
-    void display(OSG::Time dTime) override;
-};
+        void reshape(int width, int height) override;
 
+        void display(OSG::Time dTime) override;
+    };
+
+} // namespace magicvr
 
 #endif //MYPROJECT_MAGICVRGLUTFRAMEWORK_HPP

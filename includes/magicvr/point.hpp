@@ -28,7 +28,7 @@ namespace boost { namespace geometry {
 
         template<class ValueTypeT, OSG::UInt32 SizeI>
         struct dimension<OSG::Vector<ValueTypeT, SizeI>>
-                : boost::mpl::int_<3> {
+                : boost::mpl::int_<SizeI> {
         };
 
         template<class ValueTypeT, OSG::UInt32 SizeI, std::size_t Dimension>

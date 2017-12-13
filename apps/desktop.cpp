@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
         Leap::Controller controller;
         magicvr::leap::FingerTipPosition indexFingerTipPosition(controller, Leap::Finger::TYPE_INDEX);
         magicvr::AppControllerWithLeapSupport app(indexFingerTipPosition);
-        MagicVrDesktopGlutFramework framework(app);
+        magicvr::MagicVrDesktopGlutFramework framework(app);
         framework.startFramework(argc, argv);
     } catch (const ExitGlut& e) {
         std::cout << "clean exit of app\n";
